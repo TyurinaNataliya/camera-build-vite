@@ -1,9 +1,23 @@
+import { useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
-import { MockProducts } from '../../type-data/mock';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { useLayoutEffect } from 'react';
+import { fetchProductAction } from '../../services/thunk/fetch-product';
 
 function ProductContainer(): JSX.Element {
+  const { id: productId } = useParams();
+  const dispatch = useAppDispatch();
+
+  useLayoutEffect(() => {
+    if (productId) {
+      dispatch(fetchProductAction(Number(productId)));
+    }
+  }, [dispatch, productId]);
+
+  const product = useAppSelector((state) => state.product.product);
+
   return (
     <>
       <Header />
@@ -30,7 +44,7 @@ function ProductContainer(): JSX.Element {
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link breadcrumbs__link--active">
-                    Ретрокамера Das Auge IV
+                    {product?.name}
                   </span>
                 </li>
               </ul>
@@ -43,18 +57,22 @@ function ProductContainer(): JSX.Element {
                   <picture>
                     <source
                       type="image/webp"
-                      srcSet="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+                      srcSet={
+                        product
+                          ? `${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`
+                          : ''
+                      }
                     />
                     <img
-                      src="img/content/das-auge.jpg"
-                      srcSet="img/content/das-auge@2x.jpg 2x"
+                      src={product?.previewImg}
+                      srcSet={product?.previewImg2x}
                       width="560"
                       height="480"
-                      alt="Ретрокамера Das Auge IV"
+                      alt={product?.name}
                     />
                   </picture>
                 </div>
-                <ProductCard product={MockProducts[0]} />
+                {product ? <ProductCard product={product} /> : ''}
               </div>
             </section>
           </div>

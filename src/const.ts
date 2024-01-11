@@ -2,7 +2,18 @@ const AppRoute = {
   Basket: '/basket',
   Product: '/product',
   Catalog: '/',
-  NotFaund: '/404',
+  NotFound: '/404',
 };
 
-export { AppRoute };
+const ApiRoute = {
+  Products: '/cameras',
+};
+
+const RequestStatus = {
+  Idle: 'IDLE',
+  Pending: 'PENDING',
+  Success: 'SUCCESS',
+  Error: 'ERROR',
+};
+
+export { AppRoute, ApiRoute, RequestStatus };

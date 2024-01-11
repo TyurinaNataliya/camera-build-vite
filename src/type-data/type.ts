@@ -1,3 +1,6 @@
+import { AxiosInstance } from 'axios';
+import { AppDispatch, State } from '../hooks/store';
+
 export type TypeProduct = {
   id: number;
   name: string;
@@ -14,6 +17,7 @@ export type TypeProduct = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 };
+
 export type TypePromoProduct = {
   id: number;
   name: string;
@@ -31,4 +35,9 @@ export type TypeProductReview = {
   disadvantage: string;
   review: string;
   rating: number;
+};
+export type Thunk = {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
 };

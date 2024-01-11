@@ -12,9 +12,12 @@ function App(): JSX.Element {
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogContainer />} />
-          <Route path={AppRoute.Product} element={<ProductContainer />} />
+          <Route
+            path={`${AppRoute.Product}/:id`}
+            element={<ProductContainer />}
+          />
           <Route path={AppRoute.Basket} element={<BacketContainer />} />
-          <Route path={AppRoute.NotFaund} element={<NotFoundContainer />} />
+          <Route path={AppRoute.NotFound} element={<NotFoundContainer />} />
           <Route path="*" element={<NotFoundContainer />} />
         </Routes>
       </BrowserRouter>
