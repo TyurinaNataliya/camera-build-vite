@@ -1,50 +1,26 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { TypePromoProduct } from '../type-data/type';
 
-//добавить к ссылке /${id}
-function Banner(): JSX.Element {
-  const result = [
-    {
-      id: 7,
-      name: 'Look 54',
-      previewImg: 'img/content/promo-look-54.jpg',
-      previewImg2x: 'img/content/promo-look-54@2x.jpg',
-      previewImgWebp: 'img/content/promo-look-54.webp',
-      previewImgWebp2x: 'img/content/promo-look-54@2x.webp',
-    },
-    {
-      id: 35,
-      name: 'Click Pro',
-      previewImg: 'img/content/promo_click_pro.jpg',
-      previewImg2x: 'img/content/promo_click_pro@2x.jpg',
-      previewImgWebp: 'img/content/promo_click_pro.webp',
-      previewImgWebp2x: 'img/content/promo_click_pro@2x.webp',
-    },
-    {
-      id: 36,
-      name: 'Click Lite R',
-      previewImg: 'img/content/promo_click-lite-r.jpg',
-      previewImg2x: 'img/content/promo_click-lite-r@2x.jpg',
-      previewImgWebp: 'img/content/promo_click-lite-r.webp',
-      previewImgWebp2x: 'img/content/promo_click-lite-r@2x.webp',
-    },
-  ];
+type Props = {
+  promoProducts: TypePromoProduct[];
+};
+
+function Banner({ promoProducts }: Props): JSX.Element {
   return (
     <div className="banner">
       <Swiper
-        pagination
-        navigation
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Autoplay]}
         autoplay={{ delay: 3000 }}
         className="mySwiper"
       >
-        {result.map((slide) => (
+        {promoProducts.map((slide) => (
           <SwiperSlide key={slide.id}>
             <picture>
               <source
@@ -55,7 +31,7 @@ function Banner(): JSX.Element {
                 src={`${slide.previewImg}`}
                 srcSet={`${slide.previewImg2x} 2x`}
                 width="1280"
-                height="280"
+                height="300"
                 alt={slide.name}
               />
             </picture>

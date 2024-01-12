@@ -26,6 +26,7 @@ export type TypePromoProduct = {
   previewImgWebp: string;
   previewImgWebp2x: string;
 };
+
 export type TypeProductReview = {
   id: string;
   createAt: string;

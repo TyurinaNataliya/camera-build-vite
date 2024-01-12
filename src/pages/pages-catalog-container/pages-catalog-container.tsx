@@ -8,18 +8,26 @@ import { RequestStatus } from '../../const';
 import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
+import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
-  const fetchingStatus = useAppSelector(
-    (state) => state.products.fetchingStatus
-  );
 
   useLayoutEffect(() => {
     dispatch(fetchProductsAction());
   }, [dispatch]);
 
+  useLayoutEffect(() => {
+    dispatch(fetchPromoProductsAction());
+  }, [dispatch]);
+
+  const products = useAppSelector((state) => state.products.products);
+  const fetchingStatus = useAppSelector(
+    (state) => state.products.fetchingStatus
+  );
+  const promoProducts = useAppSelector(
+    (state) => state.promoProducts.promoProducts
+  );
   return (
     <>
       <Header />
@@ -27,7 +35,7 @@ function CatalogContainer(): JSX.Element {
       {fetchingStatus === RequestStatus.Pending && <LoadingComponent />}
       {fetchingStatus === RequestStatus.Success && (
         <main>
-          <Banner />
+          {promoProducts && <Banner promoProducts={promoProducts} />}
           <div className="page-content">
             <div className="breadcrumbs">
               <div className="container">

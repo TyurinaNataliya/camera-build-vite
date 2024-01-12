@@ -7,6 +7,7 @@ const AppRoute = {
 
 const ApiRoute = {
   Products: '/cameras',
+  Promo: '/promo',
 };
 
 const RequestStatus = {
