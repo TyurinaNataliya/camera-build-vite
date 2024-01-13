@@ -1,7 +1,6 @@
 import { useLayoutEffect } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { ProductCardListInCatalog } from '../../components/product-card/product-cards-list-in-catalog';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
 import { RequestStatus } from '../../const';
@@ -9,6 +8,7 @@ import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
+import { AppPagination } from '../../components/pagination/app-pagination';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -251,9 +251,27 @@ function CatalogContainer(): JSX.Element {
                             </div>
                           </div>
                         </div>
+                        {products && (
+                          <AppPagination productsCameras={products} />
+                        )}
                       </form>
                     </div>
-                    <div className="cards catalog__cards">
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+      )}
+
+      <Footer />
+    </>
+  );
+}
+export { CatalogContainer };
+{
+  /*
+<div className="cards catalog__cards">
                       <ProductCardListInCatalog
                         products={products ? products : []}
                       />
@@ -287,17 +305,5 @@ function CatalogContainer(): JSX.Element {
                           </a>
                         </li>
                       </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </main>
-      )}
-
-      <Footer />
-    </>
-  );
+                    </div> */
 }
-export { CatalogContainer };

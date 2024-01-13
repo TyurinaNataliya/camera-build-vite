@@ -1,7 +1,7 @@
 type Props = {
   countProductsPage: number;
   totalProducts: number;
-  paginate: (pageNumber: number) => number;
+  paginate: (pageNumber: number) => void;
 };
 
 function Paginations({
@@ -19,7 +19,11 @@ function Paginations({
       <ul className="pagination__list">
         {pageNumbers.map((number) => (
           <li className="pagination__item" key={number}>
-            <a className="pagination__link pagination__link--active" href="1">
+            <a
+              className="pagination__link "
+              href="!#"
+              onChange={() => paginate(number)}
+            >
               {number}
             </a>
           </li>
@@ -37,3 +41,7 @@ function Paginations({
   );
 }
 export { Paginations };
+//доделать кнопки далее-назад
+//по 3 страницы
+//добавление класса "pagination__link--active" ссылке при нажатии
+//доделать ссылку на последующие страницы(посмотреть в документации и поправить компонент арр)

@@ -1,25 +1,28 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { ProductCardsList } from './products-carts-list';
 import { Paginations } from './paginations';
+import { TypeProduct } from '../../type-data/type';
 
-function AppPagination(): JSX.Element {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+type Props = {
+  productsCameras: TypeProduct[];
+};
+
+function AppPagination({ productsCameras }: Props): JSX.Element {
+  const [products, setProducts] = useState<TypeProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [countProductsPage] = useState(9);
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getProducts = () => {
       setLoading(true);
-      const res = await axios.get(
-        'https://camera-shop.accelerator.pages.academy/cameras' ////////////////???
-      );
+      const res = productsCameras;
+
       setProducts(res);
       setLoading(false);
     };
     getProducts();
-  }, []);
+  }, [productsCameras]);
 
   const lastProductIndex = currentPage * countProductsPage;
   const firstProductIndex = lastProductIndex - countProductsPage;
@@ -30,7 +33,7 @@ function AppPagination(): JSX.Element {
   };
 
   return (
-    <div>
+    <div className="cards catalog__cards">
       <ProductCardsList products={currentProducts} loading={loading} />
       <Paginations
         countProductsPage={countProductsPage}

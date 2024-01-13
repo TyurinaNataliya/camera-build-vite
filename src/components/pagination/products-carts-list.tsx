@@ -4,6 +4,7 @@ import { ProductCardInCatalog } from '../product-card/product-card-in-catalog';
 
 type Props = {
   products: TypeProduct[];
+  loading: boolean;
 };
 
 function ProductCardsList({ products, loading }: Props): JSX.Element {
@@ -12,8 +13,8 @@ function ProductCardsList({ products, loading }: Props): JSX.Element {
   }
   return (
     <>
-      {products.map((product, i) => (
-        <ProductCardInCatalog product={product} key={i} />
+      {products.map((product) => (
+        <ProductCardInCatalog product={product} key={product.id} />
       ))}
     </>
   );
