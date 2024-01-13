@@ -14,14 +14,14 @@ type Props = {
 
 function Banner({ promoProducts }: Props): JSX.Element {
   return (
-    <div className="banner">
-      <Swiper
-        modules={[Autoplay]}
-        autoplay={{ delay: 3000 }}
-        className="mySwiper"
-      >
-        {promoProducts.map((slide) => (
-          <SwiperSlide key={slide.id}>
+    <Swiper
+      modules={[Autoplay]}
+      autoplay={{ delay: 3000 }}
+      className="mySwiper"
+    >
+      {promoProducts.map((slide) => (
+        <SwiperSlide key={slide.id}>
+          <div className="banner">
             <picture>
               <source
                 type="image/webp"
@@ -45,10 +45,10 @@ function Banner({ promoProducts }: Props): JSX.Element {
                 Подробнее
               </Link>
             </p>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 }
 export { Banner };
