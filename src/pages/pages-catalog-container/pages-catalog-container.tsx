@@ -8,7 +8,7 @@ import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
-import { AppPagination } from '../../components/pagination/app-pagination';
+import { PagePagination } from '../../components/pagination/page-pagination';
 import { ModallAddItemSuccess } from '../../components/modal-add-item-success';
 
 function CatalogContainer(): JSX.Element {
@@ -263,7 +263,7 @@ function CatalogContainer(): JSX.Element {
                           </div>
                         </div>
                         {products && (
-                          <AppPagination
+                          <PagePagination
                             productsCameras={products}
                             handleActiveModal={handleActiveModal}
                           />
