@@ -13,6 +13,10 @@ function App(): JSX.Element {
         <Routes>
           <Route path={AppRoute.Catalog} element={<CatalogContainer />} />
           <Route
+            path={`${AppRoute.Catalog}?page=:number`}
+            element={<CatalogContainer />}
+          />
+          <Route
             path={`${AppRoute.Product}/:id`}
             element={<ProductContainer />}
           />

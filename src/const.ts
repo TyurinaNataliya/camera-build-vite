@@ -1,3 +1,4 @@
+const MIN_COUNT_CATALOG_CARDS = 9;
 const AppRoute = {
   Basket: '/basket',
   Product: '/product',
@@ -17,4 +18,4 @@ const RequestStatus = {
   Error: 'ERROR',
 };
 
-export { AppRoute, ApiRoute, RequestStatus };
+export { AppRoute, ApiRoute, RequestStatus, MIN_COUNT_CATALOG_CARDS };
