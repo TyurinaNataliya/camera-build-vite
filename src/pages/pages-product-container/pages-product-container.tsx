@@ -52,26 +52,7 @@ function ProductContainer(): JSX.Element {
           </div>
           <div className="page-content__section">
             <section className="product">
-              {product && (
-                <div className="container">
-                  <div className="product__img">
-                    <picture>
-                      <source
-                        type="image/webp"
-                        srcSet={`${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`}
-                      />
-                      <img
-                        src={product?.previewImg}
-                        srcSet={`${product?.previewImg2x || ''} 2x`}
-                        width="560"
-                        height="480"
-                        alt={product?.name}
-                      />
-                    </picture>
-                  </div>
-                  <ProductCard product={product} />
-                </div>
-              )}
+              {product && <ProductCard product={product} />}
             </section>
           </div>
           <div className="page-content__section">

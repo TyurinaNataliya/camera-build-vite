@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -9,9 +9,17 @@ import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
 import { AppPagination } from '../../components/pagination/app-pagination';
+import { ModallAddItemSuccess } from '../../components/modal-add-item-success';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [modalActive, setModalActive] = useState<boolean>(false);
+  const handleActiveModal = () => {
+    setModalActive(true);
+  };
+  const handleCloseModal = () => {
+    setModalActive(false);
+  };
 
   useLayoutEffect(() => {
     dispatch(fetchProductsAction());
@@ -37,6 +45,9 @@ function CatalogContainer(): JSX.Element {
         <main>
           {promoProducts && <Banner promoProducts={promoProducts} />}
           <div className="page-content">
+            {modalActive === true && (
+              <ModallAddItemSuccess handleCloseModal={handleCloseModal} />
+            )}
             <div className="breadcrumbs">
               <div className="container">
                 <ul className="breadcrumbs__list">
@@ -252,7 +263,10 @@ function CatalogContainer(): JSX.Element {
                           </div>
                         </div>
                         {products && (
-                          <AppPagination productsCameras={products} />
+                          <AppPagination
+                            productsCameras={products}
+                            handleActiveModal={handleActiveModal}
+                          />
                         )}
                       </form>
                     </div>

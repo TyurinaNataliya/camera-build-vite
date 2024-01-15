@@ -4,9 +4,13 @@ import { AppRoute } from '../../const';
 
 type Props = {
   product: TypeProduct;
+  handleActiveModal: () => void;
 };
 
-function ProductCardInCatalog({ product }: Props): JSX.Element {
+function ProductCardInCatalog({
+  product,
+  handleActiveModal,
+}: Props): JSX.Element {
   const {
     id,
     rating,
@@ -66,7 +70,11 @@ function ProductCardInCatalog({ product }: Props): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">
+        <button
+          className="btn btn--purple product-card__btn"
+          type="button"
+          onClick={handleActiveModal}
+        >
           Купить
         </button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>
