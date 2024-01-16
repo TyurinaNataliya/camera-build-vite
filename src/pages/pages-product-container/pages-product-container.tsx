@@ -3,8 +3,10 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
+import { ModalAddItemSuccess } from '../../components/modal-add-item-success';
+import { ModalCatalogAddItem } from '../../components/modal-catalog-add-item';
 
 function ProductContainer(): JSX.Element {
   const { id: productId } = useParams();
@@ -18,10 +20,39 @@ function ProductContainer(): JSX.Element {
 
   const product = useAppSelector((state) => state.product.product);
 
+  const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
+  const handleActiveModalSuccess = () => {
+    setmodalActivSuccess(true);
+  };
+  const handleCloseModalSuccess = () => {
+    setmodalActivSuccess(false);
+  };
+  const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
+  const handleActiveModalItem = () => {
+    setModalActiveItem(true);
+  };
+  const handleCloseModalItem = () => {
+    setModalActiveItem(false);
+  };
+
   return (
     <>
       <Header />
       <main>
+        {modalActiveItem === true && product && (
+          <ModalCatalogAddItem
+            product={product}
+            handleCloseModalItem={handleCloseModalItem}
+            handleActiveModalSuccess={handleActiveModalSuccess}
+          />
+        )}
+        {modalActivSuccess === true && (
+          <ModalAddItemSuccess
+            handleCloseModalSuccess={handleCloseModalSuccess}
+            fromProduct
+            id={product?.id}
+          />
+        )}
         <div className="page-content">
           <div className="breadcrumbs">
             <div className="container">
@@ -52,7 +83,12 @@ function ProductContainer(): JSX.Element {
           </div>
           <div className="page-content__section">
             <section className="product">
-              {product && <ProductCard product={product} />}
+              {product && (
+                <ProductCard
+                  product={product}
+                  handleActiveModalItem={handleActiveModalItem}
+                />
+              )}
             </section>
           </div>
           <div className="page-content__section">
@@ -66,11 +102,11 @@ function ProductContainer(): JSX.Element {
                         <picture>
                           <source
                             type="image/webp"
-                            srcSet="img/content/fast-shot.webp, img/content/fast-shot@2x.webp 2x"
+                            srcSet="/img/content/fast-shot.webp, img/content/fast-shot@2x.webp 2x"
                           />
                           <img
-                            src="img/content/fast-shot.jpg"
-                            srcSet="img/content/fast-shot@2x.jpg 2x"
+                            src="/img/content/fast-shot.jpg"
+                            srcSet="/img/content/fast-shot@2x.jpg 2x"
                             width="280"
                             height="240"
                             alt="Фотоаппарат FastShot MR-5"
@@ -124,11 +160,11 @@ function ProductContainer(): JSX.Element {
                         <picture>
                           <source
                             type="image/webp"
-                            srcSet="img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
+                            srcSet="/img/content/das-auge.webp, img/content/das-auge@2x.webp 2x"
                           />
                           <img
-                            src="img/content/das-auge.jpg"
-                            srcSet="img/content/das-auge@2x.jpg 2x"
+                            src="/img/content/das-auge.jpg"
+                            srcSet="/img/content/das-auge@2x.jpg 2x"
                             width="280"
                             height="240"
                             alt="Ретрокамера «Das Auge IV»"
@@ -184,11 +220,11 @@ function ProductContainer(): JSX.Element {
                         <picture>
                           <source
                             type="image/webp"
-                            srcSet="img/content/instaprinter.webp, img/content/instaprinter@2x.webp 2x"
+                            srcSet="/img/content/instaprinter.webp, img/content/instaprinter@2x.webp 2x"
                           />
                           <img
-                            src="img/content/instaprinter.jpg"
-                            srcSet="img/content/instaprinter@2x.jpg 2x"
+                            src="/img/content/instaprinter.jpg"
+                            srcSet="/img/content/instaprinter@2x.jpg 2x"
                             width="280"
                             height="240"
                             alt="Фотоаппарат Instaprinter P2"

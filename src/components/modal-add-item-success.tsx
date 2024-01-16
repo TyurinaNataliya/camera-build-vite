@@ -2,10 +2,18 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 
 type Props = {
-  handleCloseModal: () => void;
+  handleCloseModalSuccess: () => void;
+  fromCatalog?: boolean;
+  fromProduct?: boolean;
+  id?: number;
 };
 
-function ModallAddItemSuccess({ handleCloseModal }: Props): JSX.Element {
+function ModalAddItemSuccess({
+  handleCloseModalSuccess,
+  fromCatalog,
+  fromProduct,
+  id,
+}: Props): JSX.Element {
   return (
     <div className="modal is-active modal--narrow">
       <div className="modal__wrapper">
@@ -21,13 +29,24 @@ function ModallAddItemSuccess({ handleCloseModal }: Props): JSX.Element {
             <use xlinkHref="#icon-success"></use>
           </svg>
           <div className="modal__buttons">
-            <Link
-              onClick={handleCloseModal}
-              className="btn btn--transparent modal__btn"
-              to={AppRoute.Catalog}
-            >
-              Продолжить покупки
-            </Link>
+            {fromCatalog && (
+              <Link
+                onClick={handleCloseModalSuccess}
+                className="btn btn--transparent modal__btn"
+                to={AppRoute.Catalog}
+              >
+                Продолжить покупки
+              </Link>
+            )}
+            {fromProduct && id && (
+              <Link
+                onClick={handleCloseModalSuccess}
+                className="btn btn--transparent modal__btn"
+                to={`${AppRoute.Product}/${id}`}
+              >
+                Продолжить покупки
+              </Link>
+            )}
 
             <Link
               className="btn btn--purple modal__btn modal__btn--fit-width"
@@ -40,7 +59,7 @@ function ModallAddItemSuccess({ handleCloseModal }: Props): JSX.Element {
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            onClick={handleCloseModal}
+            onClick={handleCloseModalSuccess}
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
@@ -51,4 +70,4 @@ function ModallAddItemSuccess({ handleCloseModal }: Props): JSX.Element {
     </div>
   );
 }
-export { ModallAddItemSuccess };
+export { ModalAddItemSuccess };

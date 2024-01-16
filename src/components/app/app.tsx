@@ -20,6 +20,10 @@ function App(): JSX.Element {
             path={`${AppRoute.Product}/:id`}
             element={<ProductContainer />}
           />
+          <Route
+            path={`${AppRoute.Product}/:id/:string`}
+            element={<ProductContainer />}
+          />
           <Route path={AppRoute.Basket} element={<BacketContainer />} />
           <Route path={AppRoute.NotFound} element={<NotFoundContainer />} />
           <Route path="*" element={<NotFoundContainer />} />

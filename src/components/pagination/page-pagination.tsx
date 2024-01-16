@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ProductCardsList } from './products-carts-list';
+import { ProductCardsList } from '../product-card/products-carts-list';
 import { PaginationPagesNumbers } from './pagination-pages-numbers';
 import { TypeProduct } from '../../type-data/type';
 import {
@@ -10,12 +10,12 @@ import {
 
 type Props = {
   productsCameras: TypeProduct[];
-  handleActiveModal: () => void;
+  handleActiveModalItem: () => void;
 };
 
 function PagePagination({
   productsCameras,
-  handleActiveModal,
+  handleActiveModalItem,
 }: Props): JSX.Element {
   const [products, setProducts] = useState<TypeProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,11 +33,11 @@ function PagePagination({
   }, [productsCameras]);
 
   const lastProductIndex = useMemo(
-    () => currentPage * MAX_COUNT_PRODUCTS_PAGE, //последний индекс
+    () => currentPage * MAX_COUNT_PRODUCTS_PAGE,
     [currentPage]
   );
   const firstProductIndex = useMemo(
-    () => lastProductIndex - MAX_COUNT_PRODUCTS_PAGE, //первый индекс
+    () => lastProductIndex - MAX_COUNT_PRODUCTS_PAGE,
     [lastProductIndex]
   );
   const currentProducts = useMemo(
@@ -56,7 +56,7 @@ function PagePagination({
         <ProductCardsList
           products={currentProducts}
           loading={loading}
-          handleActiveModal={handleActiveModal}
+          handleActiveModalItem={handleActiveModalItem}
         />
       </div>
       {products.length > MIN_COUNT_CATALOG_CARDS && (

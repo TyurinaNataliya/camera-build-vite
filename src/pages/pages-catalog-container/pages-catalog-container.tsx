@@ -9,16 +9,25 @@ import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
 import { PagePagination } from '../../components/pagination/page-pagination';
-import { ModallAddItemSuccess } from '../../components/modal-add-item-success';
+import { ModalCatalogAddItem } from '../../components/modal-catalog-add-item';
+import { ModalAddItemSuccess } from '../../components/modal-add-item-success';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
-  const [modalActive, setModalActive] = useState<boolean>(false);
-  const handleActiveModal = () => {
-    setModalActive(true);
+
+  const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
+  const handleActiveModalItem = () => {
+    setModalActiveItem(true);
   };
-  const handleCloseModal = () => {
-    setModalActive(false);
+  const handleCloseModalItem = () => {
+    setModalActiveItem(false);
+  };
+  const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
+  const handleActiveModalSuccess = () => {
+    setmodalActivSuccess(true);
+  };
+  const handleCloseModalSuccess = () => {
+    setmodalActivSuccess(false);
   };
 
   useLayoutEffect(() => {
@@ -36,6 +45,8 @@ function CatalogContainer(): JSX.Element {
   const promoProducts = useAppSelector(
     (state) => state.promoProducts.promoProducts
   );
+  const product = useAppSelector((state) => state.product.product);
+
   return (
     <>
       <Header />
@@ -45,8 +56,18 @@ function CatalogContainer(): JSX.Element {
         <main>
           {promoProducts && <Banner promoProducts={promoProducts} />}
           <div className="page-content">
-            {modalActive === true && (
-              <ModallAddItemSuccess handleCloseModal={handleCloseModal} />
+            {modalActiveItem === true && product && (
+              <ModalCatalogAddItem
+                product={product}
+                handleCloseModalItem={handleCloseModalItem}
+                handleActiveModalSuccess={handleActiveModalSuccess}
+              />
+            )}
+            {modalActivSuccess === true && (
+              <ModalAddItemSuccess
+                handleCloseModalSuccess={handleCloseModalSuccess}
+                fromCatalog
+              />
             )}
             <div className="breadcrumbs">
               <div className="container">
@@ -265,7 +286,7 @@ function CatalogContainer(): JSX.Element {
                         {products && (
                           <PagePagination
                             productsCameras={products}
-                            handleActiveModal={handleActiveModal}
+                            handleActiveModalItem={handleActiveModalItem}
                           />
                         )}
                       </form>
@@ -283,41 +304,3 @@ function CatalogContainer(): JSX.Element {
   );
 }
 export { CatalogContainer };
-{
-  /*
-<div className="cards catalog__cards">
-                      <ProductCardListInCatalog
-                        products={products ? products : []}
-                      />
-                    </div>
-                    <div className="pagination">
-                      <ul className="pagination__list">
-                        <li className="pagination__item">
-                          <a
-                            className="pagination__link pagination__link--active"
-                            href="1"
-                          >
-                            1
-                          </a>
-                        </li>
-                        <li className="pagination__item">
-                          <a className="pagination__link" href="2">
-                            2
-                          </a>
-                        </li>
-                        <li className="pagination__item">
-                          <a className="pagination__link" href="3">
-                            3
-                          </a>
-                        </li>
-                        <li className="pagination__item">
-                          <a
-                            className="pagination__link pagination__link--text"
-                            href="2"
-                          >
-                            Далее
-                          </a>
-                        </li>
-                      </ul>
-                    </div> */
-}

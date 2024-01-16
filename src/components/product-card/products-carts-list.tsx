@@ -1,17 +1,17 @@
 import { TypeProduct } from '../../type-data/type';
 import { LoadingComponent } from '../loading';
-import { ProductCardInCatalog } from '../product-card/product-card-in-catalog';
+import { ProductCardInCatalog } from './product-card-in-catalog';
 
 type Props = {
   products: TypeProduct[];
   loading: boolean;
-  handleActiveModal: () => void;
+  handleActiveModalItem: () => void;
 };
 
 function ProductCardsList({
   products,
   loading,
-  handleActiveModal,
+  handleActiveModalItem,
 }: Props): JSX.Element {
   if (loading) {
     return <LoadingComponent />;
@@ -22,7 +22,7 @@ function ProductCardsList({
         <ProductCardInCatalog
           product={product}
           key={product.id}
-          handleActiveModal={handleActiveModal}
+          handleActiveModalItem={handleActiveModalItem}
         />
       ))}
     </>

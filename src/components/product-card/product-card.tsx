@@ -1,21 +1,20 @@
+import { useState } from 'react';
 import { TypeProduct } from '../../type-data/type';
+import { TabsElementCharacteristics } from '../tabs-element-characteristics';
+import { TabsElementText } from '../tabs-element-text';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type Props = {
   product: TypeProduct;
+
+  handleActiveModalItem: () => void;
 };
 
-function ProductCard({ product }: Props): JSX.Element {
-  const {
-    name,
-    rating,
-    reviewCount,
-    price,
-    vendorCode,
-    category,
-    type,
-    level,
-    description,
-  } = product;
+function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
+  const { name, rating, reviewCount, price, id } = product;
+  const [isActiveText, setIsActiveText] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   return (
     <div className="container">
@@ -23,11 +22,11 @@ function ProductCard({ product }: Props): JSX.Element {
         <picture>
           <source
             type="image/webp"
-            srcSet={`${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`}
+            srcSet={`/${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`}
           />
           <img
-            src={product?.previewImg}
-            srcSet={`${product?.previewImg2x || ''} 2x`}
+            src={`/${product?.previewImg}`}
+            srcSet={`/${product?.previewImg2x || ''} 2x`}
             width="560"
             height="480"
             alt={product?.name}
@@ -62,7 +61,11 @@ function ProductCard({ product }: Props): JSX.Element {
           <span className="visually-hidden">Цена:</span>
           {`${price} ₽`}
         </p>
-        <button className="btn btn--purple" type="button">
+        <button
+          className="btn btn--purple"
+          type="button"
+          onClick={handleActiveModalItem}
+        >
           <svg width="24" height="16" aria-hidden="true">
             <use xlinkHref="#icon-add-basket"></use>
           </svg>
@@ -70,44 +73,40 @@ function ProductCard({ product }: Props): JSX.Element {
         </button>
         <div className="tabs product__tabs">
           <div className="tabs__controls product__tabs-controls">
-            <button className="tabs__control" type="button">
+            <button
+              className={
+                isActiveText === false
+                  ? 'tabs__control is-active'
+                  : 'tabs__control'
+              }
+              type="button"
+              onClick={() => (
+                setIsActiveText(false),
+                navigate(`${AppRoute.Product}/${id}/specification`)
+              )}
+            >
               Характеристики
             </button>
-            <button className="tabs__control is-active" type="button">
+            <button
+              className={
+                isActiveText === true
+                  ? 'tabs__control is-active'
+                  : 'tabs__control'
+              }
+              type="button"
+              onClick={() => (
+                setIsActiveText(true),
+                navigate(`${AppRoute.Product}/${id}/description`)
+              )}
+            >
               Описание
             </button>
           </div>
           <div className="tabs__content">
-            <div className="tabs__element">
-              <ul className="product__tabs-list">
-                <li className="item-list">
-                  <span className="item-list__title">Артикул:</span>
-                  <p className="item-list__text"> {vendorCode}</p>
-                </li>
-                <li className="item-list">
-                  <span className="item-list__title">Категория:</span>
-                  <p className="item-list__text">{category}</p>
-                </li>
-                <li className="item-list">
-                  <span className="item-list__title">Тип камеры:</span>
-                  <p className="item-list__text">{type}</p>
-                </li>
-                <li className="item-list">
-                  <span className="item-list__title">Уровень:</span>
-                  <p className="item-list__text">{level}</p>
-                </li>
-              </ul>
-            </div>
-            <div className="tabs__element is-active">
-              <div className="product__tabs-text">
-                <p>{description}</p>
-                <p>
-                  {`Вы тоже можете прикоснуться к волшебству аналоговой
-                съёмки, заказав этот чудо-аппарат. Кто знает, может ${name} начнёт ваш путь к наградам всех престижных
-                кинофестивалей.`}
-                </p>
-              </div>
-            </div>
+            {isActiveText === false && (
+              <TabsElementCharacteristics product={product} />
+            )}
+            {isActiveText === true && <TabsElementText product={product} />}
           </div>
         </div>
       </div>

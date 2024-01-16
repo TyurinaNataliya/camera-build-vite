@@ -4,12 +4,12 @@ import { AppRoute } from '../../const';
 
 type Props = {
   product: TypeProduct;
-  handleActiveModal: () => void;
+  handleActiveModalItem: () => void;
 };
 
 function ProductCardInCatalog({
   product,
-  handleActiveModal,
+  handleActiveModalItem,
 }: Props): JSX.Element {
   const {
     id,
@@ -73,7 +73,7 @@ function ProductCardInCatalog({
         <button
           className="btn btn--purple product-card__btn"
           type="button"
-          onClick={handleActiveModal}
+          onClick={handleActiveModalItem}
         >
           Купить
         </button>
