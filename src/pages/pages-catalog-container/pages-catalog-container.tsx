@@ -56,7 +56,7 @@ function CatalogContainer(): JSX.Element {
         <main>
           {promoProducts && <Banner promoProducts={promoProducts} />}
           <div className="page-content">
-            {modalActiveItem === true && product && (
+            {modalActiveItem && product && (
               <ModalCatalogAddItem
                 product={product}
                 handleCloseModalItem={handleCloseModalItem}

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { TypeProduct } from '../../type-data/type';
 import { AppRoute } from '../../const';
+import { fetchProductAction } from '../../services/thunk/fetch-product';
+import { useAppDispatch } from '../../hooks/store';
 
 type Props = {
   product: TypeProduct;
@@ -23,6 +25,7 @@ function ProductCardInCatalog({
     previewImgWebp2x,
   } = product;
 
+  const dispatch = useAppDispatch();
   return (
     <div className="product-card">
       <div className="product-card__img">
@@ -73,7 +76,10 @@ function ProductCardInCatalog({
         <button
           className="btn btn--purple product-card__btn"
           type="button"
-          onClick={handleActiveModalItem}
+          onClick={() => {
+            dispatch(fetchProductAction(Number(id)));
+            handleActiveModalItem();
+          }}
         >
           Купить
         </button>
