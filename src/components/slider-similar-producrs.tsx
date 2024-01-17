@@ -36,9 +36,10 @@ function SliderSimilarProducts({
                   nextEl: nextRef.current,
                 }}
                 modules={[Navigation]}
+                style={{ display: 'flex' }}
               >
                 {similarProducts.map((slide) => (
-                  <SwiperSlide key={slide.id}>
+                  <SwiperSlide key={slide.id} style={{ display: 'flex' }}>
                     <ProductCardInCatalog
                       product={slide}
                       handleActiveModalItem={handleActiveModalItem}

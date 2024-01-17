@@ -29,7 +29,10 @@ function ProductCardInCatalog({
 
   const dispatch = useAppDispatch();
   return (
-    <div className={fromSlider ? 'product-card is-active' : 'product-card'}>
+    <div
+      className={fromSlider ? 'product-card is-active' : 'product-card'}
+      style={fromSlider ? { width: '100%' } : undefined}
+    >
       <div className="product-card__img">
         {fromSlider ? (
           <picture>
