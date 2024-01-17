@@ -3,11 +3,13 @@ import { productSlice } from './slices/product-slice';
 import { createAPI } from '../services/api';
 import { productsSlice } from './slices/products-slice';
 import { promoProductsSlice } from './slices/promo-products-slice';
+import { similarProductsSlice } from './slices/similar-products-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
   [productsSlice.name]: productsSlice.reducer,
   [promoProductsSlice.name]: promoProductsSlice.reducer,
+  [similarProductsSlice.name]: similarProductsSlice.reducer,
 });
 
 const api = createAPI();

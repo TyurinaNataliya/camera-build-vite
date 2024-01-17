@@ -7,11 +7,13 @@ import { useAppDispatch } from '../../hooks/store';
 type Props = {
   product: TypeProduct;
   handleActiveModalItem: () => void;
+  fromSlider?: boolean;
 };
 
 function ProductCardInCatalog({
   product,
   handleActiveModalItem,
+  fromSlider,
 }: Props): JSX.Element {
   const {
     id,
@@ -27,21 +29,37 @@ function ProductCardInCatalog({
 
   const dispatch = useAppDispatch();
   return (
-    <div className="product-card">
+    <div className={fromSlider ? 'product-card is-active' : 'product-card'}>
       <div className="product-card__img">
-        <picture>
-          <source
-            type="image/webp"
-            srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
-          />
-          <img
-            src={previewImg}
-            srcSet={`${previewImg2x} 2x`}
-            width="280"
-            height="240"
-            alt={name}
-          />
-        </picture>
+        {fromSlider ? (
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x`}
+            />
+            <img
+              src={`/${previewImg}`}
+              srcSet={`/${previewImg2x} 2x`}
+              width="280"
+              height="240"
+              alt={name}
+            />
+          </picture>
+        ) : (
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
+            />
+            <img
+              src={previewImg}
+              srcSet={`${previewImg2x} 2x`}
+              width="280"
+              height="240"
+              alt={name}
+            />
+          </picture>
+        )}
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
