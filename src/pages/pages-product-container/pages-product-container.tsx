@@ -9,9 +9,10 @@ import { ModalAddItemSuccess } from '../../components/modals-components/modal-ad
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
 import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
 import { SliderSimilarProducts } from '../../components/slider-similar-producrs';
-import { AppRoute } from '../../const';
+import { AppRoute, COUNT_REVIEWS, COUNT_REVIEWS_DEFAULT } from '../../const';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
 import { ProductReviewsList } from '../../components/reviews/product-reviews-list';
+import { ModalAddReview } from '../../components/modals-components/modal-add-review';
 
 function ProductContainer(): JSX.Element {
   const { id: productId } = useParams();
@@ -46,6 +47,7 @@ function ProductContainer(): JSX.Element {
   const handleCloseModalSuccess = () => {
     setmodalActivSuccess(false);
   };
+
   const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
   const handleActiveModalItem = () => {
     setModalActiveItem(true);
@@ -54,10 +56,19 @@ function ProductContainer(): JSX.Element {
     setModalActiveItem(false);
   };
 
-  const [limitReviews, setlimitReviews] = useState<number>(3);
-
+  const [limitReviews, setlimitReviews] = useState<number>(
+    COUNT_REVIEWS_DEFAULT
+  );
   const handleShowReviews = () => {
-    setlimitReviews(limitReviews + 3);
+    setlimitReviews(limitReviews + COUNT_REVIEWS);
+  };
+
+  const [modalActiveReview, setModalActiveReview] = useState<boolean>(false);
+  const handleActiveModalReview = () => {
+    setModalActiveReview(true);
+  };
+  const handleCloseModalReview = () => {
+    setModalActiveReview(false);
   };
 
   return (
@@ -77,6 +88,9 @@ function ProductContainer(): JSX.Element {
             fromProduct
             id={product?.id}
           />
+        )}
+        {modalActiveReview === true && (
+          <ModalAddReview handleCloseModalReview={handleCloseModalReview} />
         )}
         <div className="page-content">
           <div className="breadcrumbs">
@@ -127,7 +141,11 @@ function ProductContainer(): JSX.Element {
               <div className="container">
                 <div className="page-content__headed">
                   <h2 className="title title--h3">Отзывы</h2>
-                  <button className="btn" type="button">
+                  <button
+                    className="btn"
+                    type="button"
+                    onClick={handleActiveModalReview}
+                  >
                     Оставить свой отзыв
                   </button>
                 </div>
@@ -138,13 +156,15 @@ function ProductContainer(): JSX.Element {
                       limitReviews={limitReviews}
                     />
                     <div className="review-block__buttons">
-                      <button
-                        className="btn btn--purple"
-                        type="button"
-                        onClick={handleShowReviews}
-                      >
-                        Показать больше отзывов
-                      </button>
+                      {limitReviews < reviewsProduct.length && (
+                        <button
+                          className="btn btn--purple"
+                          type="button"
+                          onClick={handleShowReviews}
+                        >
+                          Показать больше отзывов
+                        </button>
+                      )}
                     </div>
                   </>
                 )}

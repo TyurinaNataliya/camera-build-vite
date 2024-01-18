@@ -1,8 +1,28 @@
+import dayjs from 'dayjs';
 import { TypeProductReview } from '../../type-data/type';
+import updateLocale from 'dayjs/plugin/updateLocale';
 
 type Props = {
   reviewProduct: TypeProductReview;
 };
+dayjs.extend(updateLocale);
+
+dayjs.updateLocale('en', {
+  months: [
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря',
+  ],
+});
 
 function ReviewCard({ reviewProduct }: Props): JSX.Element {
   const { userName, createAt, rating, advantage, disadvantage, review } =
@@ -12,7 +32,7 @@ function ReviewCard({ reviewProduct }: Props): JSX.Element {
       <div className="review-card__head">
         <p className="title title--h4">{userName}</p>
         <time className="review-card__data" dateTime="2022-04-13">
-          {createAt}
+          {dayjs(createAt).format('DD MMMM')}
         </time>
       </div>
       <div className="rate review-card__rate">
