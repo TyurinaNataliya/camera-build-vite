@@ -1,7 +1,6 @@
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { TypeProduct } from '../type-data/type';
 import 'swiper/css';
-// import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { ProductCardInCatalog } from './product-card/product-card-in-catalog';
 import { useRef } from 'react';

@@ -3,14 +3,15 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
-import { RequestStatus } from '../../const';
+import { AppRoute, RequestStatus } from '../../const';
 import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
 import { PagePagination } from '../../components/pagination/page-pagination';
-import { ModalCatalogAddItem } from '../../components/modal-catalog-add-item';
-import { ModalAddItemSuccess } from '../../components/modal-add-item-success';
+import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
+import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
+import { Link } from 'react-router-dom';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -73,12 +74,12 @@ function CatalogContainer(): JSX.Element {
               <div className="container">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link" href="index.html">
+                    <Link className="breadcrumbs__link" to={AppRoute.Catalog}>
                       Главная
                       <svg width="5" height="8" aria-hidden="true">
                         <use xlinkHref="#icon-arrow-mini"></use>
                       </svg>
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
                     <span className="breadcrumbs__link breadcrumbs__link--active">

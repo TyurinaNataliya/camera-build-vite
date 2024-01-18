@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TypeProduct } from '../../type-data/type';
-import { TabsElementCharacteristics } from '../tabs-element-characteristics';
-import { TabsElementText } from '../tabs-element-text';
+import { TabsElementCharacteristics } from '../tabs-components/tabs-element-characteristics';
+import { TabsElementText } from '../tabs-components/tabs-element-text';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
