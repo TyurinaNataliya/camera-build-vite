@@ -54,6 +54,12 @@ function ProductContainer(): JSX.Element {
     setModalActiveItem(false);
   };
 
+  const [limitReviews, setlimitReviews] = useState<number>(3);
+
+  const handleShowReviews = () => {
+    setlimitReviews(limitReviews + 3);
+  };
+
   return (
     <>
       <Header />
@@ -125,16 +131,23 @@ function ProductContainer(): JSX.Element {
                     Оставить свой отзыв
                   </button>
                 </div>
-                {reviewsProduct ? (
-                  <ProductReviewsList reviews={reviewsProduct} />
-                ) : (
-                  <> </>
+                {reviewsProduct && (
+                  <>
+                    <ProductReviewsList
+                      reviews={reviewsProduct}
+                      limitReviews={limitReviews}
+                    />
+                    <div className="review-block__buttons">
+                      <button
+                        className="btn btn--purple"
+                        type="button"
+                        onClick={handleShowReviews}
+                      >
+                        Показать больше отзывов
+                      </button>
+                    </div>
+                  </>
                 )}
-                <div className="review-block__buttons">
-                  <button className="btn btn--purple" type="button">
-                    Показать больше отзывов
-                  </button>
-                </div>
               </div>
             </section>
           </div>
