@@ -28,8 +28,8 @@ export type TypePromoProduct = {
 };
 
 export type TypeProductReview = {
-  id: string;
-  createAt: string;
+  id?: string;
+  createAt?: string;
   cameraId: number;
   userName: string;
   advantage: string;

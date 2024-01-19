@@ -1,8 +1,70 @@
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { TypeProductReview } from '../../type-data/type';
+import { useAppDispatch } from '../../hooks/store';
+import { postReviewProduct } from '../../services/thunk/post-review-product';
+import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
+
 type Props = {
   handleCloseModalReview: () => void;
+  idProduct: number;
+};
+const RatingMap = {
+  '5': 'Отлично',
+  '4': 'Хорошо',
+  '3': 'Нормально',
+  '2': 'Плохо',
+  '1': 'Ужасно',
 };
 
-function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
+function ModalAddReview({
+  handleCloseModalReview,
+  idProduct,
+}: Props): JSX.Element {
+  const [ratingStars, setRatingStars] = useState<string>('');
+  const [reviewName, setreviewName] = useState<string>('');
+  const [reviewAdvantages, setReviewAdvantages] = useState<string>('');
+  const [reviewDisadvantages, setReviewDisadvantages] = useState<string>('');
+  const [reviewCommentary, setReviewCommentary] = useState<string>('');
+  const dispatch = useAppDispatch();
+
+  function ratingChangeHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setRatingStars(evt.target.value);
+  }
+  function nameChangeHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setreviewName(evt.target.value);
+  }
+  function advantagesChangeHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setReviewAdvantages(evt.target.value);
+  }
+  function disadvantagesChangeHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setReviewDisadvantages(evt.target.value);
+  }
+  function commentaryChangeHandle(evt: ChangeEvent<HTMLTextAreaElement>) {
+    setReviewCommentary(evt.target.value);
+  }
+  function resetForm() {
+    setRatingStars('');
+    setreviewName('');
+    setReviewAdvantages('');
+    setReviewDisadvantages('');
+    setReviewCommentary('');
+  }
+  function handleSubmit(evt: FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+    const review: TypeProductReview = {
+      rating: Number(ratingStars),
+      userName: reviewName,
+      advantage: reviewAdvantages,
+      disadvantage: reviewDisadvantages,
+      review: reviewCommentary,
+      cameraId: idProduct,
+    };
+    dispatch(postReviewProduct({ reviewData: review, productId: idProduct }));
+    dispatch(fetchReviewsProductAction(Number(idProduct)));
+    resetForm();
+    handleCloseModalReview();
+  }
+
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
@@ -10,7 +72,7 @@ function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
-            <form method="post">
+            <form method="post" onSubmit={handleSubmit}>
               <div className="form-review__rate">
                 <fieldset className="rate form-review__item">
                   <legend className="rate__caption">
@@ -21,69 +83,29 @@ function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
                   </legend>
                   <div className="rate__bar">
                     <div className="rate__group">
-                      <input
-                        className="visually-hidden"
-                        id="star-5"
-                        name="rate"
-                        type="radio"
-                        value="5"
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-5"
-                        title="Отлично"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-4"
-                        name="rate"
-                        type="radio"
-                        value="4"
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-4"
-                        title="Хорошо"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-3"
-                        name="rate"
-                        type="radio"
-                        value="3"
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-3"
-                        title="Нормально"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-2"
-                        name="rate"
-                        type="radio"
-                        value="2"
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-2"
-                        title="Плохо"
-                      />
-                      <input
-                        className="visually-hidden"
-                        id="star-1"
-                        name="rate"
-                        type="radio"
-                        value="1"
-                      />
-                      <label
-                        className="rate__label"
-                        htmlFor="star-1"
-                        title="Ужасно"
-                      />
+                      {Object.entries(RatingMap)
+                        .reverse()
+                        .map(([key, title]) => (
+                          <Fragment key={key}>
+                            <input
+                              onChange={ratingChangeHandle}
+                              className="visually-hidden"
+                              id={`star-${key}`}
+                              name="rate"
+                              type="radio"
+                              checked={key === ratingStars}
+                              value={key}
+                            />
+                            <label
+                              className="rate__label"
+                              htmlFor={`star-${key}`}
+                              title={title}
+                            />
+                          </Fragment>
+                        ))}
                     </div>
                     <div className="rate__progress">
-                      <span className="rate__stars">0</span>
+                      <span className="rate__stars">{ratingStars}</span>
                       <span>/</span>
                       <span className="rate__all-stars">5</span>
                     </div>
@@ -101,6 +123,10 @@ function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
                     <input
                       type="text"
                       name="user-name"
+                      minLength={2}
+                      maxLength={15}
+                      onChange={nameChangeHandle}
+                      value={reviewName}
                       placeholder="Введите ваше имя"
                       required
                     />
@@ -118,6 +144,10 @@ function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
                     <input
                       type="text"
                       name="user-plus"
+                      minLength={10}
+                      maxLength={160}
+                      onChange={advantagesChangeHandle}
+                      value={reviewAdvantages}
                       placeholder="Основные преимущества товара"
                       required
                     />
@@ -137,6 +167,10 @@ function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
                     <input
                       type="text"
                       name="user-minus"
+                      minLength={10}
+                      maxLength={160}
+                      onChange={disadvantagesChangeHandle}
+                      value={reviewDisadvantages}
                       placeholder="Главные недостатки товара"
                       required
                     />
@@ -155,8 +189,12 @@ function ModalAddReview({ handleCloseModalReview }: Props): JSX.Element {
                     </span>
                     <textarea
                       name="user-comment"
-                      minLength={5}
+                      minLength={10}
+                      maxLength={160}
+                      onChange={commentaryChangeHandle}
+                      value={reviewCommentary}
                       placeholder="Поделитесь своим опытом покупки"
+                      required
                     />
                   </label>
                   <div className="custom-textarea__error">

@@ -89,8 +89,11 @@ function ProductContainer(): JSX.Element {
             id={product?.id}
           />
         )}
-        {modalActiveReview === true && (
-          <ModalAddReview handleCloseModalReview={handleCloseModalReview} />
+        {modalActiveReview === true && product && (
+          <ModalAddReview
+            handleCloseModalReview={handleCloseModalReview}
+            idProduct={product?.id}
+          />
         )}
         <div className="page-content">
           <div className="breadcrumbs">
