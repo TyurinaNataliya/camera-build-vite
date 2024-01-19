@@ -8,23 +8,19 @@ import {
   MAX_COUNT_LETTERS_NAME,
   MIN_COUNT_LETTERS_INPUT,
   MIN_COUNT_LETTERS_NAME,
+  RatingMap,
 } from '../../const';
 
 type Props = {
   handleCloseModalReview: () => void;
   idProduct: number;
-};
-const RatingMap = {
-  '5': 'Отлично',
-  '4': 'Хорошо',
-  '3': 'Нормально',
-  '2': 'Плохо',
-  '1': 'Ужасно',
+  handleActiveModalReviewSucces: () => void;
 };
 
 function ModalAddReview({
   handleCloseModalReview,
   idProduct,
+  handleActiveModalReviewSucces,
 }: Props): JSX.Element {
   const [ratingStars, setRatingStars] = useState<string>('');
   const [reviewName, setreviewName] = useState<string>('');
@@ -69,6 +65,7 @@ function ModalAddReview({
     dispatch(fetchReviewsProductAction(Number(idProduct)));
     resetForm();
     handleCloseModalReview();
+    handleActiveModalReviewSucces();
   }
 
   const isInvalidInputs = (nameInput: string) =>

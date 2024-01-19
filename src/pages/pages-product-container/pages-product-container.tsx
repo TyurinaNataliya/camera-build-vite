@@ -13,6 +13,7 @@ import { AppRoute, COUNT_REVIEWS, COUNT_REVIEWS_DEFAULT } from '../../const';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
 import { ProductReviewsList } from '../../components/reviews/product-reviews-list';
 import { ModalAddReview } from '../../components/modals-components/modal-add-review';
+import { ModalReviewSuccess } from '../../components/modals-components/modal-review-success';
 
 function ProductContainer(): JSX.Element {
   const { id: productId } = useParams();
@@ -71,6 +72,15 @@ function ProductContainer(): JSX.Element {
     setModalActiveReview(false);
   };
 
+  const [modalActiveReviewSucces, setModalActiveReviewSucces] =
+    useState<boolean>(false);
+  const handleActiveModalReviewSucces = () => {
+    setModalActiveReviewSucces(true);
+  };
+  const handleCloseModalReviewSucces = () => {
+    setModalActiveReviewSucces(false);
+  };
+
   return (
     <>
       <Header />
@@ -91,7 +101,14 @@ function ProductContainer(): JSX.Element {
         )}
         {modalActiveReview === true && product && (
           <ModalAddReview
+            handleActiveModalReviewSucces={handleActiveModalReviewSucces}
             handleCloseModalReview={handleCloseModalReview}
+            idProduct={product?.id}
+          />
+        )}
+        {modalActiveReviewSucces === true && product && (
+          <ModalReviewSuccess
+            handleCloseModalReviewSucces={handleCloseModalReviewSucces}
             idProduct={product?.id}
           />
         )}

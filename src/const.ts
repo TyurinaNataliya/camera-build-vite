@@ -27,8 +27,16 @@ const RequestStatus = {
   Success: 'SUCCESS',
   Error: 'ERROR',
 };
+const RatingMap = {
+  5: 'Отлично',
+  4: 'Хорошо',
+  3: 'Нормально',
+  2: 'Плохо',
+  1: 'Ужасно',
+};
 
 export {
+  RatingMap,
   AppRoute,
   ApiRoute,
   RequestStatus,
