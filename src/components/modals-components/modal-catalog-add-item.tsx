@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { TypeProduct } from '../../type-data/type';
 
 type Props = {
@@ -22,10 +23,16 @@ function ModalCatalogAddItem({
     level,
     price,
   } = product;
+  const modalRef = useRef(null);
 
   return (
     <div
       className="modal is-active"
+      onMouseDown={(event) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          handleCloseModalItem();
+        }
+      }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
@@ -35,7 +42,7 @@ function ModalCatalogAddItem({
       tabIndex={0}
     >
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">

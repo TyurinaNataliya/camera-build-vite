@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -48,8 +48,17 @@ function CatalogContainer(): JSX.Element {
   );
   const product = useAppSelector((state) => state.product.product);
 
+  useEffect(() => {
+    if (modalActiveItem || modalActivSuccess) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [modalActivSuccess, modalActiveItem]);
+
+  //className={modalActiveItem || modalActivSuccess ? 'scroll-lock' : ''}
   return (
-    <>
+    <div>
       <Header />
       {fetchingStatus === RequestStatus.Error && <ErrorMessage />}
       {fetchingStatus === RequestStatus.Pending && <LoadingComponent />}
@@ -301,7 +310,7 @@ function CatalogContainer(): JSX.Element {
       )}
 
       <Footer />
-    </>
+    </div>
   );
 }
 export { CatalogContainer };

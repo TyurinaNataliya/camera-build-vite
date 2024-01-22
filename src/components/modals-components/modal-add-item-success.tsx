@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useRef } from 'react';
 
 type Props = {
   handleCloseModalSuccess: () => void;
@@ -14,9 +15,16 @@ function ModalAddItemSuccess({
   fromProduct,
   id,
 }: Props): JSX.Element {
+  const modalRef = useRef(null);
+
   return (
     <div
       className="modal is-active modal--narrow"
+      onMouseDown={(event) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          handleCloseModalSuccess();
+        }
+      }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
@@ -26,7 +34,7 @@ function ModalAddItemSuccess({
       tabIndex={0}
     >
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
           <p className="title title--h4">Товар успешно добавлен в корзину</p>
           <svg
@@ -43,6 +51,7 @@ function ModalAddItemSuccess({
                 onClick={handleCloseModalSuccess}
                 className="btn btn--transparent modal__btn"
                 to={AppRoute.Catalog}
+                autoFocus
               >
                 Продолжить покупки
               </Link>

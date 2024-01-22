@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useRef, useState } from 'react';
 import { TypeProductReview } from '../../type-data/type';
 import { useAppDispatch } from '../../hooks/store';
 import { postReviewProduct } from '../../services/thunk/post-review-product';
@@ -72,9 +72,16 @@ function ModalAddReview({
     nameInput.length < MIN_COUNT_LETTERS_INPUT ||
     nameInput.length > MAX_COUNT_LETTERS_INPUT;
 
+  const modalRef = useRef(null);
+
   return (
     <div
       className="modal is-active"
+      onMouseDown={(event) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          handleCloseModalReview();
+        }
+      }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
@@ -84,7 +91,7 @@ function ModalAddReview({
       tabIndex={0}
     >
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
@@ -148,6 +155,7 @@ function ModalAddReview({
                         value={reviewName}
                         placeholder="Введите ваше имя"
                         required
+                        autoFocus
                       />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>

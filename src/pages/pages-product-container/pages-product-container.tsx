@@ -3,7 +3,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
@@ -81,32 +81,52 @@ function ProductContainer(): JSX.Element {
     setModalActiveReviewSucces(false);
   };
 
+  useEffect(() => {
+    if (
+      modalActiveItem ||
+      modalActivSuccess ||
+      modalActiveReview ||
+      modalActiveReviewSucces
+    ) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [
+    modalActivSuccess,
+    modalActiveItem,
+    modalActiveReview,
+    modalActiveReviewSucces,
+  ]);
+
   return (
-    <>
+    <div>
       <Header />
       <main>
-        {modalActiveItem === true && product && (
+        {modalActiveItem && product && (
           <ModalCatalogAddItem
             product={product}
-            handleCloseModalItem={handleCloseModalItem}
-            handleActiveModalSuccess={handleActiveModalSuccess}
+            handleCloseModalItem={() => setModalActiveItem(false)}
+            handleActiveModalSuccess={() => setmodalActivSuccess(true)}
           />
         )}
-        {modalActivSuccess === true && (
+        {modalActivSuccess && (
           <ModalAddItemSuccess
-            handleCloseModalSuccess={handleCloseModalSuccess}
+            handleCloseModalSuccess={() => {
+              setmodalActivSuccess(false);
+            }}
             fromProduct
             id={product?.id}
           />
         )}
-        {modalActiveReview === true && product && (
+        {modalActiveReview && product && (
           <ModalAddReview
             handleActiveModalReviewSucces={handleActiveModalReviewSucces}
             handleCloseModalReview={handleCloseModalReview}
             idProduct={product?.id}
           />
         )}
-        {modalActiveReviewSucces === true && product && (
+        {modalActiveReviewSucces && product && (
           <ModalReviewSuccess
             handleCloseModalReviewSucces={handleCloseModalReviewSucces}
             idProduct={product?.id}
@@ -199,7 +219,7 @@ function ProductContainer(): JSX.Element {
         </svg>
       </a>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useRef } from 'react';
 
 type Props = {
   idProduct: number;
@@ -11,9 +12,16 @@ function ModalReviewSuccess({
   handleCloseModalReviewSucces,
 }: Props): JSX.Element {
   const navigate = useNavigate();
+  const modalRef = useRef(null);
+
   return (
     <div
       className="modal is-active modal--narrow"
+      onMouseDown={(event) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          handleCloseModalReviewSucces();
+        }
+      }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
@@ -23,7 +31,7 @@ function ModalReviewSuccess({
       tabIndex={0}
     >
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
           <p className="title title--h4">Спасибо за отзыв</p>
           <svg
