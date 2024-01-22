@@ -12,7 +12,16 @@ function ModalReviewSuccess({
 }: Props): JSX.Element {
   const navigate = useNavigate();
   return (
-    <div className="modal is-active modal--narrow">
+    <div
+      className="modal is-active modal--narrow"
+      onKeyDown={(evt) => {
+        if (evt.key === 'Escape') {
+          evt.preventDefault();
+          handleCloseModalReviewSucces();
+        }
+      }}
+      tabIndex={0}
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">

@@ -24,7 +24,16 @@ function ModalCatalogAddItem({
   } = product;
 
   return (
-    <div className="modal is-active">
+    <div
+      className="modal is-active"
+      onKeyDown={(evt) => {
+        if (evt.key === 'Escape') {
+          evt.preventDefault();
+          handleCloseModalItem();
+        }
+      }}
+      tabIndex={0}
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">

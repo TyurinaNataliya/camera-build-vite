@@ -41,7 +41,7 @@ function ProductContainer(): JSX.Element {
     (state) => state.reviewsProduct.reviewsProduct
   );
 
-  const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
+  const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false); //товар успешно добавлен в корзину
   const handleActiveModalSuccess = () => {
     setmodalActivSuccess(true);
   };
@@ -49,7 +49,7 @@ function ProductContainer(): JSX.Element {
     setmodalActivSuccess(false);
   };
 
-  const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
+  const [modalActiveItem, setModalActiveItem] = useState<boolean>(false); //добавить товар в корзину?
   const handleActiveModalItem = () => {
     setModalActiveItem(true);
   };
@@ -57,14 +57,14 @@ function ProductContainer(): JSX.Element {
     setModalActiveItem(false);
   };
 
-  const [limitReviews, setlimitReviews] = useState<number>(
+  const [limitReviews, setlimitReviews] = useState<number>( //пролистывание отзывов
     COUNT_REVIEWS_DEFAULT
   );
   const handleShowReviews = () => {
     setlimitReviews(limitReviews + COUNT_REVIEWS);
   };
 
-  const [modalActiveReview, setModalActiveReview] = useState<boolean>(false);
+  const [modalActiveReview, setModalActiveReview] = useState<boolean>(false); //отзыв
   const handleActiveModalReview = () => {
     setModalActiveReview(true);
   };
@@ -72,7 +72,7 @@ function ProductContainer(): JSX.Element {
     setModalActiveReview(false);
   };
 
-  const [modalActiveReviewSucces, setModalActiveReviewSucces] =
+  const [modalActiveReviewSucces, setModalActiveReviewSucces] = //спасибо за отзыв
     useState<boolean>(false);
   const handleActiveModalReviewSucces = () => {
     setModalActiveReviewSucces(true);

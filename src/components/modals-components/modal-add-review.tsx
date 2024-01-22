@@ -73,7 +73,16 @@ function ModalAddReview({
     nameInput.length > MAX_COUNT_LETTERS_INPUT;
 
   return (
-    <div className="modal is-active">
+    <div
+      className="modal is-active"
+      onKeyDown={(evt) => {
+        if (evt.key === 'Escape') {
+          evt.preventDefault();
+          handleCloseModalReview();
+        }
+      }}
+      tabIndex={0}
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">

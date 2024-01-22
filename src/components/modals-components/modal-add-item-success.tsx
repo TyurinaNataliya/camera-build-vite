@@ -15,7 +15,16 @@ function ModalAddItemSuccess({
   id,
 }: Props): JSX.Element {
   return (
-    <div className="modal is-active modal--narrow">
+    <div
+      className="modal is-active modal--narrow"
+      onKeyDown={(evt) => {
+        if (evt.key === 'Escape') {
+          evt.preventDefault();
+          handleCloseModalSuccess();
+        }
+      }}
+      tabIndex={0}
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">
