@@ -41,7 +41,7 @@ function ProductContainer(): JSX.Element {
     (state) => state.reviewsProduct.reviewsProduct
   );
 
-  const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false); //товар успешно добавлен в корзину
+  const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
   const handleActiveModalSuccess = () => {
     setmodalActivSuccess(true);
   };
@@ -49,7 +49,7 @@ function ProductContainer(): JSX.Element {
     setmodalActivSuccess(false);
   };
 
-  const [modalActiveItem, setModalActiveItem] = useState<boolean>(false); //добавить товар в корзину?
+  const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
   const handleActiveModalItem = () => {
     setModalActiveItem(true);
   };
@@ -57,14 +57,14 @@ function ProductContainer(): JSX.Element {
     setModalActiveItem(false);
   };
 
-  const [limitReviews, setlimitReviews] = useState<number>( //пролистывание отзывов
+  const [limitReviews, setlimitReviews] = useState<number>(
     COUNT_REVIEWS_DEFAULT
   );
   const handleShowReviews = () => {
     setlimitReviews(limitReviews + COUNT_REVIEWS);
   };
 
-  const [modalActiveReview, setModalActiveReview] = useState<boolean>(false); //отзыв
+  const [modalActiveReview, setModalActiveReview] = useState<boolean>(false);
   const handleActiveModalReview = () => {
     setModalActiveReview(true);
   };
@@ -72,7 +72,7 @@ function ProductContainer(): JSX.Element {
     setModalActiveReview(false);
   };
 
-  const [modalActiveReviewSucces, setModalActiveReviewSucces] = //спасибо за отзыв
+  const [modalActiveReviewSucces, setModalActiveReviewSucces] =
     useState<boolean>(false);
   const handleActiveModalReviewSucces = () => {
     setModalActiveReviewSucces(true);
@@ -98,6 +98,30 @@ function ProductContainer(): JSX.Element {
     modalActiveReview,
     modalActiveReviewSucces,
   ]);
+
+  const [fetching, setFetching] = useState<boolean>(false);
+
+  const scrollHandler = (): void => {
+    if (
+      document.documentElement.scrollHeight -
+        (document.documentElement.scrollTop + window.innerWidth) <
+      100
+    ) {
+      setFetching(true);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('scroll', scrollHandler);
+    return function () {
+      document.removeEventListener('scroll', scrollHandler);
+    };
+  }, []);
+  useEffect(() => {
+    if (fetching) {
+      handleShowReviews();
+      setFetching(false);
+    }
+  }, [fetching, handleShowReviews]);
 
   return (
     <div>
