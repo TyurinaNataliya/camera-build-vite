@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 
 function Header(): JSX.Element {
   return (
-    <header className="header" id="header">
+    <header className="header" id="header" data-testid="header-container">
       <div className="container">
         <Link
           className="header__logo"
