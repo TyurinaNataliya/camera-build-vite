@@ -156,6 +156,7 @@ function ModalAddReview({
                         placeholder="Введите ваше имя"
                         required
                         autoFocus
+                        data-testid="user-name"
                       />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
@@ -186,6 +187,7 @@ function ModalAddReview({
                         value={reviewName}
                         placeholder="Введите ваше имя"
                         required
+                        data-testid="user-name"
                       />
                     </label>
                     <p className="custom-input__error">Нужно указать имя</p>
@@ -210,6 +212,7 @@ function ModalAddReview({
                         value={reviewAdvantages}
                         placeholder="Основные преимущества товара"
                         required
+                        data-testid="user-advantages-product"
                       />
                     </label>
                     <p className="custom-input__error">
@@ -240,6 +243,7 @@ function ModalAddReview({
                         value={reviewAdvantages}
                         placeholder="Основные преимущества товара"
                         required
+                        data-testid="user-advantages-product"
                       />
                     </label>
                     <p className="custom-input__error">

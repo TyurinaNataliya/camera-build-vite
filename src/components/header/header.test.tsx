@@ -1,12 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { Header } from './header';
+import { withHistory } from '../../utils/mock-component';
 
 describe('Component:Header', () => {
   it('should render correct', () => {
-    const headerTestId = 'header-container';
+    const headertext = 'О компании';
+    const headerPlaceholder = 'Поиск по сайту';
+    const headerTextId = 'header-container';
 
-    render(<Header />);
+    const preparedComponent = withHistory(<Header />);
 
-    expect(screen.getByTestId(headerTestId)).toBeInTheDocument();
+    render(preparedComponent);
+
+    expect(screen.getByText(headertext)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(headerPlaceholder)).toBeInTheDocument();
+    expect(screen.getByTestId(headerTextId)).toBeInTheDocument();
   });
 });

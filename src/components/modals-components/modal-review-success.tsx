@@ -30,7 +30,7 @@ function ModalReviewSuccess({
       }}
       tabIndex={0}
     >
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" data-testid="modal-review-success">
         <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
           <p className="title title--h4">Спасибо за отзыв</p>
