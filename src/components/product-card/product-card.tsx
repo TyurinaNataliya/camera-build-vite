@@ -8,7 +8,7 @@ import { AppRoute } from '../../const';
 type Props = {
   product: TypeProduct;
 
-  handleActiveModalItem: () => void;
+  handleActiveModalItem?: () => void;
 };
 
 function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
@@ -17,7 +17,7 @@ function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
   const navigate = useNavigate();
 
   return (
-    <div className="container">
+    <div className="container" data-testid="product-card">
       <div className="product__img">
         <picture>
           <source

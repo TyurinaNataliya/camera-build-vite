@@ -10,7 +10,7 @@ import {
 
 type Props = {
   productsCameras: TypeProduct[];
-  handleActiveModalItem: () => void;
+  handleActiveModalItem?: () => void;
 };
 
 function PagePagination({
@@ -52,7 +52,7 @@ function PagePagination({
 
   return (
     <>
-      <div className="cards catalog__cards">
+      <div className="cards catalog__cards" data-testid="page=pagination">
         <ProductCardsList
           products={currentProducts}
           loading={loading}

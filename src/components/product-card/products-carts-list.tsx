@@ -5,7 +5,7 @@ import { ProductCardInCatalog } from './product-card-in-catalog';
 type Props = {
   products: TypeProduct[];
   loading: boolean;
-  handleActiveModalItem: () => void;
+  handleActiveModalItem?: () => void;
 };
 
 function ProductCardsList({
@@ -17,7 +17,7 @@ function ProductCardsList({
     return <LoadingComponent />;
   }
   return (
-    <>
+    <div data-testid="product-cards-list">
       {products.map((product) => (
         <ProductCardInCatalog
           product={product}
@@ -25,7 +25,7 @@ function ProductCardsList({
           handleActiveModalItem={handleActiveModalItem}
         />
       ))}
-    </>
+    </div>
   );
 }
 

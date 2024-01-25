@@ -5,7 +5,7 @@ import { PaginateButton } from './paginate-button';
 
 type Props = {
   maxPage: number;
-  onChangePage: (pageNumber: number) => void;
+  onChangePage?: (pageNumber: number) => void;
   currentPage: number;
 };
 
@@ -31,7 +31,7 @@ function PaginationPagesNumbers({
   }, [currentPage, maxPage]);
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination-pages-numbers">
       <ul className="pagination__list">
         {currentPage > 1 && (
           <PaginateButton
@@ -49,7 +49,7 @@ function PaginationPagesNumbers({
                   : 'pagination__link'
               }
               to={`${AppRoute.Catalog}?page=${number}`}
-              onClick={() => onChangePage(number)}
+              onClick={() => onChangePage?.(number)}
             >
               {number}
             </Link>

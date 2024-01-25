@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../hooks/store';
 
 type Props = {
   product: TypeProduct;
-  handleActiveModalItem: () => void;
+  handleActiveModalItem?: () => void;
   fromSlider?: boolean;
 };
 
@@ -30,6 +30,7 @@ function ProductCardInCatalog({
   const dispatch = useAppDispatch();
   return (
     <div
+      data-testid="product-card-in-catalog"
       className={fromSlider ? 'product-card is-active' : 'product-card'}
       style={fromSlider ? { width: '100%' } : undefined}
     >
@@ -99,7 +100,7 @@ function ProductCardInCatalog({
           type="button"
           onClick={() => {
             dispatch(fetchProductAction(Number(id)));
-            handleActiveModalItem();
+            handleActiveModalItem?.();
           }}
         >
           Купить
