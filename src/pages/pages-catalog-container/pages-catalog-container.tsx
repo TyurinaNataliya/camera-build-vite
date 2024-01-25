@@ -12,6 +12,7 @@ import { PagePagination } from '../../components/pagination/page-pagination';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
 import { Link } from 'react-router-dom';
+import { TypeProduct } from '../../type-data/type';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -43,6 +44,12 @@ function CatalogContainer(): JSX.Element {
   const fetchingStatus = useAppSelector(
     (state) => state.products?.fetchingStatus
   );
+
+  function sortByPrice(a: TypeProduct, b: TypeProduct) {
+    return b.price - a.price;
+  }
+  const sortingProducts = products?.toSorted(sortByPrice);
+
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
   );
@@ -295,7 +302,7 @@ function CatalogContainer(): JSX.Element {
                         </div>
                         {products && (
                           <PagePagination
-                            productsCameras={products}
+                            productsCameras={sortingProducts}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}
