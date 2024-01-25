@@ -333,8 +333,8 @@ function ModalAddReview({
                   <div
                     className={
                       isInvalidInputs(reviewCommentary)
-                        ? 'custom-textarea form-review__item is-invalid input'
-                        : 'custom-textarea form-review__item is-valid input'
+                        ? 'custom-textarea form-review__item is-invalid textarea'
+                        : 'custom-textarea form-review__item is-valid textarea'
                     }
                   >
                     <label>
