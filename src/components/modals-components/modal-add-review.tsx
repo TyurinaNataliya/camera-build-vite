@@ -12,9 +12,9 @@ import {
 } from '../../const';
 
 type Props = {
-  handleCloseModalReview: () => void;
+  handleCloseModalReview?: () => void;
   idProduct: number;
-  handleActiveModalReviewSucces: () => void;
+  handleActiveModalReviewSucces?: () => void;
 };
 
 function ModalAddReview({
@@ -64,8 +64,8 @@ function ModalAddReview({
     dispatch(postReviewProduct({ reviewData: review, productId: idProduct }));
     dispatch(fetchReviewsProductAction(Number(idProduct)));
     resetForm();
-    handleCloseModalReview();
-    handleActiveModalReviewSucces();
+    handleCloseModalReview?.();
+    handleActiveModalReviewSucces?.();
   }
 
   const isInvalidInputs = (nameInput: string) =>
@@ -79,13 +79,13 @@ function ModalAddReview({
       className="modal is-active"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalReview();
+          handleCloseModalReview?.();
         }
       }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
-          handleCloseModalReview();
+          handleCloseModalReview?.();
         }
       }}
       tabIndex={0}

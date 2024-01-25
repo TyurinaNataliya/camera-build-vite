@@ -7,12 +7,7 @@ describe('Component:ModalReviewSuccess', () => {
     const ModalReviewSuccessText = /Спасибо за отзыв/i;
     const ModalReviewSuccessTextId = 'modal-review-success';
 
-    const preparedComponent = withHistory(
-      <ModalReviewSuccess
-        handleCloseModalReviewSucces={()=>{void}}
-        idProduct={1}
-      />
-    );
+    const preparedComponent = withHistory(<ModalReviewSuccess idProduct={1} />);
 
     render(preparedComponent);
 

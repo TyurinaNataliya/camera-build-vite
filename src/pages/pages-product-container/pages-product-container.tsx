@@ -33,12 +33,12 @@ function ProductContainer(): JSX.Element {
     dispatch(fetchReviewsProductAction(Number(productId)));
   }, [dispatch, productId]);
 
-  const product = useAppSelector((state) => state.product.product);
+  const product = useAppSelector((state) => state.product?.product);
   const similarProducts = useAppSelector(
-    (state) => state.similarProducts.similarProducts
+    (state) => state.similarProducts?.similarProducts
   );
   const reviewsProduct = useAppSelector(
-    (state) => state.reviewsProduct.reviewsProduct
+    (state) => state.reviewsProduct?.reviewsProduct
   );
 
   const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
@@ -124,7 +124,7 @@ function ProductContainer(): JSX.Element {
   }, [fetching, handleShowReviews]);
 
   return (
-    <div>
+    <div data-testid="product-container">
       <Header />
       <main>
         {modalActiveItem && product && (

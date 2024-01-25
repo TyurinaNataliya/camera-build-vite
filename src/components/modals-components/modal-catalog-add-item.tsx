@@ -3,8 +3,8 @@ import { TypeProduct } from '../../type-data/type';
 
 type Props = {
   product: TypeProduct;
-  handleCloseModalItem: () => void;
-  handleActiveModalSuccess: () => void;
+  handleCloseModalItem?: () => void;
+  handleActiveModalSuccess?: () => void;
 };
 
 function ModalCatalogAddItem({
@@ -30,18 +30,18 @@ function ModalCatalogAddItem({
       className="modal is-active"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalItem();
+          handleCloseModalItem?.();
         }
       }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
-          handleCloseModalItem();
+          handleCloseModalItem?.();
         }
       }}
       tabIndex={0}
     >
-      <div className="modal__wrapper">
+      <div className="modal__wrapper" data-testid="modal-catalog-add-item">
         <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
@@ -82,8 +82,8 @@ function ModalCatalogAddItem({
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
               onClick={() => {
-                handleActiveModalSuccess();
-                handleCloseModalItem();
+                handleActiveModalSuccess?.();
+                handleCloseModalItem?.();
               }}
             >
               <svg width="24" height="16" aria-hidden="true">

@@ -39,14 +39,14 @@ function CatalogContainer(): JSX.Element {
     dispatch(fetchPromoProductsAction());
   }, [dispatch]);
 
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products?.products);
   const fetchingStatus = useAppSelector(
-    (state) => state.products.fetchingStatus
+    (state) => state.products?.fetchingStatus
   );
   const promoProducts = useAppSelector(
-    (state) => state.promoProducts.promoProducts
+    (state) => state.promoProducts?.promoProducts
   );
-  const product = useAppSelector((state) => state.product.product);
+  const product = useAppSelector((state) => state.product?.product);
 
   useEffect(() => {
     if (modalActiveItem || modalActivSuccess) {

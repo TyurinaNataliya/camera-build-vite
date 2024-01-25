@@ -4,7 +4,7 @@ import { useRef } from 'react';
 
 type Props = {
   idProduct: number;
-  handleCloseModalReviewSucces: () => void;
+  handleCloseModalReviewSucces?: () => void;
 };
 
 function ModalReviewSuccess({
@@ -19,13 +19,13 @@ function ModalReviewSuccess({
       className="modal is-active modal--narrow"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalReviewSucces();
+          handleCloseModalReviewSucces?.();
         }
       }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
-          handleCloseModalReviewSucces();
+          handleCloseModalReviewSucces?.();
         }
       }}
       tabIndex={0}
@@ -48,7 +48,7 @@ function ModalReviewSuccess({
               type="button"
               onClick={() => (
                 navigate(`${AppRoute.Product}/${idProduct}`),
-                handleCloseModalReviewSucces()
+                handleCloseModalReviewSucces?.()
               )}
             >
               Вернуться к покупкам
@@ -60,7 +60,7 @@ function ModalReviewSuccess({
             aria-label="Закрыть попап"
             onClick={() => (
               navigate(`${AppRoute.Product}/${idProduct}`),
-              handleCloseModalReviewSucces()
+              handleCloseModalReviewSucces?.()
             )}
           >
             <svg width="10" height="10" aria-hidden="true">

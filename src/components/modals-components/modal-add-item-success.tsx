@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 import { useRef } from 'react';
 
 type Props = {
-  handleCloseModalSuccess: () => void;
+  handleCloseModalSuccess?: () => void;
   fromCatalog?: boolean;
   fromProduct?: boolean;
   id?: number;
@@ -20,15 +20,16 @@ function ModalAddItemSuccess({
   return (
     <div
       className="modal is-active modal--narrow"
+      data-testid="modal-add-item-success"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalSuccess();
+          handleCloseModalSuccess?.();
         }
       }}
       onKeyDown={(evt) => {
         if (evt.key === 'Escape') {
           evt.preventDefault();
-          handleCloseModalSuccess();
+          handleCloseModalSuccess?.();
         }
       }}
       tabIndex={0}
