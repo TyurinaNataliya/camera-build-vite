@@ -58,7 +58,7 @@ function CatalogContainer(): JSX.Element {
 
   //className={modalActiveItem || modalActivSuccess ? 'scroll-lock' : ''}
   return (
-    <div>
+    <div data-testid="catalog-container">
       <Header />
       {fetchingStatus === RequestStatus.Error && <ErrorMessage />}
       {fetchingStatus === RequestStatus.Pending && <LoadingComponent />}

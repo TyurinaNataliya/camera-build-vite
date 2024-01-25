@@ -9,7 +9,7 @@ describe('Component:ModalReviewSuccess', () => {
 
     const preparedComponent = withHistory(
       <ModalReviewSuccess
-        handleCloseModalReviewSucces={()=>void}
+        handleCloseModalReviewSucces={()=>{void}}
         idProduct={1}
       />
     );

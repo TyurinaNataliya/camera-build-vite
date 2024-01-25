@@ -17,7 +17,7 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
   } = product;
 
   return (
-    <li className="basket-item">
+    <li className="basket-item" data-testid="product-card-in-basket">
       <div className="basket-item__img">
         <picture>
           <source

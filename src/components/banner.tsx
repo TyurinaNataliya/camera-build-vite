@@ -16,6 +16,7 @@ function Banner({ promoProducts }: Props): JSX.Element {
       modules={[Autoplay]}
       autoplay={{ delay: 3000 }}
       className="mySwiper"
+      data-testid="banner"
     >
       {promoProducts.map((slide) => (
         <SwiperSlide key={slide.id}>
