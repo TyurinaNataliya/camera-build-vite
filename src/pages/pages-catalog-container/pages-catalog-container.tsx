@@ -302,7 +302,7 @@ function CatalogContainer(): JSX.Element {
                         </div>
                         {products && (
                           <PagePagination
-                            productsCameras={sortingProducts}
+                            productsCameras={sortingProducts!}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

@@ -3,6 +3,7 @@ import { withHistory, withStore } from '../../utils/mock-component';
 import { createMemoryHistory } from 'history';
 import { ProductCard } from './product-card';
 import { makeFakeProduct } from '../../utils/mock';
+import { TypeProduct } from '../../type-data/type';
 
 describe('Component:ProductCard', () => {
   it('should render correctly', () => {
@@ -11,7 +12,7 @@ describe('Component:ProductCard', () => {
     const PagePaginationText = /Характеристики/i;
 
     const { withStoreComponent } = withStore(
-      <ProductCard product={makeFakeProduct} />
+      <ProductCard product={makeFakeProduct as TypeProduct} />
     );
 
     const preparedComponent = withHistory(withStoreComponent, mockHistory);
