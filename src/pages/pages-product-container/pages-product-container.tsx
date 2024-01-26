@@ -42,19 +42,10 @@ function ProductContainer(): JSX.Element {
   );
 
   const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
-  const handleActiveModalSuccess = () => {
-    setmodalActivSuccess(true);
-  };
-  const handleCloseModalSuccess = () => {
-    setmodalActivSuccess(false);
-  };
-
+ 
   const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
   const handleActiveModalItem = () => {
     setModalActiveItem(true);
-  };
-  const handleCloseModalItem = () => {
-    setModalActiveItem(false);
   };
 
   const [limitReviews, setlimitReviews] = useState<number>(
