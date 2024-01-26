@@ -3154,6 +3154,11 @@ button,
   left: 0;
   margin-right: 16px;
 }
+.slider-controls--prev:hover {
+  left: 0;
+  margin-right: 16px;
+  
+}
 
 .slider-controls--prev svg {
   -webkit-transform: rotate(180deg);
