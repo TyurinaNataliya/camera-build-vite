@@ -48,7 +48,7 @@ function CatalogContainer(): JSX.Element {
   function sortByPrice(a: TypeProduct, b: TypeProduct) {
     return b.price - a.price;
   }
-  const sortingProducts = useMemo(() => (products || [])?.toSorted(sortByPrice), []);
+  const sortingProducts = useMemo(() => (products || [])?.sort(sortByPrice), []);
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
