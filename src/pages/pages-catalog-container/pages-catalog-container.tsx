@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -48,7 +48,7 @@ function CatalogContainer(): JSX.Element {
   function sortByPrice(a: TypeProduct, b: TypeProduct) {
     return b.price - a.price;
   }
-  const sortingProducts = products?.toSorted(sortByPrice)
+  const sortingProducts = products?.toSorted(sortByPrice)||[]
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
@@ -63,7 +63,7 @@ function CatalogContainer(): JSX.Element {
     }
   }, [modalActivSuccess, modalActiveItem]);
 
-  //className={modalActiveItem || modalActivSuccess ? 'scroll-lock' : ''}
+  
   return (
     <div data-testid="catalog-container">
       <Header />
