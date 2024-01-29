@@ -48,10 +48,13 @@ function CatalogContainer(): JSX.Element {
 
   const sortingProducts = useMemo(() => {
     function sortByPrice(a: TypeProduct, b: TypeProduct) {
-      return b.price - a.price;
+      return b?.price - a?.price;
     }
-
-    return products?.toSorted(sortByPrice);
+    if (products) {
+      return ([...products || []])?.sort(sortByPrice);
+    } else {
+      return [];
+    }
   }, [products]);
 
   const promoProducts = useAppSelector(
