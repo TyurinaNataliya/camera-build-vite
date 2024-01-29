@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -12,6 +12,7 @@ import { PagePagination } from '../../components/pagination/page-pagination';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
 import { Link } from 'react-router-dom';
+import { TypeProduct } from '../../type-data/type';
 //import { TypeProduct } from '../../type-data/type';
 
 function CatalogContainer(): JSX.Element {
@@ -45,10 +46,13 @@ function CatalogContainer(): JSX.Element {
     (state) => state.products?.fetchingStatus
   );
 
-  // function sortByPrice(a: TypeProduct, b: TypeProduct) {
-  //   return b.price - a.price;
-  // }
-  // const sortingProducts = products?.toSorted(sortByPrice)
+  const sortingProducts = useMemo(() => {
+    function sortByPrice(a: TypeProduct, b: TypeProduct) {
+      return b.price - a.price;
+    }
+
+    return products?.toSorted(sortByPrice);
+  }, [products]);
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
@@ -63,7 +67,6 @@ function CatalogContainer(): JSX.Element {
     }
   }, [modalActivSuccess, modalActiveItem]);
 
-  
   return (
     <div data-testid="catalog-container">
       <Header />
@@ -300,9 +303,9 @@ function CatalogContainer(): JSX.Element {
                             </div>
                           </div>
                         </div>
-                        {products && (
+                        {sortingProducts && (
                           <PagePagination
-                            productsCameras={products}
+                            productsCameras={sortingProducts}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}
