@@ -48,7 +48,7 @@ function CatalogContainer(): JSX.Element {
   function sortByPrice(a: TypeProduct, b: TypeProduct) {
     return b.price - a.price;
   }
-  const sortingProducts = useMemo(() => (products || [])?.sort(sortByPrice), []);
+  const sortingProducts = products?.toSorted(sortByPrice)
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
@@ -302,7 +302,7 @@ function CatalogContainer(): JSX.Element {
                         </div>
                         {products && (
                           <PagePagination
-                            productsCameras={sortingProducts!}
+                            productsCameras={sortingProducts}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

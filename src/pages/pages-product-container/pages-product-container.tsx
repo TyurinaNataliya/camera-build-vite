@@ -3,7 +3,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
@@ -51,9 +51,9 @@ function ProductContainer(): JSX.Element {
   const [limitReviews, setlimitReviews] = useState<number>(
     COUNT_REVIEWS_DEFAULT
   );
-  const handleShowReviews = () => {
+  const handleShowReviews = useCallback(() => {
     setlimitReviews(limitReviews + COUNT_REVIEWS);
-  };
+  }, [limitReviews])
 
   const [modalActiveReview, setModalActiveReview] = useState<boolean>(false);
   const handleActiveModalReview = () => {
