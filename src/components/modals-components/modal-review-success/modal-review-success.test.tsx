@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { ModalReviewSuccess } from './modal-review-success';
-import { withHistory } from '../../utils/mock-component';
+import { withHistory } from '../../../utils/mock-component';
 
 describe('Component:ModalReviewSuccess', () => {
   it('should render correctly', () => {

@@ -8,12 +8,11 @@ import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading';
 import { Banner } from '../../components/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
-import { PagePagination } from '../../components/pagination/page-pagination';
-import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
-import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
+import { PagePagination } from '../../components/pagination/page-pagination/page-pagination';
+import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item/modal-catalog-add-item';
+import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
 import { Link } from 'react-router-dom';
 import { TypeProduct } from '../../type-data/type';
-//import { TypeProduct } from '../../type-data/type';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -51,7 +50,7 @@ function CatalogContainer(): JSX.Element {
       return b?.price - a?.price;
     }
     if (products) {
-      return ([...products || []])?.sort(sortByPrice);
+      return [...(products || [])]?.sort(sortByPrice);
     } else {
       return [];
     }

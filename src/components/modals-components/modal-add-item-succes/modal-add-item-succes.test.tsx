@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { ModalAddItemSuccess } from './modal-add-item-success';
-import { withHistory } from '../../utils/mock-component';
+import { withHistory } from '../../../utils/mock-component';
 
 describe('Component:ErrorMessage', () => {
   it('should render correctly', () => {

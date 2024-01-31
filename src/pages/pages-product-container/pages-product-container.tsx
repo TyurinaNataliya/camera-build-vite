@@ -5,15 +5,15 @@ import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
-import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-success';
-import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item';
+import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
+import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item/modal-catalog-add-item';
 import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
 import { SliderSimilarProducts } from '../../components/slider-similar-producrs';
 import { AppRoute, COUNT_REVIEWS, COUNT_REVIEWS_DEFAULT } from '../../const';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
-import { ProductReviewsList } from '../../components/reviews/product-reviews-list';
-import { ModalAddReview } from '../../components/modals-components/modal-add-review';
-import { ModalReviewSuccess } from '../../components/modals-components/modal-review-success';
+import { ProductReviewsList } from '../../components/reviews/product-reviews-list/product-reviews-list';
+import { ModalAddReview } from '../../components/modals-components/modal-add-review/modal-add-review';
+import { ModalReviewSuccess } from '../../components/modals-components/modal-review-success/modal-review-success';
 
 function ProductContainer(): JSX.Element {
   const { id: productId } = useParams();
@@ -42,7 +42,7 @@ function ProductContainer(): JSX.Element {
   );
 
   const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
- 
+
   const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
   const handleActiveModalItem = () => {
     setModalActiveItem(true);
@@ -53,7 +53,7 @@ function ProductContainer(): JSX.Element {
   );
   const handleShowReviews = useCallback(() => {
     setlimitReviews(limitReviews + COUNT_REVIEWS);
-  }, [limitReviews])
+  }, [limitReviews]);
 
   const [modalActiveReview, setModalActiveReview] = useState<boolean>(false);
   const handleActiveModalReview = () => {

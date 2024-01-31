@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, MAX_COUNT_NUMBER_PAGE } from '../../const';
+import { AppRoute, MAX_COUNT_NUMBER_PAGE } from '../../../const';
 import { useMemo } from 'react';
-import { PaginateButton } from './paginate-button';
+import { PaginateButton } from '../paginate-button/paginate-button';
 
 type Props = {
   maxPage: number;

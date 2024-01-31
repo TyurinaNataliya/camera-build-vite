@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { makeFakeProducts } from '../../utils/mock';
+import { makeFakeProducts } from '../../../utils/mock';
 import { PagePagination } from './page-pagination';
-import { withHistory, withStore } from '../../utils/mock-component';
+import { withHistory, withStore } from '../../../utils/mock-component';
 import { createMemoryHistory } from 'history';
-import { TypeProduct } from '../../type-data/type';
+import { TypeProduct } from '../../../type-data/type';
 
 describe('Component:PagePagination', () => {
   it('should render correctly', () => {

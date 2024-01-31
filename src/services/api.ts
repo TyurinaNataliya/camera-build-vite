@@ -11,8 +11,7 @@ const browserHistory = createBrowserHistory();
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,
-    timeout: REQUEST_TIMEOUT,    
-  
+    timeout: REQUEST_TIMEOUT,
   });
 
   api.interceptors.request.use((config) => {
@@ -20,7 +19,6 @@ export const createAPI = (): AxiosInstance => {
 
     if (token && config.headers) {
       config.headers['X-Token'] = token;
-  
     }
     return config;
   });

@@ -1,16 +1,16 @@
 import { ChangeEvent, FormEvent, Fragment, useRef, useState } from 'react';
-import { TypeProductReview } from '../../type-data/type';
-import { useAppDispatch } from '../../hooks/store';
-import { postReviewProduct } from '../../services/thunk/post-review-product';
-import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
+import { TypeProductReview } from '../../../type-data/type';
+import { useAppDispatch } from '../../../hooks/store';
+import { postReviewProduct } from '../../../services/thunk/post-review-product';
+import { fetchReviewsProductAction } from '../../../services/thunk/fetch-reviews-product';
 import {
   MAX_COUNT_LETTERS_INPUT,
   MAX_COUNT_LETTERS_NAME,
   MIN_COUNT_LETTERS_INPUT,
   MIN_COUNT_LETTERS_NAME,
   RatingMap,
-} from '../../const';
-import { fetchProductAction } from '../../services/thunk/fetch-product';
+} from '../../../const';
+import { fetchProductAction } from '../../../services/thunk/fetch-product';
 
 type Props = {
   handleCloseModalReview?: () => void;
@@ -64,7 +64,7 @@ function ModalAddReview({
     };
     dispatch(postReviewProduct({ reviewData: review, productId: idProduct }));
     dispatch(fetchReviewsProductAction(Number(idProduct)));
-    dispatch(fetchProductAction(Number(idProduct)))
+    dispatch(fetchProductAction(Number(idProduct)));
     resetForm();
     handleCloseModalReview?.();
     handleActiveModalReviewSucces?.();

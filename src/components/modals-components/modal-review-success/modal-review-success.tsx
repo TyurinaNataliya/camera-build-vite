@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../../const';
 import { useRef } from 'react';
 
 type Props = {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { ModalAddReview } from './modal-add-review';
-import { withHistory, withStore } from '../../utils/mock-component';
+import { withHistory, withStore } from '../../../utils/mock-component';
 import userEvent from '@testing-library/user-event';
 
 describe('Component:ModalAddReview', () => {

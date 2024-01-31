@@ -49,9 +49,8 @@ function SliderSimilarProducts({
               </Swiper>
               <div className="swiper-naw-btns">
                 <button
-                  className="slider-controls--prev" 
+                  className="slider-controls--prev"
                   type="button"
-                  
                   aria-label="Предыдущий слайд"
                   ref={prevRef}
                   style={{
@@ -76,7 +75,7 @@ function SliderSimilarProducts({
                   </svg>
                 </button>
                 <button
-                  className="slider-controls--next" 
+                  className="slider-controls--next"
                   type="button"
                   aria-label="Следующий слайд"
                   ref={nextRef}

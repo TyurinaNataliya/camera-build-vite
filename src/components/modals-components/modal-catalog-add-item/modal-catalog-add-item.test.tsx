@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory } from '../../utils/mock-component';
+import { withHistory } from '../../../utils/mock-component';
 import { ModalCatalogAddItem } from './modal-catalog-add-item';
-import { makeFakeProduct } from '../../utils/mock';
-import { TypeProduct } from '../../type-data/type';
+import { makeFakeProduct } from '../../../utils/mock';
+import { TypeProduct } from '../../../type-data/type';
 
 describe('Component:ModalCatalogAddItem', () => {
   it('should render correctly', () => {

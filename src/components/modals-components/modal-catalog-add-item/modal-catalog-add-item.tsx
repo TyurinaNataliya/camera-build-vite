@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { TypeProduct } from '../../type-data/type';
+import { TypeProduct } from '../../../type-data/type';
 
 type Props = {
   product: TypeProduct;

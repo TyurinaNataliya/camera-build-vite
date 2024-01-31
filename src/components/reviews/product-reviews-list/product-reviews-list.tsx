@@ -1,5 +1,5 @@
-import { TypeProductReview } from '../../type-data/type';
-import { ReviewCard } from './review-card';
+import { TypeProductReview } from '../../../type-data/type';
+import { ReviewCard } from '../reviews-card/review-card';
 
 type Props = {
   reviews: TypeProductReview[];

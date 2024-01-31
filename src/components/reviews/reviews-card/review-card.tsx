@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { TypeProductReview } from '../../type-data/type';
+import { TypeProductReview } from '../../../type-data/type';
 import updateLocale from 'dayjs/plugin/updateLocale';
 
 type Props = {

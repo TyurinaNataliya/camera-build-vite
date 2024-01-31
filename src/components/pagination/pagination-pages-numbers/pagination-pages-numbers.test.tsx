@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { withHistory } from '../../utils/mock-component';
+import { withHistory } from '../../../utils/mock-component';
 import { PaginationPagesNumbers } from './pagination-pages-numbers';
 
 describe('Component:PaginationPagesNumbers', () => {
