@@ -3,7 +3,6 @@ import { ProductCardsList } from '../../product-card/products-carts-list';
 import { PaginationPagesNumbers } from '../pagination-pages-numbers/pagination-pages-numbers';
 import { TypeProduct } from '../../../type-data/type';
 import {
-  // MAX_COUNT_NUMBER_PAGE,
   MAX_COUNT_PRODUCTS_PAGE,
   MIN_COUNT_CATALOG_CARDS,
 } from '../../../const';
@@ -30,6 +29,7 @@ function PagePagination({
       setLoading(false);
     };
     getProducts();
+    return () => (setProducts([]), setLoading(false));
   }, [productsCameras]);
 
   const lastProductIndex = useMemo(

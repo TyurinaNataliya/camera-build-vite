@@ -112,6 +112,7 @@ function ProductContainer(): JSX.Element {
       handleShowReviews();
       setFetching(false);
     }
+    return () => setFetching(false);
   }, [fetching, handleShowReviews]);
 
   return (
