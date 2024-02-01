@@ -170,7 +170,7 @@ function ModalAddReview({
                         reviewName.length < MIN_COUNT_LETTERS_NAME) ||
                       reviewName.length > MAX_COUNT_LETTERS_NAME
                         ? 'custom-input form-review__item is-invalid input'
-                        : 'custom-input form-review__item is-valid input'
+                        : 'custom-input form-review__item  input'
                     }
                   >
                     <label>
@@ -226,7 +226,7 @@ function ModalAddReview({
                     className={
                       isInvalidInputs(reviewAdvantages)
                         ? 'custom-input form-review__item is-invalid input'
-                        : 'custom-input form-review__item is-valid input'
+                        : 'custom-input form-review__item input'
                     }
                   >
                     <label>
@@ -282,7 +282,7 @@ function ModalAddReview({
                     className={
                       isInvalidInputs(reviewDisadvantages)
                         ? 'custom-input form-review__item is-invalid input'
-                        : 'custom-input form-review__item is-valid input'
+                        : 'custom-input form-review__item input'
                     }
                   >
                     <label>
