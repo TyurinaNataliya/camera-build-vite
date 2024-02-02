@@ -3,7 +3,7 @@ import { AppRoute } from '../../const';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import './banner.css';
-import 'swiper/swiper-bundle.css';
+//import 'swiper/css/pagination';
 
 import { TypePromoProduct } from '../../type-data/type';
 

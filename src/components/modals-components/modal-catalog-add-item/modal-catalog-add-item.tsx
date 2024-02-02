@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { TypeProduct } from '../../../type-data/type';
 
 type Props = {
@@ -24,18 +24,23 @@ function ModalCatalogAddItem({
     price,
   } = product;
   const modalRef = useRef(null);
+  useEffect(() => {
+    const handleKey = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        handleCloseModalItem?.();
+      }
+    };
+    document.addEventListener('keydown', handleKey, true);
+    return () => {
+      document.removeEventListener('keydown', handleKey, true);
+    };
+  }, [handleCloseModalItem]);
 
   return (
     <div
       className="modal is-active"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalItem?.();
-        }
-      }}
-      onKeyDown={(evt) => {
-        if (evt.key === 'Escape') {
-          evt.preventDefault();
           handleCloseModalItem?.();
         }
       }}

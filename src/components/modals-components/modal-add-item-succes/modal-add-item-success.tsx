@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   handleCloseModalSuccess?: () => void;
@@ -16,6 +16,17 @@ function ModalAddItemSuccess({
   id,
 }: Props): JSX.Element {
   const modalRef = useRef(null);
+  useEffect(() => {
+    const handleKey = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        handleCloseModalSuccess?.();
+      }
+    };
+    document.addEventListener('keydown', handleKey, true);
+    return () => {
+      document.removeEventListener('keydown', handleKey, true);
+    };
+  }, [handleCloseModalSuccess]);
 
   return (
     <div
@@ -23,12 +34,6 @@ function ModalAddItemSuccess({
       data-testid="modal-add-item-success"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalSuccess?.();
-        }
-      }}
-      onKeyDown={(event) => {
-        if (event.key === 'Escape') {
-          event.preventDefault();
           handleCloseModalSuccess?.();
         }
       }}

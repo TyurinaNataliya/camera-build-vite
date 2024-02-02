@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   idProduct: number;
@@ -14,17 +14,23 @@ function ModalReviewSuccess({
   const navigate = useNavigate();
   const modalRef = useRef(null);
 
+  useEffect(() => {
+    const handleKey = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        handleCloseModalReviewSucces?.();
+      }
+    };
+    document.addEventListener('keydown', handleKey, true);
+    return () => {
+      document.removeEventListener('keydown', handleKey, true);
+    };
+  }, [handleCloseModalReviewSucces]);
+
   return (
     <div
       className="modal is-active modal--narrow"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalReviewSucces?.();
-        }
-      }}
-      onKeyDown={(evt) => {
-        if (evt.key === 'Escape') {
-          evt.preventDefault();
           handleCloseModalReviewSucces?.();
         }
       }}

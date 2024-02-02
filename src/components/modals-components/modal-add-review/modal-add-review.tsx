@@ -1,4 +1,11 @@
-import { ChangeEvent, FormEvent, Fragment, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { TypeProductReview } from '../../../type-data/type';
 import { useAppDispatch } from '../../../hooks/store';
 import { postReviewProduct } from '../../../services/thunk/post-review-product';
@@ -76,17 +83,23 @@ function ModalAddReview({
 
   const modalRef = useRef(null);
 
+  useEffect(() => {
+    const handleKey = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        handleCloseModalReview?.();
+      }
+    };
+    document.addEventListener('keydown', handleKey, true);
+    return () => {
+      document.removeEventListener('keydown', handleKey, true);
+    };
+  }, [handleCloseModalReview]);
+
   return (
     <div
       className="modal is-active"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalReview?.();
-        }
-      }}
-      onKeyDown={(evt) => {
-        if (evt.key === 'Escape') {
-          evt.preventDefault();
           handleCloseModalReview?.();
         }
       }}
