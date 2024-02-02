@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute } from '../../const';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
+import './banner.css';
+import 'swiper/swiper-bundle.css';
 
-import 'swiper/css';
-import { TypePromoProduct } from '../type-data/type';
+import { TypePromoProduct } from '../../type-data/type';
 
 type Props = {
   promoProducts: TypePromoProduct[];
@@ -13,10 +14,11 @@ type Props = {
 function Banner({ promoProducts }: Props): JSX.Element {
   return (
     <Swiper
-      modules={[Autoplay]}
+      modules={[Autoplay, Pagination]}
       autoplay={{ delay: 3000 }}
       className="mySwiper"
       data-testid="banner"
+      pagination={{ clickable: true }}
     >
       {promoProducts.map((slide) => (
         <SwiperSlide key={slide.id}>

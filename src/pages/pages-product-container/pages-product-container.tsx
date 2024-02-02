@@ -3,7 +3,13 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item/modal-catalog-add-item';
@@ -14,6 +20,7 @@ import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-pr
 import { ProductReviewsList } from '../../components/reviews/product-reviews-list/product-reviews-list';
 import { ModalAddReview } from '../../components/modals-components/modal-add-review/modal-add-review';
 import { ModalReviewSuccess } from '../../components/modals-components/modal-review-success/modal-review-success';
+import { TypeProductReview } from '../../type-data/type';
 
 function ProductContainer(): JSX.Element {
   const { id: productId } = useParams();
@@ -72,6 +79,20 @@ function ProductContainer(): JSX.Element {
     setModalActiveReviewSucces(false);
   };
 
+  const sortingReviews = useMemo(() => {
+    function sortReviewsToData(a: TypeProductReview, b: TypeProductReview) {
+      return (
+        new Date(a.createAt || 0).getTime() -
+        new Date(b.createAt || 0).getTime()
+      );
+    }
+    if (reviewsProduct) {
+      return [...(reviewsProduct || [])]?.sort(sortReviewsToData);
+    } else {
+      return [];
+    }
+  }, [reviewsProduct]);
+
   useEffect(() => {
     if (
       modalActiveItem ||
@@ -89,31 +110,6 @@ function ProductContainer(): JSX.Element {
     modalActiveReview,
     modalActiveReviewSucces,
   ]);
-
-  const [fetching, setFetching] = useState<boolean>(false);
-
-  const scrollHandler = (): void => {
-    if (
-      document.documentElement.scrollHeight -
-        (document.documentElement.scrollTop + window.innerWidth) <
-      100
-    ) {
-      setFetching(true);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener('scroll', scrollHandler);
-    return function () {
-      document.removeEventListener('scroll', scrollHandler);
-    };
-  }, []);
-  useEffect(() => {
-    if (fetching) {
-      handleShowReviews();
-      setFetching(false);
-    }
-    return () => setFetching(false);
-  }, [fetching, handleShowReviews]);
 
   return (
     <div data-testid="product-container">
@@ -208,7 +204,7 @@ function ProductContainer(): JSX.Element {
                 {reviewsProduct && (
                   <>
                     <ProductReviewsList
-                      reviews={reviewsProduct}
+                      reviews={sortingReviews}
                       limitReviews={limitReviews}
                     />
                     <div className="review-block__buttons">

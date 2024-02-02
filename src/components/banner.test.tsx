@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory } from '../utils/mock-component';
-import { Banner } from './banner';
+import { Banner } from './banner/banner';
 import { makeFakePromoProducts } from '../utils/mock';
 
 describe('Component:Banner', () => {

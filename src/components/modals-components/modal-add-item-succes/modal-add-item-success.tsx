@@ -26,9 +26,9 @@ function ModalAddItemSuccess({
           handleCloseModalSuccess?.();
         }
       }}
-      onKeyDown={(evt) => {
-        if (evt.key === 'Escape') {
-          evt.preventDefault();
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
           handleCloseModalSuccess?.();
         }
       }}
