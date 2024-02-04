@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, MAX_COUNT_NUMBER_PAGE } from '../../../const';
+import { AppRoute } from '../../../const';
 import { useMemo } from 'react';
 import { PaginateButton } from '../paginate-button/paginate-button';
 
@@ -15,16 +15,13 @@ function PaginationPagesNumbers({
   currentPage,
 }: Props): JSX.Element {
   const numberPages = useMemo(() => {
-    const result: number[] = [];
-
-    if (currentPage + MAX_COUNT_NUMBER_PAGE <= maxPage) {
-      for (let i = currentPage; i < currentPage + MAX_COUNT_NUMBER_PAGE; i++) {
-        result.push(i);
-      }
+    let result: number[] = [];
+    if (currentPage === 1) {
+      result = [currentPage, currentPage + 1, currentPage + 2];
+    } else if (currentPage === maxPage) {
+      result = [currentPage - 2, currentPage - 1, currentPage];
     } else {
-      for (let i = maxPage - MAX_COUNT_NUMBER_PAGE + 1; i <= maxPage; i++) {
-        result.push(i);
-      }
+      result = [currentPage - 1, currentPage, currentPage + 1];
     }
 
     return result;

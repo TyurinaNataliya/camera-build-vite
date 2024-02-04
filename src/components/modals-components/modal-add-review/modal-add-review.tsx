@@ -70,7 +70,7 @@ function ModalAddReview({
       cameraId: idProduct,
     };
     dispatch(postReviewProduct({ reviewData: review, productId: idProduct }));
-    dispatch(fetchReviewsProductAction(Number(idProduct)));
+
     dispatch(fetchProductAction(Number(idProduct)));
     resetForm();
     handleCloseModalReview?.();

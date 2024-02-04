@@ -1,4 +1,4 @@
-.my-swiper .swiper-pagination-bullet {
+/* .my-swiper .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
   background-color: rgba(244, 244, 252, 1);
@@ -15,4 +15,27 @@
 .my-swiper .swiper-pagination-bullet-active {
   background-color: rgba(117, 117, 226, 1);
   opacity: 1;
+} */
+
+.swiper-pagination-bullet {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  color: #000;
+  opacity: 0.8;
+  background: rgba(244, 244, 252, 0.8);
+}
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px;
+  left: -40px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: rgba(117, 117, 226, 0.9);
 }

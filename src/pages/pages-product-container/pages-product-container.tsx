@@ -72,6 +72,7 @@ function ProductContainer(): JSX.Element {
 
   const [modalActiveReviewSucces, setModalActiveReviewSucces] =
     useState<boolean>(false);
+
   const handleActiveModalReviewSucces = () => {
     setModalActiveReviewSucces(true);
   };

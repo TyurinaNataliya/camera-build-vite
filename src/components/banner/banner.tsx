@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css/pagination';
 import './banner.css';
-//import 'swiper/css/pagination';
 
 import { TypePromoProduct } from '../../type-data/type';
 
@@ -18,7 +18,12 @@ function Banner({ promoProducts }: Props): JSX.Element {
       autoplay={{ delay: 3000 }}
       className="mySwiper"
       data-testid="banner"
-      pagination={{ clickable: true }}
+      pagination={{
+        clickable: true,
+        // el: 'swiper-pagination',
+        renderBullet: (index, className) =>
+          `<span class="${className}"></span>`,
+      }}
     >
       {promoProducts.map((slide) => (
         <SwiperSlide key={slide.id}>
