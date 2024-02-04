@@ -20,8 +20,7 @@ function Banner({ promoProducts }: Props): JSX.Element {
       data-testid="banner"
       pagination={{
         clickable: true,
-        // el: 'swiper-pagination',
-        renderBullet: (className) => `<span class="${className}"></span>`,
+        renderBullet: (_, className) => `<span class="${className}"></span>`,
       }}
     >
       {promoProducts.map((slide) => (
