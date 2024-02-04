@@ -9,7 +9,6 @@ import {
 import { TypeProductReview } from '../../../type-data/type';
 import { useAppDispatch } from '../../../hooks/store';
 import { postReviewProduct } from '../../../services/thunk/post-review-product';
-import { fetchReviewsProductAction } from '../../../services/thunk/fetch-reviews-product';
 import {
   MAX_COUNT_LETTERS_INPUT,
   MAX_COUNT_LETTERS_NAME,
