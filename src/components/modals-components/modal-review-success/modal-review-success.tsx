@@ -7,6 +7,10 @@ type Props = {
   handleCloseModalReviewSucces?: () => void;
 };
 
+function handleWindowUpdate() {
+  location.reload();
+}
+
 function ModalReviewSuccess({
   idProduct,
   handleCloseModalReviewSucces,
@@ -18,6 +22,7 @@ function ModalReviewSuccess({
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         handleCloseModalReviewSucces?.();
+        handleWindowUpdate();
       }
     };
     document.addEventListener('keydown', handleKey, true);
@@ -32,6 +37,7 @@ function ModalReviewSuccess({
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
           handleCloseModalReviewSucces?.();
+          handleWindowUpdate();
         }
       }}
       tabIndex={0}
@@ -54,7 +60,8 @@ function ModalReviewSuccess({
               type="button"
               onClick={() => (
                 navigate(`${AppRoute.Product}/${idProduct}`),
-                handleCloseModalReviewSucces?.()
+                handleCloseModalReviewSucces?.(),
+                handleWindowUpdate()
               )}
             >
               Вернуться к покупкам
@@ -66,7 +73,8 @@ function ModalReviewSuccess({
             aria-label="Закрыть попап"
             onClick={() => (
               navigate(`${AppRoute.Product}/${idProduct}`),
-              handleCloseModalReviewSucces?.()
+              handleCloseModalReviewSucces?.(),
+              handleWindowUpdate()
             )}
           >
             <svg width="10" height="10" aria-hidden="true">
