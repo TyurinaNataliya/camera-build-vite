@@ -14,7 +14,7 @@ import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item/modal-catalog-add-item';
 import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
-import { SliderSimilarProducts } from '../../components/slider-similar-producrs';
+import { SliderSimilarProducts } from '../../components/slider-similar-products/slider-similar-products';
 import { AppRoute, COUNT_REVIEWS, COUNT_REVIEWS_DEFAULT } from '../../const';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
 import { ProductReviewsList } from '../../components/reviews/product-reviews-list/product-reviews-list';

@@ -16,7 +16,7 @@ import {
   MIN_COUNT_LETTERS_NAME,
   RatingMap,
 } from '../../../const';
-import { fetchProductAction } from '../../../services/thunk/fetch-product';
+import { fetchReviewsProductAction } from '../../../services/thunk/fetch-reviews-product';
 
 type Props = {
   handleCloseModalReview?: () => void;
@@ -69,8 +69,7 @@ function ModalAddReview({
       cameraId: idProduct,
     };
     dispatch(postReviewProduct({ reviewData: review, productId: idProduct }));
-
-    dispatch(fetchProductAction(Number(idProduct)));
+    dispatch(fetchReviewsProductAction(Number(idProduct)));
     resetForm();
     handleCloseModalReview?.();
     handleActiveModalReviewSucces?.();
