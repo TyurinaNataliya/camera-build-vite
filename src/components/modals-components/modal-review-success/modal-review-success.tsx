@@ -7,10 +7,6 @@ type Props = {
   handleCloseModalReviewSucces?: () => void;
 };
 
-function handleWindowUpdate() {
-  location.reload();
-}
-
 function ModalReviewSuccess({
   idProduct,
   handleCloseModalReviewSucces,
@@ -22,7 +18,7 @@ function ModalReviewSuccess({
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         handleCloseModalReviewSucces?.();
-        handleWindowUpdate();
+        // handleWindowUpdate();
       }
     };
     document.addEventListener('keydown', handleKey, true);
@@ -37,7 +33,6 @@ function ModalReviewSuccess({
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
           handleCloseModalReviewSucces?.();
-          handleWindowUpdate();
         }
       }}
       tabIndex={0}
@@ -58,11 +53,10 @@ function ModalReviewSuccess({
             <button
               className="btn btn--purple modal__btn modal__btn--fit-width"
               type="button"
-              onClick={() => (
-                navigate(`${AppRoute.Product}/${idProduct}`),
-                handleCloseModalReviewSucces?.(),
-                handleWindowUpdate()
-              )}
+              onClick={() => {
+                navigate(`${AppRoute.Product}/${idProduct}`);
+                handleCloseModalReviewSucces?.();
+              }}
             >
               Вернуться к покупкам
             </button>
@@ -71,11 +65,11 @@ function ModalReviewSuccess({
             className="cross-btn"
             type="button"
             aria-label="Закрыть попап"
-            onClick={() => (
-              navigate(`${AppRoute.Product}/${idProduct}`),
-              handleCloseModalReviewSucces?.(),
-              handleWindowUpdate()
-            )}
+            onClick={() => {
+              navigate(`${AppRoute.Product}/${idProduct}`);
+              handleCloseModalReviewSucces?.();
+              // handleWindowUpdate()
+            }}
           >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>

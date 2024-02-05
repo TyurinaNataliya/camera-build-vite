@@ -36,16 +36,16 @@ function ProductContainer(): JSX.Element {
     dispatch(fetchSimilarProductsAction(Number(productId)));
   }, [dispatch, productId]);
 
-  useLayoutEffect(() => {
+  const reviewsProduct = useAppSelector(
+    (state) => state.reviewsProduct?.reviewsProduct
+  );
+  useEffect(() => {
     dispatch(fetchReviewsProductAction(Number(productId)));
-  }, [dispatch, productId]);
+  }, [dispatch, productId, reviewsProduct]);
 
   const product = useAppSelector((state) => state.product?.product);
   const similarProducts = useAppSelector(
     (state) => state.similarProducts?.similarProducts
-  );
-  const reviewsProduct = useAppSelector(
-    (state) => state.reviewsProduct?.reviewsProduct
   );
 
   const [modalActivSuccess, setmodalActivSuccess] = useState<boolean>(false);
@@ -73,9 +73,11 @@ function ProductContainer(): JSX.Element {
   const [modalActiveReviewSucces, setModalActiveReviewSucces] =
     useState<boolean>(false);
 
-  const handleActiveModalReviewSucces = () => {
+  const handleActiveModalReviewSucces = useCallback(() => {
+    dispatch(fetchReviewsProductAction(Number(productId)));
+
     setModalActiveReviewSucces(true);
-  };
+  }, [dispatch, productId]);
   const handleCloseModalReviewSucces = () => {
     setModalActiveReviewSucces(false);
   };
