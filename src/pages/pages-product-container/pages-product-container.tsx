@@ -85,8 +85,8 @@ function ProductContainer(): JSX.Element {
   const sortingReviews = useMemo(() => {
     function sortReviewsToData(a: TypeProductReview, b: TypeProductReview) {
       return (
-        new Date(a.createAt || 0).getTime() -
-        new Date(b.createAt || 0).getTime()
+        new Date(b.createAt || 0).getTime() -
+        new Date(a.createAt || 0).getTime()
       );
     }
     if (reviewsProduct) {

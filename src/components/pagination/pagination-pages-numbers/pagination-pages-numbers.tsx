@@ -30,9 +30,11 @@ function PaginationPagesNumbers({
   return (
     <div className="pagination" data-testid="pagination-pages-numbers">
       <ul className="pagination__list">
-        {currentPage > 1 && (
+        {currentPage > 2 && (
           <PaginateButton
-            currentPage={currentPage - 1}
+            currentPage={
+              currentPage === maxPage ? currentPage - 3 : currentPage - 2
+            }
             onChange={onChangePage}
             title="Назад"
           />
@@ -52,9 +54,9 @@ function PaginationPagesNumbers({
             </Link>
           </li>
         ))}
-        {maxPage > currentPage && (
+        {maxPage >= currentPage + 2 && (
           <PaginateButton
-            currentPage={currentPage + 1}
+            currentPage={currentPage === 1 ? currentPage + 3 : currentPage + 2}
             onChange={onChangePage}
             title="Далее"
           />
