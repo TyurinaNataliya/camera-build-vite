@@ -13,6 +13,7 @@ import { ModalCatalogAddItem } from '../../components/modals-components/modal-ca
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
 import { Link } from 'react-router-dom';
 import { TypeProduct } from '../../type-data/type';
+import { SortingProductsContainer } from '../../components/sorting-products-container/sorting-products-container';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -252,59 +253,7 @@ function CatalogContainer(): JSX.Element {
                   <div className="catalog__content">
                     <div className="catalog-sort">
                       <form action="#">
-                        <div className="catalog-sort__inner">
-                          <p className="title title--h5">Сортировать:</p>
-                          <div className="catalog-sort__type">
-                            <div className="catalog-sort__btn-text">
-                              <input
-                                type="radio"
-                                id="sortPrice"
-                                name="sort"
-                                checked
-                              />
-                              <label htmlFor="sortPrice">по цене</label>
-                            </div>
-                            <div className="catalog-sort__btn-text">
-                              <input
-                                type="radio"
-                                id="sortPopular"
-                                name="sort"
-                              />
-                              <label htmlFor="sortPopular">
-                                по популярности
-                              </label>
-                            </div>
-                          </div>
-                          <div className="catalog-sort__order">
-                            <div className="catalog-sort__btn catalog-sort__btn--up">
-                              <input
-                                type="radio"
-                                id="up"
-                                name="sort-icon"
-                                checked
-                                aria-label="По возрастанию"
-                              />
-                              <label htmlFor="up">
-                                <svg width="16" height="14" aria-hidden="true">
-                                  <use xlinkHref="#icon-sort"></use>
-                                </svg>
-                              </label>
-                            </div>
-                            <div className="catalog-sort__btn catalog-sort__btn--down">
-                              <input
-                                type="radio"
-                                id="down"
-                                name="sort-icon"
-                                aria-label="По убыванию"
-                              />
-                              <label htmlFor="down">
-                                <svg width="16" height="14" aria-hidden="true">
-                                  <use xlinkHref="#icon-sort"></use>
-                                </svg>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
+                        <SortingProductsContainer />
                         {sortingProducts && (
                           <PagePagination
                             productsCameras={sortingProducts}

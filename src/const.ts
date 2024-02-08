@@ -35,7 +35,26 @@ const RatingMap = {
   1: 'Ужасно',
 };
 
+const NAME_ASCENDING_DESCENDING_ENGLISH = ['up', 'down'];
+const NAME_ASCENDING_DESCENDING = ['По возрастанию', 'По убыванию'];
+const TypeSortingAscending = {
+  up: 'По возрастанию',
+  down: 'По убыванию',
+};
+
+const NAME_TYPE_ENGLISH = ['sortPrice', 'sortPopular'];
+const NAME_TYPE = ['по цене', 'по популярности'];
+const TypeSorting = {
+  sortPrice: 'по цене',
+  sortPopular: 'по популярности',
+};
 export {
+  TypeSortingAscending,
+  NAME_ASCENDING_DESCENDING_ENGLISH,
+  NAME_ASCENDING_DESCENDING,
+  NAME_TYPE_ENGLISH,
+  NAME_TYPE,
+  TypeSorting,
   RatingMap,
   AppRoute,
   ApiRoute,
