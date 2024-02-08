@@ -16,12 +16,10 @@ function PaginationPagesNumbers({
 }: Props): JSX.Element {
   const numberPages = useMemo(() => {
     let result: number[] = [];
-    if (currentPage === 1) {
-      result = [currentPage, currentPage + 1, currentPage + 2];
-    } else if (currentPage === maxPage) {
-      result = [currentPage - 2, currentPage - 1, currentPage];
-    } else {
-      result = [currentPage - 1, currentPage, currentPage + 1];
+    if (currentPage <= 3) {
+      result = [1, 2, 3];
+    } else if (currentPage === maxPage || currentPage === maxPage - 1) {
+      result = [4, 5];
     }
 
     return result;
@@ -30,11 +28,9 @@ function PaginationPagesNumbers({
   return (
     <div className="pagination" data-testid="pagination-pages-numbers">
       <ul className="pagination__list">
-        {currentPage > 2 && (
+        {currentPage > 3 && (
           <PaginateButton
-            currentPage={
-              currentPage === maxPage ? currentPage - 3 : currentPage - 2
-            }
+            currentPage={3}
             onChange={onChangePage}
             title="Назад"
           />
@@ -56,7 +52,7 @@ function PaginationPagesNumbers({
         ))}
         {maxPage >= currentPage + 2 && (
           <PaginateButton
-            currentPage={currentPage === 1 ? currentPage + 3 : currentPage + 2}
+            currentPage={4}
             onChange={onChangePage}
             title="Далее"
           />
