@@ -1,7 +1,7 @@
 import { NAME_TYPE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
-import { SortingTypeProductSlice } from '../../store/slices/sorting-product-slice';
+import { SortingTypeProductSlice } from '../../store/slices/sorting-type-product-slice';
 
 type Props = {
   type: string;
@@ -10,7 +10,7 @@ type Props = {
 
 function ButtonSortingType({ type, index }: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  const stateSorting = useAppSelector((state) => state.sortingType.type[0]);
+  const stateSorting = useAppSelector((state) => state.sortingType.type);
 
   return (
     <div className="catalog-sort__btn-text">

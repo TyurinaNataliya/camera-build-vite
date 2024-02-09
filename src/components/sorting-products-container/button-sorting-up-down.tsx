@@ -1,7 +1,7 @@
 import { NAME_ASCENDING_DESCENDING } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
-import { SortingTypeProductSlice } from '../../store/slices/sorting-product-slice';
+import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
 
 type Props = {
   type: string;
@@ -10,13 +10,15 @@ type Props = {
 
 function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  const stateSorting = useAppSelector((state) => state.sortingType.type[1]);
+  const stateSorting = useAppSelector(
+    (state) => state.sortingAscendingDescending.type
+  );
 
   return (
     <div className={`catalog-sort__btn catalog-sort__btn--${type}`}>
       <input
         onClick={() => {
-          dispatch(SortingTypeProductSlice.actions.changeType(type));
+          dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
           dispatch(fetchProductsAction());
         }}
         type="radio"

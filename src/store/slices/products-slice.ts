@@ -2,12 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
 import { TypeProduct } from '../../type-data/type';
 import { RequestStatus } from '../../const';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 type StateProducts = {
   products: TypeProduct[] | null;
   loadingStatus: boolean | null;
   error: null | string;
   fetchingStatus: string;
+  changeType: TypeProduct[];
+  typeProductsSorting: TypeProduct[];
+  changeAscendingDescending: TypeProduct[];
+  typeAscendingDescending: TypeProduct[];
 };
 
 const initialState: StateProducts = {
@@ -15,12 +20,32 @@ const initialState: StateProducts = {
   loadingStatus: null,
   error: null,
   fetchingStatus: RequestStatus.Idle,
+  changeType: [],
+  typeProductsSorting: [],
+  changeAscendingDescending: [],
+  typeAscendingDescending: [],
 };
 
 const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    changeType(state, action: PayloadAction<TypeProduct[]>) {
+      state.changeType = action.payload;
+    },
+    addTypeProductsSorting(state, action: PayloadAction<TypeProduct[]>) {
+      state.typeProductsSorting = action.payload;
+    },
+    changeAscendingDescending(state, action: PayloadAction<TypeProduct[]>) {
+      state.changeAscendingDescending = action.payload;
+    },
+    addAscendingDescendingProductsSorting(
+      state,
+      action: PayloadAction<TypeProduct[]>
+    ) {
+      state.typeAscendingDescending = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchProductsAction.fulfilled, (state, action) => {

@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type InitialState = {
-  type: string[];
+  type: string;
 };
 const initialState: InitialState = {
-  type: ['sortPrice', 'up'],
+  type: 'sortPrice',
 };
 
 const SortingTypeProductSlice = createSlice({

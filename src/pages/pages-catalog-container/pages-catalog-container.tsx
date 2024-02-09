@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -12,8 +12,14 @@ import { PagePagination } from '../../components/pagination/page-pagination/page
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item/modal-catalog-add-item';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
 import { Link } from 'react-router-dom';
-import { TypeProduct } from '../../type-data/type';
 import { SortingProductsContainer } from '../../components/sorting-products-container/sorting-products-container';
+import { productsSlice } from '../../store/slices/products-slice';
+import {
+  sortByPriceDown,
+  sortByPriceUp,
+  sortByRatingDown,
+  sortByRatingUp,
+} from '../../utils/utils';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -45,17 +51,44 @@ function CatalogContainer(): JSX.Element {
   const fetchingStatus = useAppSelector(
     (state) => state.products?.fetchingStatus
   );
+  const selectedSortingTypeProducts = useAppSelector(
+    (state) => state.sortingType.type
+  );
+  const selectedSortingAscendingDescendingProducts = useAppSelector(
+    (state) => state.sortingAscendingDescending.type
+  );
+  const SortingTypeProducts = useAppSelector(
+    (state) => state.products.typeProductsSorting
+  );
+  const SortingAscendingDescendingProducts = useAppSelector(
+    (state) => state.products.typeAscendingDescending
+  );
 
-  const sortingProducts = useMemo(() => {
-    function sortByPrice(a: TypeProduct, b: TypeProduct) {
-      return b?.price - a?.price;
-    }
-    if (products) {
-      return [...(products || [])]?.sort(sortByPrice);
-    } else {
-      return [];
-    }
-  }, [products]);
+  useEffect(() => {
+    const productToSortedAscendingDescending =
+      selectedSortingAscendingDescendingProducts === 'up'
+        ? [...(products || [])]?.sort(
+            selectedSortingTypeProducts === 'sortPrice'
+              ? sortByPriceUp
+              : sortByRatingUp
+          ) || []
+        : [...(products || [])]?.sort(
+            selectedSortingTypeProducts === 'sortPrice'
+              ? sortByPriceDown
+              : sortByRatingDown
+          );
+    dispatch(
+      productsSlice.actions.addAscendingDescendingProductsSorting(
+        productToSortedAscendingDescending
+      )
+    );
+  }, [
+    SortingTypeProducts,
+    dispatch,
+    products,
+    selectedSortingAscendingDescendingProducts,
+    selectedSortingTypeProducts,
+  ]);
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
@@ -254,9 +287,9 @@ function CatalogContainer(): JSX.Element {
                     <div className="catalog-sort">
                       <form action="#">
                         <SortingProductsContainer />
-                        {sortingProducts && (
+                        {products && (
                           <PagePagination
-                            productsCameras={sortingProducts}
+                            productsCameras={SortingAscendingDescendingProducts}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

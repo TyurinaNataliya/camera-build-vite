@@ -5,7 +5,8 @@ import { productsSlice } from './slices/products-slice';
 import { promoProductsSlice } from './slices/promo-products-slice';
 import { similarProductsSlice } from './slices/similar-products-slice';
 import { reviewsProductSlice } from './slices/reviews-product-slice';
-import { SortingTypeProductSlice } from './slices/sorting-product-slice';
+import { SortingTypeProductSlice } from './slices/sorting-type-product-slice';
+import { SortingAscendingDescendingSlice } from './slices/sorting-ascending-descending-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
@@ -14,6 +15,8 @@ const reducer = combineReducers({
   [similarProductsSlice.name]: similarProductsSlice.reducer,
   [reviewsProductSlice.name]: reviewsProductSlice.reducer,
   [SortingTypeProductSlice.name]: SortingTypeProductSlice.reducer,
+  [SortingAscendingDescendingSlice.name]:
+    SortingAscendingDescendingSlice.reducer,
 });
 
 const api = createAPI();
