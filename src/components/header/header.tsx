@@ -1,7 +1,32 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks/store';
+import { ChangeEvent, useState } from 'react';
 
 function Header(): JSX.Element {
+  const [name, setName] = useState<string>('');
+  let options: string[] = [];
+
+  const products = useAppSelector((state) => state.products.products);
+  const namesList: string[] = [];
+  products?.map((product) => namesList.push(product.name));
+
+  function getOptions(nameInput: string, list: string[]) {
+    return list.filter((element) => {
+      const regex = new RegExp(nameInput, 'gi');
+
+      return element.match(regex);
+    });
+  }
+  function nameChangeHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setName(evt.target.value.trim());
+
+    if (name.length > 2) {
+      options = getOptions(name, namesList);
+      console.log(options);
+    }
+  }
+
   return (
     <header className="header" id="header" data-testid="header-container">
       <div className="container">
@@ -54,24 +79,27 @@ function Header(): JSX.Element {
                 type="text"
                 autoComplete="off"
                 placeholder="Поиск по сайту"
+                value={name}
+                onChange={(event) => {
+                  nameChangeHandle(event);
+                }}
               />
             </label>
-            <ul className="form-search__select-list">
-              <li className="form-search__select-item" tabIndex={0}>
-                Cannonball Pro MX 8i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-                Cannonball Pro MX 7i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-                Cannonball Pro MX 6i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-                Cannonball Pro MX 5i
-              </li>
-              <li className="form-search__select-item" tabIndex={0}>
-                Cannonball Pro MX 4i
-              </li>
+            <ul
+              className="form-search__select-list"
+              style={
+                name.length > 3 ? { visibility: 'visible', opacity: 1 } : {}
+              }
+            >
+              {options?.map((product) => (
+                <li
+                  className="form-search__select-item"
+                  tabIndex={0}
+                  key={product}
+                >
+                  {product}
+                </li>
+              ))}
             </ul>
           </form>
           <button className="form-search__reset" type="reset">
