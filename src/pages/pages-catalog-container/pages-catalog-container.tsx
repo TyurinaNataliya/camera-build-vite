@@ -64,6 +64,41 @@ function CatalogContainer(): JSX.Element {
   const SortingAscendingDescendingProducts = useAppSelector(
     (state) => state.products.typeAscendingDescending
   );
+  const selectedFiltrationCategoryProducts = useAppSelector(
+    (state) => state.categoryFilter.category
+  );
+  // const FiltrationCategoryProducts = useAppSelector(//фильтрация по категории
+  //   (state) => state.products.categoryFiltraton
+  // );
+  const selectedFiltrationTypeCameras = useAppSelector(
+    (state) => state.typeCamerasFilter.typeCameras
+  );
+  const FiltrationTypeCamerasProduct = useAppSelector(
+    (state) => state.products.typeCamerasFiltration
+  );
+  useEffect(() => {
+    //тип камеры
+    const productToFiltrationTypeCameras =
+      [...(products || [])]?.filter(
+        (prodict) => prodict.type === selectedFiltrationTypeCameras
+      ) || [];
+    dispatch(
+      productsSlice.actions.addTypeCamerasFilter(productToFiltrationTypeCameras)
+    );
+  }, [dispatch, products, selectedFiltrationTypeCameras]);
+
+  useEffect(() => {
+    //категория
+    const productToFiltrationCategory =
+      [...(products || [])]?.filter(
+        (prodict) => prodict.category === selectedFiltrationCategoryProducts
+      ) || [];
+    dispatch(
+      productsSlice.actions.addCategoryProductsFiltration(
+        productToFiltrationCategory
+      )
+    );
+  }, [dispatch, products, selectedFiltrationCategoryProducts]);
 
   useEffect(() => {
     const productToSortedAscendingDescending =

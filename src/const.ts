@@ -41,16 +41,21 @@ const TypeSortingAscending = {
   up: 'По возрастанию',
   down: 'По убыванию',
 };
-const CATEGORY_FILTER = ['фотокамера', 'Видеокамера'];
+const CATEGORY_FILTER = ['Фотоаппарат', 'Видеокамера'];
+const CATEGORY_FILTER_ENGLISH = ['photocamera', 'videocamera'];
 
-const NAME_TYPE_ENGLISH = ['sortPrice', 'sortPopular'];
+const TYPE_CAMERAS = ['Цифровая', 'Плёночна', 'Моментальная', 'Коллекционная'];
+
 const NAME_TYPE = ['по цене', 'по популярности'];
+const NAME_TYPE_ENGLISH = ['sortPrice', 'sortPopular'];
 const TypeSorting = {
   sortPrice: 'по цене',
   sortPopular: 'по популярности',
 };
 export {
+  TYPE_CAMERAS,
   CATEGORY_FILTER,
+  CATEGORY_FILTER_ENGLISH,
   TypeSortingAscending,
   NAME_ASCENDING_DESCENDING_ENGLISH,
   NAME_ASCENDING_DESCENDING,

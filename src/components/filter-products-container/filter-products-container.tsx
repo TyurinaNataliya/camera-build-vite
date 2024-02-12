@@ -1,4 +1,5 @@
-import { CategoryFilter } from './category-filter';
+import { CategoryFilter } from './category-filter/category-filter';
+import { TypeCameras } from './type-cameras/type-cameras';
 
 function FilterProductsContainer(): JSX.Element {
   return (
@@ -22,37 +23,7 @@ function FilterProductsContainer(): JSX.Element {
             </div>
           </fieldset>
           <CategoryFilter />
-          <fieldset className="catalog-filter__block">
-            <legend className="title title--h5">Тип камеры</legend>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="digital" />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Цифровая</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="film" />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Плёночная</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="snapshot" />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Моментальная</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="collection" checked disabled />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Коллекционная</span>
-              </label>
-            </div>
-          </fieldset>
+          <TypeCameras />
           <fieldset className="catalog-filter__block">
             <legend className="title title--h5">Уровень</legend>
             <div className="custom-checkbox catalog-filter__item">

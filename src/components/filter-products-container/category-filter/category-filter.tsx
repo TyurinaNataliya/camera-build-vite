@@ -1,4 +1,4 @@
-import { CATEGORY_FILTER } from '../../const';
+import { CATEGORY_FILTER } from '../../../const';
 import { ButtonCategoryFilter } from './button-category-filter';
 
 function CategoryFilter(): JSX.Element {

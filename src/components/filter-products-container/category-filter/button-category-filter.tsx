@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { fetchProductsAction } from '../../services/thunk/fetch-products';
-import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import { fetchProductsAction } from '../../../services/thunk/fetch-products';
+import { FiltrationCategorySlice } from '../../../store/slices/filtration-category-slice';
 
 type Props = {
   category: string;
