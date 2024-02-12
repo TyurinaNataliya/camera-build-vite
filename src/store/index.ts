@@ -7,6 +7,7 @@ import { similarProductsSlice } from './slices/similar-products-slice';
 import { reviewsProductSlice } from './slices/reviews-product-slice';
 import { SortingTypeProductSlice } from './slices/sorting-type-product-slice';
 import { SortingAscendingDescendingSlice } from './slices/sorting-ascending-descending-slice';
+import { FiltrationCategorySlice } from './slices/filtration-category-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   [SortingTypeProductSlice.name]: SortingTypeProductSlice.reducer,
   [SortingAscendingDescendingSlice.name]:
     SortingAscendingDescendingSlice.reducer,
+  [FiltrationCategorySlice.name]: FiltrationCategorySlice.reducer,
 });
 
 const api = createAPI();

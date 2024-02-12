@@ -2,20 +2,20 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 type InitialState = {
-  type: string;
+  category: string;
 };
 const initialState: InitialState = {
-  type: '',
+  category: '',
 };
 
-const SortingTypeProductSlice = createSlice({
-  name: 'sortingType',
+const FiltrationCategorySlice = createSlice({
+  name: 'categoryFilter',
   initialState,
   reducers: {
     changeType(state, action: PayloadAction<string>) {
-      state.type = action.payload;
+      state.category = action.payload;
     },
   },
 });
 
-export { SortingTypeProductSlice };
+export { FiltrationCategorySlice };

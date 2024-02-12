@@ -5,7 +5,7 @@ type InitialState = {
   type: string;
 };
 const initialState: InitialState = {
-  type: 'up',
+  type: '',
 };
 
 const SortingAscendingDescendingSlice = createSlice({

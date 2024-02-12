@@ -1,31 +1,37 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks/store';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 
 function Header(): JSX.Element {
   const [name, setName] = useState<string>('');
-  let options: string[] = [];
+  const [options, setOptions] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const products = useAppSelector((state) => state.products.products);
-  const namesList: string[] = [];
-  products?.map((product) => namesList.push(product.name));
 
-  function getOptions(nameInput: string, list: string[]) {
-    return list.filter((element) => {
-      const regex = new RegExp(nameInput, 'gi');
+  const nameLists = useMemo(
+    () => products?.map((product) => product.name) || [],
+    [products]
+  );
 
-      return element.match(regex);
-    });
-  }
-  function nameChangeHandle(evt: ChangeEvent<HTMLInputElement>) {
-    setName(evt.target.value.trim());
+  const nameChangeHandle = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => {
+      setName(evt.target.value);
+      function getOptions(nameInput: string, list: string[]) {
+        return list.filter((element) => {
+          const regex = new RegExp(nameInput, 'gi');
 
-    if (name.length > 2) {
-      options = getOptions(name, namesList);
-      console.log(options);
-    }
-  }
+          return element.match(regex);
+        });
+      }
+
+      if (name.length !== 0) {
+        setOptions(getOptions(name, nameLists));
+      }
+    },
+    [name, nameLists]
+  );
 
   return (
     <header className="header" id="header" data-testid="header-container">
@@ -88,14 +94,17 @@ function Header(): JSX.Element {
             <ul
               className="form-search__select-list"
               style={
-                name.length > 3 ? { visibility: 'visible', opacity: 1 } : {}
+                name.length > 2 && options.length !== 0
+                  ? { visibility: 'visible', opacity: 1 }
+                  : {}
               }
             >
-              {options?.map((product) => (
+              {options.map((product) => (
                 <li
                   className="form-search__select-item"
                   tabIndex={0}
                   key={product}
+                  onClick={() => navigate(`${AppRoute.Product}/:${id}`)}
                 >
                   {product}
                 </li>

@@ -41,6 +41,7 @@ const TypeSortingAscending = {
   up: 'По возрастанию',
   down: 'По убыванию',
 };
+const CATEGORY_FILTER = ['фотокамера', 'Видеокамера'];
 
 const NAME_TYPE_ENGLISH = ['sortPrice', 'sortPopular'];
 const NAME_TYPE = ['по цене', 'по популярности'];
@@ -49,6 +50,7 @@ const TypeSorting = {
   sortPopular: 'по популярности',
 };
 export {
+  CATEGORY_FILTER,
   TypeSortingAscending,
   NAME_ASCENDING_DESCENDING_ENGLISH,
   NAME_ASCENDING_DESCENDING,
