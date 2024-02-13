@@ -4,8 +4,8 @@ import { fetchProductsAction } from '../../../services/thunk/fetch-products';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
 
 function PriceFilter(): JSX.Element {
-  const products = useAppSelector((state) => state.products.products);
   const dispatch = useAppDispatch();
+  const products = useAppSelector((state) => state.products.products);
   const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
   const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
 
@@ -14,9 +14,6 @@ function PriceFilter(): JSX.Element {
   );
   const maxPriceProduct = Math.max(...listPriceProducts);
   const minPriceProduct = Math.min(...listPriceProducts);
-
-  // const [priceFrom, setPriceFrom] = useState<string>('');
-  // const [priceTo, setPriceTo] = useState<string>('');
 
   const priceFromChangeHandle = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +30,7 @@ function PriceFilter(): JSX.Element {
     [dispatch]
   );
   useEffect(() => {
-    if (statePriceFrom.length >= 3 && statePriceTo.length > 3) {
+    if (statePriceFrom && statePriceTo.length > 4) {
       dispatch(
         fetchProductsAction([Number(statePriceFrom), Number(statePriceTo)])
       );

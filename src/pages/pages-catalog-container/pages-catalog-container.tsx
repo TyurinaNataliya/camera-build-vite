@@ -58,85 +58,103 @@ function CatalogContainer(): JSX.Element {
   const selectedSortingAscendingDescendingProducts = useAppSelector(
     (state) => state.sortingAscendingDescending.type
   );
-  const SortingTypeProducts = useAppSelector(
-    (state) => state.products.typeProductsSorting
-  );
+  // const SortingTypeProducts = useAppSelector(
+  //   (state) => state.products.typeProductsSorting
+  // );
   const SortingAscendingDescendingProducts = useAppSelector(
     (state) => state.products.typeAscendingDescending
   );
   const selectedFiltrationCategoryProducts = useAppSelector(
     (state) => state.categoryFilter.category
   );
-  const FiltrationCategoryProducts = useAppSelector(
-    (state) => state.products.categoryFiltraton
-  );
+  // const FiltrationCategoryProducts = useAppSelector(
+  //   (state) => state.products.categoryFiltraton
+  // );
   const selectedFiltrationTypeCameras = useAppSelector(
     (state) => state.typeCamerasFilter.typeCameras
   );
-  const FiltrationTypeCamerasProduct = useAppSelector(
-    (state) => state.products.typeCamerasFiltration
-  );
+  // const FiltrationTypeCamerasProduct = useAppSelector(
+  //   (state) => state.products.typeCamerasFiltration
+  // );
   const selectedFiltrationLevel = useAppSelector(
     (state) => state.levelFilter.level
   );
-  const FiltrationLevelProduct = useAppSelector(
-    (state) => state.products.levelFiltration
-  );
-
-  const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
-  const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
+  // const FiltrationLevelProduct = useAppSelector(
+  //   (state) => state.products.levelFiltration
+  // );
+  // const FilterationPricePriduct = useAppSelector(
+  //   (state) => state.products.priceFiltration
+  // );
 
   // useEffect(() => {
-  //   const productToFiltrationPrice =
+  //   const productToFiltrationLevel =
   //     [...(products || [])]?.filter(
-  //       (prodict) =>
-  //         prodict.price__gte === Number.statePriceFrom &&
-  //         product.price__lte === Number.statePriceTo
+  //       (prodict) => prodict.level === selectedFiltrationLevel
   //     ) || [];
-  //   dispatch(productsSlice.actions.addPriceProductsFiltration(productToFiltrationPrice));
-  // }, [dispatch, products, statePriceFrom, statePriceTo]);
+  //   dispatch(productsSlice.actions.addLevelFilter(productToFiltrationLevel));
+  // }, [dispatch, products, selectedFiltrationLevel]);
+
+  // useEffect(() => {
+  //   //тип камеры
+  //   const productToFiltrationTypeCameras =
+  //     [...(products || [])]?.filter(
+  //       (prodict) => prodict.type === selectedFiltrationTypeCameras
+  //     ) || [];
+  //   dispatch(
+  //     productsSlice.actions.addTypeCamerasFilter(productToFiltrationTypeCameras)
+  //   );
+  // }, [dispatch, products, selectedFiltrationTypeCameras]);
+
+  // useEffect(() => {
+  //   //категория
+  //   const productToFiltrationCategory =
+  //     [...(products || [])]?.filter(
+  //       (prodict) => prodict.category === selectedFiltrationCategoryProducts
+  //     ) || [];
+  //   dispatch(
+  //     productsSlice.actions.addCategoryProductsFiltration(
+  //       productToFiltrationCategory
+  //     )
+  //   );
+  // }, [dispatch, products, selectedFiltrationCategoryProducts]);
 
   useEffect(() => {
-    const productToFiltrationLevel =
-      [...(products || [])]?.filter(
-        (prodict) => prodict.level === selectedFiltrationLevel
-      ) || [];
-    dispatch(productsSlice.actions.addLevelFilter(productToFiltrationLevel));
-  }, [dispatch, products, selectedFiltrationLevel]);
-
-  useEffect(() => {
-    //тип камеры
-    const productToFiltrationTypeCameras =
-      [...(products || [])]?.filter(
-        (prodict) => prodict.type === selectedFiltrationTypeCameras
-      ) || [];
-    dispatch(
-      productsSlice.actions.addTypeCamerasFilter(productToFiltrationTypeCameras)
-    );
-  }, [dispatch, products, selectedFiltrationTypeCameras]);
-
-  useEffect(() => {
-    //категория
     const productToFiltrationCategory =
-      [...(products || [])]?.filter(
-        (prodict) => prodict.category === selectedFiltrationCategoryProducts
-      ) || [];
+      selectedFiltrationCategoryProducts === ''
+        ? products || []
+        : [...(products || [])]?.filter(
+            (prodict) => prodict.category === selectedFiltrationCategoryProducts
+          ) || [];
     dispatch(
       productsSlice.actions.addCategoryProductsFiltration(
         productToFiltrationCategory
       )
     );
-  }, [dispatch, products, selectedFiltrationCategoryProducts]);
+    const productToFiltrationTypeCameras =
+      selectedFiltrationTypeCameras === ''
+        ? productToFiltrationCategory || []
+        : [...(productToFiltrationCategory || [])]?.filter(
+            (prodict) => prodict.type === selectedFiltrationTypeCameras
+          ) || [];
+    dispatch(
+      productsSlice.actions.addTypeCamerasFilter(productToFiltrationTypeCameras)
+    );
+    const productToFiltrationLevel =
+      selectedFiltrationLevel === ''
+        ? productToFiltrationTypeCameras || []
+        : [...(productToFiltrationTypeCameras || [])]?.filter(
+            (prodict) => prodict.level === selectedFiltrationLevel
+          ) || [];
+    dispatch(productsSlice.actions.addLevelFilter(productToFiltrationLevel));
 
-  useEffect(() => {
     const productToSortedAscendingDescending =
       selectedSortingAscendingDescendingProducts === 'up'
-        ? [...(products || [])]?.sort(
+        ? [...(productToFiltrationLevel || [])]?.sort(
             selectedSortingTypeProducts === 'sortPrice'
               ? sortByPriceUp
               : sortByRatingUp
           ) || []
-        : [...(products || [])]?.sort(
+        : [...(productToFiltrationLevel || [])]?.sort(
             selectedSortingTypeProducts === 'sortPrice'
               ? sortByPriceDown
               : sortByRatingDown
@@ -147,9 +165,11 @@ function CatalogContainer(): JSX.Element {
       )
     );
   }, [
-    SortingTypeProducts,
     dispatch,
     products,
+    selectedFiltrationCategoryProducts,
+    selectedFiltrationLevel,
+    selectedFiltrationTypeCameras,
     selectedSortingAscendingDescendingProducts,
     selectedSortingTypeProducts,
   ]);
