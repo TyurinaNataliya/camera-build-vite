@@ -1,4 +1,5 @@
 import { CategoryFilter } from './category-filter/category-filter';
+import { LevelFilter } from './level-filter/level-filter';
 import { TypeCameras } from './type-cameras/type-cameras';
 
 function FilterProductsContainer(): JSX.Element {
@@ -24,30 +25,7 @@ function FilterProductsContainer(): JSX.Element {
           </fieldset>
           <CategoryFilter />
           <TypeCameras />
-          <fieldset className="catalog-filter__block">
-            <legend className="title title--h5">Уровень</legend>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="zero" />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Нулевой</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="non-professional" />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Любительский</span>
-              </label>
-            </div>
-            <div className="custom-checkbox catalog-filter__item">
-              <label>
-                <input type="checkbox" name="professional" />
-                <span className="custom-checkbox__icon"></span>
-                <span className="custom-checkbox__label">Профессиональный</span>
-              </label>
-            </div>
-          </fieldset>
+          <LevelFilter />
           <button className="btn catalog-filter__reset-btn" type="reset">
             Сбросить фильтры
           </button>

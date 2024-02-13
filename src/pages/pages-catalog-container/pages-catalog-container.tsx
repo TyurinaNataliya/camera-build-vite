@@ -73,9 +73,24 @@ function CatalogContainer(): JSX.Element {
   const selectedFiltrationTypeCameras = useAppSelector(
     (state) => state.typeCamerasFilter.typeCameras
   );
-  const FiltrationTypeCamerasProduct = useAppSelector(
-    (state) => state.products.typeCamerasFiltration
+  // const FiltrationTypeCamerasProduct = useAppSelector(
+  //   (state) => state.products.typeCamerasFiltration
+  // );
+  const selectedFiltrationLevel = useAppSelector(
+    (state) => state.levelFilter.level
   );
+  const FiltrationLevelProduct = useAppSelector(
+    (state) => state.products.levelFiltration
+  );
+  useEffect(() => {
+    //тип камеры
+    const productToFiltrationLevel =
+      [...(products || [])]?.filter(
+        (prodict) => prodict.level === selectedFiltrationLevel
+      ) || [];
+    dispatch(productsSlice.actions.addLevelFilter(productToFiltrationLevel));
+  }, [dispatch, products, selectedFiltrationLevel]);
+
   useEffect(() => {
     //тип камеры
     const productToFiltrationTypeCameras =
@@ -193,7 +208,7 @@ function CatalogContainer(): JSX.Element {
                         <SortingProductsContainer />
                         {products && (
                           <PagePagination
-                            productsCameras={SortingAscendingDescendingProducts}
+                            productsCameras={FiltrationLevelProduct}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

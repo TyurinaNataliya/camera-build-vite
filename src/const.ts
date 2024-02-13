@@ -45,6 +45,7 @@ const CATEGORY_FILTER = ['Фотоаппарат', 'Видеокамера'];
 const CATEGORY_FILTER_ENGLISH = ['photocamera', 'videocamera'];
 
 const TYPE_CAMERAS = ['Цифровая', 'Плёночна', 'Моментальная', 'Коллекционная'];
+const LEVEL_FILTER = ['Нулевой', 'Любительский', 'Профессиональный'];
 
 const NAME_TYPE = ['по цене', 'по популярности'];
 const NAME_TYPE_ENGLISH = ['sortPrice', 'sortPopular'];
@@ -53,6 +54,7 @@ const TypeSorting = {
   sortPopular: 'по популярности',
 };
 export {
+  LEVEL_FILTER,
   TYPE_CAMERAS,
   CATEGORY_FILTER,
   CATEGORY_FILTER_ENGLISH,

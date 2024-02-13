@@ -9,6 +9,7 @@ import { SortingTypeProductSlice } from './slices/sorting-type-product-slice';
 import { SortingAscendingDescendingSlice } from './slices/sorting-ascending-descending-slice';
 import { FiltrationCategorySlice } from './slices/filtration-category-slice';
 import { FiltrationTypeCamerasSlice } from './slices/filtration-type-cameras-slice';
+import { FiltrationLevelSlice } from './slices/filtration-level-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     SortingAscendingDescendingSlice.reducer,
   [FiltrationCategorySlice.name]: FiltrationCategorySlice.reducer,
   [FiltrationTypeCamerasSlice.name]: FiltrationTypeCamerasSlice.reducer,
+  [FiltrationLevelSlice.name]: FiltrationLevelSlice.reducer,
 });
 
 const api = createAPI();

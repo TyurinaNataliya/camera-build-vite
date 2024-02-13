@@ -15,6 +15,7 @@ type StateProducts = {
   typeAscendingDescending: TypeProduct[];
   categoryFiltraton: TypeProduct[];
   typeCamerasFiltration: TypeProduct[];
+  levelFiltration: TypeProduct[];
 };
 
 const initialState: StateProducts = {
@@ -28,6 +29,7 @@ const initialState: StateProducts = {
   typeAscendingDescending: [],
   categoryFiltraton: [],
   typeCamerasFiltration: [],
+  levelFiltration: [],
 };
 
 const productsSlice = createSlice({
@@ -54,6 +56,9 @@ const productsSlice = createSlice({
     },
     addTypeCamerasFilter(state, action: PayloadAction<TypeProduct[]>) {
       state.typeCamerasFiltration = action.payload;
+    },
+    addLevelFilter(state, action: PayloadAction<TypeProduct[]>) {
+      state.levelFiltration = action.payload;
     },
   },
   extraReducers(builder) {
