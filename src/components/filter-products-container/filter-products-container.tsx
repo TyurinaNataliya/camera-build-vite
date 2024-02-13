@@ -1,9 +1,11 @@
 import { useAppDispatch } from '../../hooks/store';
 import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
 import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice';
+import { FiltrationPriceSlice } from '../../store/slices/filtration-price-slice';
 import { FiltrationTypeCamerasSlice } from '../../store/slices/filtration-type-cameras-slice';
 import { CategoryFilter } from './category-filter/category-filter';
 import { LevelFilter } from './Level-filter/level-filter';
+import { PriceFilter } from './price-filter/price-filter';
 import { TypeCameras } from './type-cameras/type-cameras';
 
 function FilterProductsContainer(): JSX.Element {
@@ -12,27 +14,14 @@ function FilterProductsContainer(): JSX.Element {
     dispatch(FiltrationCategorySlice.actions.changeType(''));
     dispatch(FiltrationTypeCamerasSlice.actions.changeType(''));
     dispatch(FiltrationLevelSlice.actions.changeType(''));
+    dispatch(FiltrationPriceSlice.actions.changeType(''));
   }
   return (
     <div className="catalog__aside">
       <div className="catalog-filter">
         <form action="#">
           <h2 className="visually-hidden">Фильтр</h2>
-          <fieldset className="catalog-filter__block">
-            <legend className="title title--h5">Цена, ₽</legend>
-            <div className="catalog-filter__price-range">
-              <div className="custom-input">
-                <label>
-                  <input type="number" name="price" placeholder="от" />
-                </label>
-              </div>
-              <div className="custom-input">
-                <label>
-                  <input type="number" name="priceUp" placeholder="до" />
-                </label>
-              </div>
-            </div>
-          </fieldset>
+          <PriceFilter />
           <CategoryFilter />
           <TypeCameras />
           <LevelFilter />
@@ -40,7 +29,7 @@ function FilterProductsContainer(): JSX.Element {
             className="btn catalog-filter__reset-btn"
             type="reset"
             onClick={() => {
-              resetFiltration;
+              resetFiltration();
             }}
           >
             Сбросить фильтры

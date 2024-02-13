@@ -74,7 +74,7 @@ function CatalogContainer(): JSX.Element {
     (state) => state.typeCamerasFilter.typeCameras
   );
   const FiltrationTypeCamerasProduct = useAppSelector(
-    (state) => state.products.typeCamerasFiltration //фильтрация по типу
+    (state) => state.products.typeCamerasFiltration
   );
   const selectedFiltrationLevel = useAppSelector(
     (state) => state.levelFilter.level
@@ -82,6 +82,20 @@ function CatalogContainer(): JSX.Element {
   const FiltrationLevelProduct = useAppSelector(
     (state) => state.products.levelFiltration
   );
+
+  const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
+  const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
+
+  // useEffect(() => {
+  //   const productToFiltrationPrice =
+  //     [...(products || [])]?.filter(
+  //       (prodict) =>
+  //         prodict.price__gte === Number.statePriceFrom &&
+  //         product.price__lte === Number.statePriceTo
+  //     ) || [];
+  //   dispatch(productsSlice.actions.addPriceProductsFiltration(productToFiltrationPrice));
+  // }, [dispatch, products, statePriceFrom, statePriceTo]);
+
   useEffect(() => {
     const productToFiltrationLevel =
       [...(products || [])]?.filter(
