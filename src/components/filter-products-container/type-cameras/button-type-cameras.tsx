@@ -10,6 +10,9 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
   const stateTypeCameras = useAppSelector(
     (state) => state.typeCamerasFilter.typeCameras
   );
+  const stateCategoryCameras = useAppSelector(
+    (state) => state.categoryFilter.category
+  );
   return (
     <div className="custom-checkbox catalog-filter__item">
       <label>
@@ -22,6 +25,13 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
             dispatch(fetchProductsAction());
           }}
           checked={stateTypeCameras === typeCameras}
+          disabled={
+            !!(
+              (stateCategoryCameras === 'Видеокамера' &&
+                typeCameras === 'Плёночна') ||
+              typeCameras === 'Моментальная'
+            )
+          }
         />
         <span className="custom-checkbox__icon"></span>
         <span className="custom-checkbox__label">{typeCameras}</span>

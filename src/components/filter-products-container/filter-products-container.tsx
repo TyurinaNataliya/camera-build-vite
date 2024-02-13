@@ -1,8 +1,18 @@
+import { useAppDispatch } from '../../hooks/store';
+import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
+import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice';
+import { FiltrationTypeCamerasSlice } from '../../store/slices/filtration-type-cameras-slice';
 import { CategoryFilter } from './category-filter/category-filter';
-import { LevelFilter } from './level-filter/level-filter';
+import { LevelFilter } from './Level-filter/level-filter';
 import { TypeCameras } from './type-cameras/type-cameras';
 
 function FilterProductsContainer(): JSX.Element {
+  const dispatch = useAppDispatch();
+  function resetFiltration() {
+    dispatch(FiltrationCategorySlice.actions.changeType(''));
+    dispatch(FiltrationTypeCamerasSlice.actions.changeType(''));
+    dispatch(FiltrationLevelSlice.actions.changeType(''));
+  }
   return (
     <div className="catalog__aside">
       <div className="catalog-filter">
@@ -26,7 +36,13 @@ function FilterProductsContainer(): JSX.Element {
           <CategoryFilter />
           <TypeCameras />
           <LevelFilter />
-          <button className="btn catalog-filter__reset-btn" type="reset">
+          <button
+            className="btn catalog-filter__reset-btn"
+            type="reset"
+            onClick={() => {
+              resetFiltration;
+            }}
+          >
             Сбросить фильтры
           </button>
         </form>
