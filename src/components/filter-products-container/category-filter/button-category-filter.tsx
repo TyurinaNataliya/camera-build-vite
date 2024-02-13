@@ -20,7 +20,11 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
             dispatch(FiltrationCategorySlice.actions.changeType(category));
             dispatch(fetchProductsAction());
           }}
-          checked={stateCategoryFilter === category}
+          checked={
+            stateCategoryFilter === ''
+              ? false
+              : stateCategoryFilter === category
+          }
         />
         <span className="custom-checkbox__icon"></span>
         <span className="custom-checkbox__label">{category}</span>

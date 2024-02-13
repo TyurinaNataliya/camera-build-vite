@@ -20,7 +20,9 @@ function ButtonLevelFilter({ level }: Props): JSX.Element {
             dispatch(FiltrationLevelSlice.actions.changeType(level));
             dispatch(fetchProductsAction());
           }}
-          checked={stateCategoryFilter === level}
+          checked={
+            stateCategoryFilter === '' ? false : stateCategoryFilter === level
+          }
         />
         <span className="custom-checkbox__icon"></span>
         <span className="custom-checkbox__label">{level}</span>

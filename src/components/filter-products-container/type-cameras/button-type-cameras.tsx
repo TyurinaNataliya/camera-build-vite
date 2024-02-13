@@ -24,13 +24,18 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
             );
             dispatch(fetchProductsAction());
           }}
-          checked={stateTypeCameras === typeCameras}
+          checked={
+            stateTypeCameras === '' ? false : stateTypeCameras === typeCameras
+          }
           disabled={
-            !!(
-              (stateCategoryCameras === 'Видеокамера' &&
-                typeCameras === 'Плёночна') ||
-              typeCameras === 'Моментальная'
-            )
+            stateCategoryCameras === 'Фотоаппарат'
+              ? false
+              : !!(
+                  (stateCategoryCameras === 'Видеокамера' &&
+                    typeCameras === 'Плёночная') ||
+                  (stateCategoryCameras === 'Видеокамера' &&
+                    typeCameras === 'Моментальная')
+                )
           }
         />
         <span className="custom-checkbox__icon"></span>

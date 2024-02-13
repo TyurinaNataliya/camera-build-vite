@@ -1,4 +1,5 @@
 import { useAppDispatch } from '../../hooks/store';
+import { fetchProductsAction } from '../../services/thunk/fetch-products';
 import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
 import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice';
 import { FiltrationPriceSlice } from '../../store/slices/filtration-price-slice';
@@ -14,7 +15,9 @@ function FilterProductsContainer(): JSX.Element {
     dispatch(FiltrationCategorySlice.actions.changeType(''));
     dispatch(FiltrationTypeCamerasSlice.actions.changeType(''));
     dispatch(FiltrationLevelSlice.actions.changeType(''));
-    dispatch(FiltrationPriceSlice.actions.changeType(''));
+    dispatch(FiltrationPriceSlice.actions.changeFrom(''));
+    dispatch(FiltrationPriceSlice.actions.changeTo(''));
+    dispatch(fetchProductsAction());
   }
   return (
     <div className="catalog__aside">

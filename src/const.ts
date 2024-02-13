@@ -44,7 +44,7 @@ const TypeSortingAscending = {
 const CATEGORY_FILTER = ['Фотоаппарат', 'Видеокамера'];
 const CATEGORY_FILTER_ENGLISH = ['photocamera', 'videocamera'];
 
-const TYPE_CAMERAS = ['Цифровая', 'Плёночна', 'Моментальная', 'Коллекционная'];
+const TYPE_CAMERAS = ['Цифровая', 'Плёночная', 'Моментальная', 'Коллекционная'];
 const LEVEL_FILTER = ['Нулевой', 'Любительский', 'Профессиональный'];
 
 const NAME_TYPE = ['по цене', 'по популярности'];
