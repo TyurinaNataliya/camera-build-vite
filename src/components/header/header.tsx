@@ -1,12 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { fetchProductAction } from '../../services/thunk/fetch-product';
+import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
+import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
 
 function Header(): JSX.Element {
   const [name, setName] = useState<string>('');
   const [options, setOptions] = useState<string[]>([]);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const products = useAppSelector((state) => state.products.products);
 
@@ -104,7 +108,20 @@ function Header(): JSX.Element {
                   className="form-search__select-item"
                   tabIndex={0}
                   key={product}
-                  onClick={() => navigate(`${AppRoute.Product}/:${id}`)}
+                  onClick={() => {
+                    navigate(
+                      `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
+                    );
+                    dispatch(
+                      fetchProductAction(nameLists.indexOf(product) + 1)
+                    );
+                    dispatch(
+                      fetchSimilarProductsAction(nameLists.indexOf(product) + 1)
+                    );
+                    dispatch(
+                      fetchReviewsProductAction(nameLists.indexOf(product) + 1)
+                    );
+                  }}
                 >
                   {product}
                 </li>
