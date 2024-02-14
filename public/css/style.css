@@ -1673,9 +1673,9 @@ button,
 
 .form-search__reset {
   position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
+  top: 120;
+  right: 250;
+
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;

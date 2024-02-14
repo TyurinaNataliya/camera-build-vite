@@ -36,6 +36,9 @@ function Header(): JSX.Element {
     },
     [name, nameLists]
   );
+  const nameResetHandle = useCallback(() => {
+    setName('');
+  }, []);
 
   return (
     <header className="header" id="header" data-testid="header-container">
@@ -110,7 +113,7 @@ function Header(): JSX.Element {
                   key={product}
                   onClick={() => {
                     navigate(
-                      `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
+                      `${AppRoute.Product}/:${nameLists.indexOf(product) + 1}`
                     );
                     dispatch(
                       fetchProductAction(nameLists.indexOf(product) + 1)
@@ -128,7 +131,14 @@ function Header(): JSX.Element {
               ))}
             </ul>
           </form>
-          <button className="form-search__reset" type="reset">
+          <button
+            className="form-search__reset"
+            type="reset"
+            style={name ? { display: 'flex' } : { display: 'none' }}
+            onClick={() => {
+              nameResetHandle();
+            }}
+          >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
