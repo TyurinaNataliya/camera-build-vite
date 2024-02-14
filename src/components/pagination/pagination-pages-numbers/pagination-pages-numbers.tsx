@@ -16,8 +16,9 @@ function PaginationPagesNumbers({
 }: Props): JSX.Element {
   const numberPages = useMemo(() => {
     let result: number[] = [];
+
     if (currentPage <= 3) {
-      result = [1, 2, 3];
+      result = Array.from({ length: maxPage > 3 ? 3 : maxPage }, (_, i) => ++i);
     } else if (currentPage === maxPage || currentPage === maxPage - 1) {
       result = [4, 5];
     }
@@ -50,7 +51,7 @@ function PaginationPagesNumbers({
             </Link>
           </li>
         ))}
-        {maxPage >= currentPage + 2 && (
+        {maxPage > 3 && maxPage >= currentPage + 2 && (
           <PaginateButton
             currentPage={4}
             onChange={onChangePage}
