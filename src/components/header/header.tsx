@@ -113,7 +113,7 @@ function Header(): JSX.Element {
                   key={product}
                   onClick={() => {
                     navigate(
-                      `${AppRoute.Product}/:${nameLists.indexOf(product) + 1}`
+                      `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
                     );
                     dispatch(
                       fetchProductAction(nameLists.indexOf(product) + 1)

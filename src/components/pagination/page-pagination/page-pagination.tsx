@@ -6,6 +6,7 @@ import {
   MAX_COUNT_PRODUCTS_PAGE,
   MIN_COUNT_CATALOG_CARDS,
 } from '../../../const';
+import { NotingNotFound } from '../../noting-not-found';
 
 type Props = {
   productsCameras: TypeProduct[];
@@ -53,11 +54,15 @@ function PagePagination({
   return (
     <>
       <div className="cards catalog__cards" data-testid="page=pagination">
-        <ProductCardsList
-          products={currentProducts}
-          loading={loading}
-          handleActiveModalItem={handleActiveModalItem}
-        />
+        {currentProducts.length === 0 ? (
+          <NotingNotFound />
+        ) : (
+          <ProductCardsList
+            products={currentProducts}
+            loading={loading}
+            handleActiveModalItem={handleActiveModalItem}
+          />
+        )}
       </div>
       {products.length > MIN_COUNT_CATALOG_CARDS && (
         <PaginationPagesNumbers

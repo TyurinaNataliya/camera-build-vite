@@ -21,6 +21,7 @@ import {
   sortByRatingUp,
 } from '../../utils/utils';
 import { FilterProductsContainer } from '../../components/filter-products-container/filter-products-container';
+import { NotFoundContainer } from '../pages-not-found-container/pages-not-found-container';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -104,16 +105,16 @@ function CatalogContainer(): JSX.Element {
     dispatch(productsSlice.actions.addLevelFilter(productToFiltrationLevel));
 
     const productToSortedAscendingDescending =
-      selectedSortingAscendingDescendingProducts === 'up'
+      selectedSortingAscendingDescendingProducts === 'down'
         ? [...(productToFiltrationLevel || [])]?.sort(
-            selectedSortingTypeProducts === 'sortPrice'
-              ? sortByPriceUp
-              : sortByRatingUp
+            selectedSortingTypeProducts === 'sortPopular'
+              ? sortByRatingDown
+              : sortByPriceDown
           ) || []
         : [...(productToFiltrationLevel || [])]?.sort(
-            selectedSortingTypeProducts === 'sortPrice'
-              ? sortByPriceDown
-              : sortByRatingDown
+            selectedSortingTypeProducts === 'sortPopular'
+              ? sortByRatingUp
+              : sortByPriceUp
           );
     dispatch(
       productsSlice.actions.addAscendingDescendingProductsSorting(
@@ -195,7 +196,7 @@ function CatalogContainer(): JSX.Element {
                     <div className="catalog-sort">
                       <form action="#">
                         <SortingProductsContainer />
-                        {products && (
+                        {SortingAscendingDescendingProducts && (
                           <PagePagination
                             productsCameras={SortingAscendingDescendingProducts}
                             handleActiveModalItem={handleActiveModalItem}
