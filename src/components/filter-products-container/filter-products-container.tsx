@@ -5,7 +5,7 @@ import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice'
 import { FiltrationPriceSlice } from '../../store/slices/filtration-price-slice';
 import { FiltrationTypeCamerasSlice } from '../../store/slices/filtration-type-cameras-slice';
 import { CategoryFilter } from './category-filter/category-filter';
-import { LevelFilter } from './level-filter/level-filter';
+import { LevelFilter } from './level-filter/level-filter-component';
 import { PriceFilter } from './price-filter/price-filter';
 import { TypeCameras } from './type-cameras/type-cameras';
 
