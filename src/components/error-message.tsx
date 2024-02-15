@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 function ErrorMessage(): JSX.Element {
   return (
     <div style={{ marginTop: 300, marginLeft: 400, marginBottom: 300 }}>

@@ -40,7 +40,9 @@ function ProductContainer(): JSX.Element {
     (state) => state.reviewsProduct?.reviewsProduct
   );
   useEffect(() => {
-    dispatch(fetchReviewsProductAction(Number(productId)));
+    if (!reviewsProduct) {
+      dispatch(fetchReviewsProductAction(Number(productId)));
+    }
   }, [dispatch, productId, reviewsProduct]);
 
   const product = useAppSelector((state) => state.product?.product);

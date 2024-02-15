@@ -1,5 +1,5 @@
 import { TypeProduct } from '../../type-data/type';
-import { LoadingComponent } from '../loading';
+import { LoadingComponent } from '../loading/loading';
 import { ProductCardInCatalog } from './product-card-in-catalog';
 
 type Props = {

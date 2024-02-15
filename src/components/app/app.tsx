@@ -5,6 +5,7 @@ import { ProductContainer } from '../../pages/pages-product-container/pages-prod
 import { BacketContainer } from '../../pages/pages-basket-container/pages-basket-container';
 import { NotFoundContainer } from '../../pages/pages-not-found-container/pages-not-found-container';
 import { HelmetProvider } from 'react-helmet-async';
+import { ToastContainer } from 'react-toastify';
 
 function App(): JSX.Element {
   return (
@@ -28,6 +29,17 @@ function App(): JSX.Element {
           <Route path={AppRoute.NotFound} element={<NotFoundContainer />} />
           <Route path="*" element={<NotFoundContainer />} />
         </Routes>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </BrowserRouter>
     </HelmetProvider>
   );

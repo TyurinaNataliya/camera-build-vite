@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
 import { AppRoute, RequestStatus } from '../../const';
 import { ErrorMessage } from '../../components/error-message';
-import { LoadingComponent } from '../../components/loading';
+import { LoadingComponent } from '../../components/loading/loading';
 import { Banner } from '../../components/banner/banner';
 import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-products';
 import { PagePagination } from '../../components/pagination/page-pagination/page-pagination';
@@ -21,7 +21,6 @@ import {
   sortByRatingUp,
 } from '../../utils/utils';
 import { FilterProductsContainer } from '../../components/filter-products-container/filter-products-container';
-import { NotFoundContainer } from '../pages-not-found-container/pages-not-found-container';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();

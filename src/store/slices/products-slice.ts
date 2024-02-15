@@ -3,6 +3,7 @@ import { fetchProductsAction } from '../../services/thunk/fetch-products';
 import { TypeProduct } from '../../type-data/type';
 import { RequestStatus } from '../../const';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 type StateProducts = {
   products: TypeProduct[] | null;
@@ -86,6 +87,7 @@ const productsSlice = createSlice({
         state.error = action.error.message || 'Unknown error';
         state.loadingStatus = false;
         state.fetchingStatus = RequestStatus.Error;
+        toast.error<string>('Не удалось загрузить данные с сервера!');
       });
   },
 });
