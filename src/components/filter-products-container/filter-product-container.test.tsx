@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { FilterProductsContainer } from './filter-products-container';
 import { withHistory } from '../../utils/mock-component';
 
-describe('Component:componentFilterProductsContainer', () => {
+describe('Component:FilterProductsContainer', () => {
   it('should render correctly', () => {
     const ComponentFilterProductsContainerTextId =
       'componentFilterProductsContainer';

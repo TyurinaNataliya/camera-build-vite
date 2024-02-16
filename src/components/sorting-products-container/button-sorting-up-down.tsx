@@ -17,6 +17,7 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
   return (
     <div className={`catalog-sort__btn catalog-sort__btn--${type}`}>
       <input
+        data-testid="btnSortingUpDown"
         onClick={() => {
           dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
           dispatch(fetchProductsAction());

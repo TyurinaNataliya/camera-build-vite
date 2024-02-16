@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory } from '../../../utils/mock-component';
 import { TypeCameras } from './type-cameras';
 
-describe('Component:componentTypeCameras', () => {
+describe('Component:TypeCameras', () => {
   it('should render correctly', () => {
     const ComponentTypeCamerasTextId = 'componentTypeCameras';
 

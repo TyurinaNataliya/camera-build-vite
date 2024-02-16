@@ -15,6 +15,7 @@ function ButtonSortingType({ type, index }: Props): JSX.Element {
   return (
     <div className="catalog-sort__btn-text">
       <input
+        data-testid="btnSortingType"
         onClick={() => {
           dispatch(SortingTypeProductSlice.actions.changeType(type));
           dispatch(fetchProductsAction());

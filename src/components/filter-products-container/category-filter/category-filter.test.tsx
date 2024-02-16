@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { withHistory } from '../../../utils/mock-component';
 import { CategoryFilter } from './category-filter';
 
-describe('Component:componentCatоgiry', () => {
+describe('Component:Catоgiry', () => {
   it('should render correctly', () => {
     const ComponentCategiryTextId = 'componentCategоry';
 

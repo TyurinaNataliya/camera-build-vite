@@ -7,7 +7,10 @@ import { ButtonSortingUpDown } from './button-sorting-up-down';
 
 function SortingProductsContainer(): JSX.Element {
   return (
-    <div className="catalog-sort__inner">
+    <div
+      className="catalog-sort__inner"
+      data-testid="componentSortingProductsContainer"
+    >
       <p className="title title--h5">Сортировать:</p>
       <div className="catalog-sort__type">
         {NAME_TYPE_ENGLISH.map((typeSort) => (
