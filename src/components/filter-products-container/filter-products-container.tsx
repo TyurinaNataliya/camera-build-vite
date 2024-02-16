@@ -20,7 +20,10 @@ function FilterProductsContainer(): JSX.Element {
     dispatch(fetchProductsAction());
   }
   return (
-    <div className="catalog__aside">
+    <div
+      className="catalog__aside"
+      data-testid="componentFilterProductsContainer"
+    >
       <div className="catalog-filter">
         <form action="#">
           <h2 className="visually-hidden">Фильтр</h2>

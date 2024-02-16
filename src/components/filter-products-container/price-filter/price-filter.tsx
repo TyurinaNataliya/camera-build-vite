@@ -46,7 +46,7 @@ function PriceFilter(): JSX.Element {
   return (
     <fieldset className="catalog-filter__block">
       <legend className="title title--h5">Цена, ₽</legend>
-      <div className="catalog-filter__price-range">
+      <div className="catalog-filter__price-range" data-testid="componentPrice">
         <div className="custom-input">
           <label>
             <input

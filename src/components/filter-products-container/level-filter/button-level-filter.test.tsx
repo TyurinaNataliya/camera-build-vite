@@ -7,7 +7,9 @@ describe('Component:btnLevel', () => {
   it('should render correctly', () => {
     const btnLevelTextId = 'btnLevel';
 
-    const preparedComponent = withHistory(<ButtonLevelFilter level={''} />);
+    const preparedComponent = withHistory(
+      <ButtonLevelFilter level={'Нулевой'} />
+    );
 
     render(preparedComponent);
 

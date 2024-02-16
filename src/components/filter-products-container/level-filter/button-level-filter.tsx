@@ -8,6 +8,7 @@ type Props = {
 
 function ButtonLevelFilter({ level }: Props): JSX.Element {
   const dispatch = useAppDispatch();
+
   const stateCategoryFilter = useAppSelector(
     (state) => state.levelFilter.level
   );

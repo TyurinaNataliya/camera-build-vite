@@ -17,6 +17,7 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
     <div className="custom-checkbox catalog-filter__item">
       <label>
         <input
+          data-testid="btnTypeCameras"
           type="checkbox"
           onClick={() => {
             dispatch(
