@@ -15,6 +15,7 @@ function ButtonLevelFilter({ level }: Props): JSX.Element {
     <div className="custom-checkbox catalog-filter__item">
       <label>
         <input
+          data-testid="btnLevel"
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationLevelSlice.actions.changeType(level));

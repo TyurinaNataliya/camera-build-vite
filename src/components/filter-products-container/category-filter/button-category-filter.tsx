@@ -15,6 +15,7 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
     <div className="custom-checkbox catalog-filter__item">
       <label>
         <input
+          data-testid="btnCategiry"
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationCategorySlice.actions.changeType(category));
