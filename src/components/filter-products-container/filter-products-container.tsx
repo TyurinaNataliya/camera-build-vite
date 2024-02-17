@@ -1,5 +1,6 @@
+import { useCallback } from 'react';
 import { useAppDispatch } from '../../hooks/store';
-import { fetchProductsAction } from '../../services/thunk/fetch-products';
+
 import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
 import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice';
 import { FiltrationPriceSlice } from '../../store/slices/filtration-price-slice';
@@ -11,14 +12,14 @@ import { TypeCameras } from './type-cameras/type-cameras';
 
 function FilterProductsContainer(): JSX.Element {
   const dispatch = useAppDispatch();
-  function resetFiltration() {
+  const resetFiltration = useCallback(() => {
     dispatch(FiltrationCategorySlice.actions.changeType(''));
     dispatch(FiltrationTypeCamerasSlice.actions.changeType(''));
     dispatch(FiltrationLevelSlice.actions.changeType(''));
     dispatch(FiltrationPriceSlice.actions.changeFrom(''));
     dispatch(FiltrationPriceSlice.actions.changeTo(''));
-    dispatch(fetchProductsAction());
-  }
+  }, [dispatch]);
+
   return (
     <div
       className="catalog__aside"

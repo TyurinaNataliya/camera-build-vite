@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { fetchProductsAction } from '../../../services/thunk/fetch-products';
 import { FiltrationLevelSlice } from '../../../store/slices/filtration-level-slice';
 
 type Props = {
@@ -20,7 +19,6 @@ function ButtonLevelFilter({ level }: Props): JSX.Element {
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationLevelSlice.actions.changeType(level));
-            dispatch(fetchProductsAction());
           }}
           checked={
             stateCategoryFilter === '' ? false : stateCategoryFilter === level

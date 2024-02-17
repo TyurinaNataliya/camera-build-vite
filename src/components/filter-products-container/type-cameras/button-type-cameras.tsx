@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { fetchProductsAction } from '../../../services/thunk/fetch-products';
 import { FiltrationTypeCamerasSlice } from '../../../store/slices/filtration-type-cameras-slice';
 
 type Props = {
@@ -23,7 +22,6 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
             dispatch(
               FiltrationTypeCamerasSlice.actions.changeType(typeCameras)
             );
-            dispatch(fetchProductsAction());
           }}
           checked={
             stateTypeCameras === '' ? false : stateTypeCameras === typeCameras

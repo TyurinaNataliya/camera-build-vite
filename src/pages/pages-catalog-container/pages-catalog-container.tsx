@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
@@ -13,7 +13,6 @@ import { ModalCatalogAddItem } from '../../components/modals-components/modal-ca
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
 import { Link } from 'react-router-dom';
 import { SortingProductsContainer } from '../../components/sorting-products-container/sorting-products-container';
-import { productsSlice } from '../../store/slices/products-slice';
 import {
   sortByPriceDown,
   sortByPriceUp,
@@ -59,9 +58,6 @@ function CatalogContainer(): JSX.Element {
     (state) => state.sortingAscendingDescending.type
   );
 
-  const SortingAscendingDescendingProducts = useAppSelector(
-    (state) => state.products.typeAscendingDescending
-  );
   const selectedFiltrationCategoryProducts = useAppSelector(
     (state) => state.categoryFilter.category
   );
@@ -74,54 +70,51 @@ function CatalogContainer(): JSX.Element {
     (state) => state.levelFilter.level
   );
 
-  useEffect(() => {
-    const productToFiltrationCategory =
-      selectedFiltrationCategoryProducts === ''
-        ? products || []
-        : [...(products || [])]?.filter(
-            (prodict) => prodict.category === selectedFiltrationCategoryProducts
-          ) || [];
-    dispatch(
-      productsSlice.actions.addCategoryProductsFiltration(
-        productToFiltrationCategory
-      )
-    );
-    const productToFiltrationTypeCameras =
-      selectedFiltrationTypeCameras === ''
-        ? productToFiltrationCategory || []
-        : [...(productToFiltrationCategory || [])]?.filter(
-            (prodict) => prodict.type === selectedFiltrationTypeCameras
-          ) || [];
-    dispatch(
-      productsSlice.actions.addTypeCamerasFilter(productToFiltrationTypeCameras)
-    );
-    const productToFiltrationLevel =
-      selectedFiltrationLevel === ''
-        ? productToFiltrationTypeCameras || []
-        : [...(productToFiltrationTypeCameras || [])]?.filter(
-            (prodict) => prodict.level === selectedFiltrationLevel
-          ) || [];
-    dispatch(productsSlice.actions.addLevelFilter(productToFiltrationLevel));
+  const { priceFilter } = useAppSelector((state) => state);
 
-    const productToSortedAscendingDescending =
-      selectedSortingAscendingDescendingProducts === 'down'
-        ? [...(productToFiltrationLevel || [])]?.sort(
-            selectedSortingTypeProducts === 'sortPopular'
-              ? sortByRatingDown
-              : sortByPriceDown
-          ) || []
-        : [...(productToFiltrationLevel || [])]?.sort(
-            selectedSortingTypeProducts === 'sortPopular'
-              ? sortByRatingUp
-              : sortByPriceUp
-          );
-    dispatch(
-      productsSlice.actions.addAscendingDescendingProductsSorting(
-        productToSortedAscendingDescending
-      )
-    );
+  const filteredProducts = useMemo(() => {
+    let result = [...(products || [])];
+    if (selectedFiltrationCategoryProducts) {
+      result = result.filter(
+        (product) => product.category === selectedFiltrationCategoryProducts
+      );
+    }
+    if (selectedFiltrationTypeCameras) {
+      result = result.filter(
+        (product) => product.type === selectedFiltrationTypeCameras
+      );
+    }
+    if (selectedFiltrationLevel) {
+      result = result.filter(
+        (product) => product.level === selectedFiltrationLevel
+      );
+    }
+    if (selectedSortingTypeProducts) {
+      if (selectedSortingTypeProducts === 'sortPrice') {
+        result = result.sort(
+          selectedSortingAscendingDescendingProducts === 'down'
+            ? sortByPriceDown
+            : sortByPriceUp
+        );
+      } else {
+        result = result.sort(
+          selectedSortingAscendingDescendingProducts === 'down'
+            ? sortByRatingDown
+            : sortByRatingUp
+        );
+      }
+    }
+    if (priceFilter.priceFrom && priceFilter.priceTo) {
+      result = result.filter(
+        (e) =>
+          e.price >= Number(priceFilter.priceFrom) &&
+          e.price <= Number(priceFilter.priceTo)
+      );
+    }
+    return result;
   }, [
-    dispatch,
+    priceFilter.priceFrom,
+    priceFilter.priceTo,
     products,
     selectedFiltrationCategoryProducts,
     selectedFiltrationLevel,
@@ -195,9 +188,9 @@ function CatalogContainer(): JSX.Element {
                     <div className="catalog-sort">
                       <form action="#">
                         <SortingProductsContainer />
-                        {SortingAscendingDescendingProducts && (
+                        {filteredProducts && (
                           <PagePagination
-                            productsCameras={SortingAscendingDescendingProducts}
+                            productsCameras={filteredProducts}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

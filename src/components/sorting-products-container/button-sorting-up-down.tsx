@@ -1,6 +1,6 @@
 import { NAME_ASCENDING_DESCENDING } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { fetchProductsAction } from '../../services/thunk/fetch-products';
+
 import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
 
 type Props = {
@@ -20,7 +20,6 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
         data-testid="btnSortingUpDown"
         onClick={() => {
           dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
-          dispatch(fetchProductsAction());
         }}
         type="radio"
         id={type}

@@ -1,6 +1,6 @@
 import { NAME_TYPE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { fetchProductsAction } from '../../services/thunk/fetch-products';
+
 import { SortingTypeProductSlice } from '../../store/slices/sorting-type-product-slice';
 
 type Props = {
@@ -18,7 +18,6 @@ function ButtonSortingType({ type, index }: Props): JSX.Element {
         data-testid="btnSortingType"
         onClick={() => {
           dispatch(SortingTypeProductSlice.actions.changeType(type));
-          dispatch(fetchProductsAction());
         }}
         type="radio"
         id={type}

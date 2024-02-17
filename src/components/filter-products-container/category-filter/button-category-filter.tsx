@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
-import { fetchProductsAction } from '../../../services/thunk/fetch-products';
 import { FiltrationCategorySlice } from '../../../store/slices/filtration-category-slice';
 
 type Props = {
@@ -19,7 +18,6 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationCategorySlice.actions.changeType(category));
-            dispatch(fetchProductsAction());
           }}
           checked={
             stateCategoryFilter === ''
