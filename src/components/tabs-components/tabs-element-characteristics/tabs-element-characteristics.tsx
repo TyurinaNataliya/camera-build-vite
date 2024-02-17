@@ -8,7 +8,10 @@ function TabsElementCharacteristics({ product }: Props): JSX.Element {
   const { vendorCode, category, type, level } = product;
 
   return (
-    <div className="tabs__element is-active">
+    <div
+      className="tabs__element is-active"
+      data-testid="TabsElementCharacteristics"
+    >
       <ul className="product__tabs-list">
         <li className="item-list">
           <span className="item-list__title">Артикул:</span>

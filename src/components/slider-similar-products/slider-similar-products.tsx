@@ -9,7 +9,7 @@ import './slider-similar.css';
 
 type Props = {
   similarProducts: TypeProduct[];
-  handleActiveModalItem: () => void;
+  handleActiveModalItem?: () => void;
 };
 
 function SliderSimilarProducts({
@@ -17,7 +17,10 @@ function SliderSimilarProducts({
   handleActiveModalItem,
 }: Props): JSX.Element {
   return (
-    <section className="product-similar">
+    <section
+      className="product-similar"
+      data-testid="componentSliderSimilarProducts"
+    >
       {similarProducts && (
         <div className="container">
           <h2 className="title title--h3">Похожие товары</h2>

@@ -7,7 +7,7 @@ type Props = {
 function TabsElementText({ product }: Props): JSX.Element {
   const { description } = product;
   return (
-    <div className="tabs__element is-active">
+    <div className="tabs__element is-active" data-testid="TabsElementText">
       <div className="product__tabs-text">
         {description.split('.').map((e) => (
           <p key={e}>{e}.</p>
