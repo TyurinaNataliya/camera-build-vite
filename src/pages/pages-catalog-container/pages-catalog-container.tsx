@@ -11,7 +11,7 @@ import { fetchPromoProductsAction } from '../../services/thunk/fetch-promo-produ
 import { PagePagination } from '../../components/pagination/page-pagination/page-pagination';
 import { ModalCatalogAddItem } from '../../components/modals-components/modal-catalog-add-item/modal-catalog-add-item';
 import { ModalAddItemSuccess } from '../../components/modals-components/modal-add-item-succes/modal-add-item-success';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SortingProductsContainer } from '../../components/sorting-products-container/sorting-products-container';
 import {
   sortByPriceDown,
@@ -20,9 +20,57 @@ import {
   sortByRatingUp,
 } from '../../utils/utils';
 import { FilterProductsContainer } from '../../components/filter-products-container/filter-products-container';
+import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
+import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice';
+import { PaginationSlice } from '../../store/slices/pagination-slice';
+import { FiltrationTypeCamerasSlice } from '../../store/slices/filtration-type-cameras-slice';
+import { SortingTypeProductSlice } from '../../store/slices/sorting-type-product-slice';
+import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('category')) {
+      dispatch(
+        FiltrationCategorySlice.actions.changeType(
+          searchParams.get('category') || ''
+        )
+      );
+    }
+    if (searchParams.get('type')) {
+      dispatch(
+        FiltrationTypeCamerasSlice.actions.changeType(
+          searchParams.get('type') || ''
+        )
+      );
+    }
+    if (searchParams.get('level')) {
+      dispatch(
+        FiltrationLevelSlice.actions.changeType(searchParams.get('level') || '')
+      );
+    }
+    if (searchParams.get('sorting')) {
+      dispatch(
+        SortingTypeProductSlice.actions.changeType(
+          searchParams.get('sorting') || ''
+        )
+      );
+    }
+    if (searchParams.get('order')) {
+      dispatch(
+        SortingAscendingDescendingSlice.actions.changeType(
+          searchParams.get('order') || ''
+        )
+      );
+    }
+    if (searchParams.get('page')) {
+      dispatch(
+        PaginationSlice.actions.changePage(searchParams.get('page') || '')
+      );
+    }
+  }, [dispatch, searchParams]);
 
   const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
   const handleActiveModalItem = () => {

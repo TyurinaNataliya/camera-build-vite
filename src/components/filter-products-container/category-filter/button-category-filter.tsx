@@ -1,5 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationCategorySlice } from '../../../store/slices/filtration-category-slice';
 
@@ -9,15 +8,10 @@ type Props = {
 
 function ButtonCategoryFilter({ category }: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const stateCategoryFilter = useAppSelector(
     (state) => state.categoryFilter.category
   );
-  const stateTypeSorting = useAppSelector((state) => state.sortingType.type);
-  const stateType = useAppSelector(
-    (state) => state.typeCamerasFilter.typeCameras
-  );
-  const statelevel = useAppSelector((state) => state.levelFilter.level);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div className="custom-checkbox catalog-filter__item">
@@ -27,9 +21,9 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationCategorySlice.actions.changeType(category));
-            navigate(
-              `${AppRoute.Catalog}?page=1/sorting='${stateTypeSorting}'/filtration='${category}''${stateType}''${statelevel}'`
-            );
+            searchParams.set('category', category);
+            searchParams.delete('page');
+            setSearchParams(searchParams);
           }}
           checked={
             stateCategoryFilter === ''

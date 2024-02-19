@@ -11,7 +11,9 @@ describe('Component:FilterProductsContainer', () => {
   });
 
   it('should render correctly', () => {
-    const { withStoreComponent } = withStore(<FilterProductsContainer />);
+    const { withStoreComponent } = withStore(
+      <FilterProductsContainer filteredProducts={[]} />
+    );
     const preparedComponent = withHistory(withStoreComponent, mockHistory);
 
     const ComponentFilterProductsContainerTextId =

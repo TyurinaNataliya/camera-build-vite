@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationLevelSlice } from '../../../store/slices/filtration-level-slice';
-import { AppRoute } from '../../../const';
 
 type Props = {
   level: string;
@@ -9,17 +8,10 @@ type Props = {
 
 function ButtonLevelFilter({ level }: Props): JSX.Element {
   const dispatch = useAppDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const stateCategoryFilter = useAppSelector(
     (state) => state.levelFilter.level
-  );
-  const navigate = useNavigate();
-  const stateTypeSorting = useAppSelector((state) => state.sortingType.type);
-  const stateCategory = useAppSelector(
-    (state) => state.categoryFilter.category
-  );
-  const stateType = useAppSelector(
-    (state) => state.typeCamerasFilter.typeCameras
   );
 
   return (
@@ -30,9 +22,9 @@ function ButtonLevelFilter({ level }: Props): JSX.Element {
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationLevelSlice.actions.changeType(level));
-            navigate(
-              `${AppRoute.Catalog}?page=1/sorting='${stateTypeSorting}'/filtration='${stateCategory}''${stateType}''${level}'`
-            );
+            searchParams.set('level', level);
+            searchParams.delete('page');
+            setSearchParams(searchParams);
           }}
           checked={
             stateCategoryFilter === '' ? false : stateCategoryFilter === level
