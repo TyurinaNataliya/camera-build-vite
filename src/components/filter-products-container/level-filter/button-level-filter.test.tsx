@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import { withHistory } from '../../../utils/mock-component';
-import { ButtonLevelFilter } from './button-level-filter';
+import { ButtonLevelFilter } from './button-level-filter.tsx';
 
 describe('Component:btnLevel', () => {
   it('should render correctly', () => {

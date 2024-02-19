@@ -1,5 +1,5 @@
 import { LEVEL_FILTER } from '../../../const';
-import { ButtonLevelFilter } from './button-level-filter';
+import { ButtonLevelFilter } from './button-level-filter.tsx';
 
 function LevelFilter(): JSX.Element {
   return (
