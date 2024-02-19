@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useMemo } from 'react';
 import { PaginateButton } from '../paginate-button/paginate-button';
+import { useAppSelector } from '../../../hooks/store';
 
 type Props = {
   maxPage: number;
@@ -25,6 +26,14 @@ function PaginationPagesNumbers({
 
     return result;
   }, [currentPage, maxPage]);
+  const stateTypeSorting = useAppSelector((state) => state.sortingType.type);
+  const stateCategory = useAppSelector(
+    (state) => state.categoryFilter.category
+  );
+  const stateType = useAppSelector(
+    (state) => state.typeCamerasFilter.typeCameras
+  );
+  const statelevel = useAppSelector((state) => state.levelFilter.level);
 
   return (
     <div className="pagination" data-testid="pagination-pages-numbers">
@@ -44,7 +53,7 @@ function PaginationPagesNumbers({
                   ? 'pagination__link--active pagination__link'
                   : 'pagination__link'
               }
-              to={`${AppRoute.Catalog}?page=${number}`}
+              to={`${AppRoute.Catalog}?page=${number}/sorting='${stateTypeSorting}'/filtration='${stateCategory}''${stateType}''${statelevel}'`}
               onClick={() => onChangePage?.(number)}
             >
               {number}

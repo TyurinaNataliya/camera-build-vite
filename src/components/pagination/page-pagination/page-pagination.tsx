@@ -7,6 +7,8 @@ import {
   MIN_COUNT_CATALOG_CARDS,
 } from '../../../const';
 import { NotingNotFound } from '../../noting-not-found';
+import { PaginationSlice } from '../../../store/slices/pagination-slice';
+import { useAppDispatch } from '../../../hooks/store';
 
 type Props = {
   productsCameras: TypeProduct[];
@@ -20,6 +22,7 @@ function PagePagination({
   const [products, setProducts] = useState<TypeProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getProducts = () => {
@@ -32,6 +35,10 @@ function PagePagination({
     getProducts();
     return () => (setProducts([]), setLoading(false));
   }, [productsCameras]);
+
+  useMemo(() => {
+    dispatch(PaginationSlice.actions.changePage(String(currentPage)));
+  }, [currentPage, dispatch]);
 
   const lastProductIndex = useMemo(
     () => currentPage * MAX_COUNT_PRODUCTS_PAGE,

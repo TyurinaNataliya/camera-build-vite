@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useAppDispatch } from '../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 import { FiltrationCategorySlice } from '../../store/slices/filtration-category-slice';
 import { FiltrationLevelSlice } from '../../store/slices/filtration-level-slice';
@@ -9,16 +9,23 @@ import { CategoryFilter } from './category-filter/category-filter';
 import { LevelFilter } from './level-filter/level-filter';
 import { PriceFilter } from './price-filter/price-filter';
 import { TypeCameras } from './type-cameras/type-cameras';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { productsSlice } from '../../store/slices/products-slice';
 
 function FilterProductsContainer(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const stateTypeSorting = useAppSelector((state) => state.sortingType.type);
   const resetFiltration = useCallback(() => {
     dispatch(FiltrationCategorySlice.actions.changeType(''));
     dispatch(FiltrationTypeCamerasSlice.actions.changeType(''));
     dispatch(FiltrationLevelSlice.actions.changeType(''));
     dispatch(FiltrationPriceSlice.actions.changeFrom(''));
     dispatch(FiltrationPriceSlice.actions.changeTo(''));
-  }, [dispatch]);
+    dispatch(productsSlice.actions.changePage('1'));
+    navigate(`${AppRoute.Catalog}?page=1/sorting='${stateTypeSorting}'`);
+  }, [dispatch, navigate, stateTypeSorting]);
 
   return (
     <div

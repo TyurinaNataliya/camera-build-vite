@@ -18,6 +18,7 @@ type StateProducts = {
   typeCamerasFiltration: TypeProduct[];
   levelFiltration: TypeProduct[];
   priceFiltration: TypeProduct[];
+  changePage: string;
 };
 
 const initialState: StateProducts = {
@@ -33,6 +34,7 @@ const initialState: StateProducts = {
   typeCamerasFiltration: [],
   levelFiltration: [],
   priceFiltration: [],
+  changePage: '1',
 };
 
 const productsSlice = createSlice({
@@ -41,6 +43,9 @@ const productsSlice = createSlice({
   reducers: {
     changeType(state, action: PayloadAction<TypeProduct[]>) {
       state.changeType = action.payload;
+    },
+    changePage(state, action: PayloadAction<string>) {
+      state.changePage = action.payload;
     },
     addTypeProductsSorting(state, action: PayloadAction<TypeProduct[]>) {
       state.typeProductsSorting = action.payload;

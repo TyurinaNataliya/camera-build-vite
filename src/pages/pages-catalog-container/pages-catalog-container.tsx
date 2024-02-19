@@ -104,6 +104,17 @@ function CatalogContainer(): JSX.Element {
         );
       }
     }
+    if (
+      selectedSortingAscendingDescendingProducts &&
+      !selectedSortingTypeProducts
+    ) {
+      result = result.sort(
+        selectedSortingAscendingDescendingProducts === 'down'
+          ? sortByPriceDown
+          : sortByPriceUp
+      );
+    }
+
     if (priceFilter.priceFrom && priceFilter.priceTo) {
       result = result.filter(
         (e) =>
