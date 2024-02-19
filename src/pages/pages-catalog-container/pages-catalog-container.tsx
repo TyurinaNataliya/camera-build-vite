@@ -194,7 +194,9 @@ function CatalogContainer(): JSX.Element {
                   Каталог фото- и видеотехники
                 </h1>
                 <div className="page-content__columns">
-                  <FilterProductsContainer />
+                  <FilterProductsContainer
+                    filteredProducts={filteredProducts}
+                  />
                   <div className="catalog__content">
                     <div className="catalog-sort">
                       <form action="#">

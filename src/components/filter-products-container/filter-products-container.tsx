@@ -12,8 +12,13 @@ import { TypeCameras } from './type-cameras/type-cameras';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { productsSlice } from '../../store/slices/products-slice';
+import { TypeProduct } from '../../type-data/type';
 
-function FilterProductsContainer(): JSX.Element {
+type Props = {
+  filteredProducts: TypeProduct[];
+};
+
+function FilterProductsContainer({ filteredProducts }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const stateTypeSorting = useAppSelector((state) => state.sortingType.type);
@@ -35,7 +40,7 @@ function FilterProductsContainer(): JSX.Element {
       <div className="catalog-filter">
         <form action="#">
           <h2 className="visually-hidden">Фильтр</h2>
-          <PriceFilter />
+          <PriceFilter filteredProducts={filteredProducts} />
           <CategoryFilter />
           <TypeCameras />
           <LevelFilter />

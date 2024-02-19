@@ -1,14 +1,25 @@
-import { useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import { useMemo, useState } from 'react';
+import { useAppDispatch } from '../../../hooks/store';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
+import { TypeProduct } from '../../../type-data/type';
 
-function PriceFilter(): JSX.Element {
+type Props = {
+  filteredProducts: TypeProduct[];
+};
+
+function PriceFilter({ filteredProducts }: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
-  const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
-  const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
 
-  const listPriceProducts = [...(products || [])].map(
+  const [statePriceFrom, setStatePriceFrom] = useState('');
+  function hendlePriceFrom(event: React.ChangeEvent<HTMLInputElement>) {
+    setStatePriceFrom(event.target.value);
+  }
+  const [statePriceTo, setStatePriceTo] = useState('');
+  function hendlePriceTo(event: React.ChangeEvent<HTMLInputElement>) {
+    setStatePriceTo(event.target.value);
+  }
+
+  const listPriceProducts = [...(filteredProducts || [])].map(
     (product) => product.price
   );
   const maxPriceProduct = Math.max(...listPriceProducts);
@@ -18,21 +29,32 @@ function PriceFilter(): JSX.Element {
     if (Number(statePriceFrom) < 0) {
       return 0;
     }
-    // if (Number(statePriceFrom) < minPriceProduct) {
-    //   return minPriceProduct;
-    // }
-    return statePriceFrom;
-  }, [statePriceFrom]);
+    if (statePriceFrom.length && Number(statePriceFrom) < minPriceProduct) {
+      return minPriceProduct;
+    }
+    if (
+      statePriceFrom.length >= String(maxPriceProduct).length &&
+      Number(statePriceFrom) > maxPriceProduct
+    ) {
+      return maxPriceProduct;
+    }
+  }, [maxPriceProduct, minPriceProduct, statePriceFrom]);
 
   const resultTo = useMemo(() => {
     if (Number(statePriceTo) < 0) {
       return 0;
     }
-    // if (Number(statePriceTo) < maxPriceProduct) {
-    //   return maxPriceProduct;
-    // }
+    if (statePriceTo.length && Number(statePriceTo) < Number(statePriceFrom)) {
+      return Number(statePriceFrom);
+    }
+    if (
+      statePriceTo.length >= String(maxPriceProduct).length &&
+      Number(statePriceTo) > maxPriceProduct
+    ) {
+      return maxPriceProduct;
+    }
     return statePriceTo;
-  }, [statePriceTo]);
+  }, [maxPriceProduct, statePriceFrom, statePriceTo]);
 
   return (
     <fieldset className="catalog-filter__block">
@@ -46,6 +68,7 @@ function PriceFilter(): JSX.Element {
               placeholder={`от${minPriceProduct}`}
               value={resultFrom}
               onChange={(event) => {
+                hendlePriceFrom(event);
                 dispatch(
                   FiltrationPriceSlice.actions.changeFrom(event.target.value)
                 );
@@ -61,6 +84,7 @@ function PriceFilter(): JSX.Element {
               placeholder={`до${maxPriceProduct}`}
               value={resultTo}
               onChange={(event) => {
+                hendlePriceTo(event);
                 dispatch(
                   FiltrationPriceSlice.actions.changeTo(event.target.value)
                 );
