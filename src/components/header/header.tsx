@@ -12,7 +12,7 @@ function Header(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const products = useAppSelector((state) => state.products.products);
+  const products = useAppSelector((state) => state.products?.products);
 
   const nameLists = useMemo(
     () => products?.map((product) => product.name) || [],

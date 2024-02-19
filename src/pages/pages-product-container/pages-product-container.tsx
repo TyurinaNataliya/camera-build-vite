@@ -117,7 +117,7 @@ function ProductContainer(): JSX.Element {
   ]);
 
   return (
-    <div data-testid="product-container">
+    <div data-testid="productСontainer">
       <Header />
       <main>
         {modalActiveItem && product && (

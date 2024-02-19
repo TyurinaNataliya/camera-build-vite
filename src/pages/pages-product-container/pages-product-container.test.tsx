@@ -14,7 +14,7 @@ describe('Component:ProductContainer', () => {
     const { withStoreComponent } = withStore(<ProductContainer />);
     const preparedComponent = withHistory(withStoreComponent, mockHistory);
 
-    const ProductContainerTextId = 'product-container';
+    const ProductContainerTextId = 'productСontainer';
 
     render(preparedComponent);
 
