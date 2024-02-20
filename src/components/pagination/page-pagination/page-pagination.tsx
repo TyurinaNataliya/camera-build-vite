@@ -8,7 +8,7 @@ import {
 } from '../../../const';
 import { NotingNotFound } from '../../noting-not-found';
 import { PaginationSlice } from '../../../store/slices/pagination-slice';
-import { useAppDispatch } from '../../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 
 type Props = {
   productsCameras: TypeProduct[];
@@ -21,7 +21,10 @@ function PagePagination({
 }: Props): JSX.Element {
   const [products, setProducts] = useState<TypeProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPageString = useAppSelector(
+    (state) => state.pagination.currentPage
+  );
+  const currentPage = Number(currentPageString);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -72,11 +75,7 @@ function PagePagination({
         )}
       </div>
       {products.length > MIN_COUNT_CATALOG_CARDS && (
-        <PaginationPagesNumbers
-          maxPage={maxPage}
-          currentPage={currentPage}
-          onChangePage={setCurrentPage}
-        />
+        <PaginationPagesNumbers maxPage={maxPage} />
       )}
     </>
   );

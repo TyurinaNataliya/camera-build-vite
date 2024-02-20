@@ -12,6 +12,7 @@ import { TypeCameras } from './type-cameras/type-cameras';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { TypeProduct } from '../../type-data/type';
+import { PaginationSlice } from '../../store/slices/pagination-slice';
 
 type Props = {
   filteredProducts: TypeProduct[];
@@ -26,7 +27,8 @@ function FilterProductsContainer({ filteredProducts }: Props): JSX.Element {
     dispatch(FiltrationLevelSlice.actions.changeType(''));
     dispatch(FiltrationPriceSlice.actions.changeFrom(''));
     dispatch(FiltrationPriceSlice.actions.changeTo(''));
-    navigate(`${AppRoute.Catalog}`);
+    dispatch(PaginationSlice.actions.changePage('1'));
+    navigate(AppRoute.Catalog);
   }, [dispatch, navigate]);
 
   return (

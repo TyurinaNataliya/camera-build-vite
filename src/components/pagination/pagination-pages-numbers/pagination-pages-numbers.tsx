@@ -2,21 +2,21 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useMemo } from 'react';
 import { PaginateButton } from '../paginate-button/paginate-button';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
+import { PaginationSlice } from '../../../store/slices/pagination-slice';
 
 type Props = {
   maxPage: number;
-  onChangePage?: (pageNumber: number) => void;
-  currentPage: number;
 };
 
-function PaginationPagesNumbers({
-  maxPage,
-  onChangePage,
-  currentPage,
-}: Props): JSX.Element {
+function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
+  const currentPageString = useAppSelector(
+    (state) => state.pagination.currentPage
+  );
+  const currentPage = Number(currentPageString);
+  const dispatch = useAppDispatch();
   const numberPages = useMemo(() => {
     let result: number[] = [];
-
     if (currentPage <= 3) {
       result = Array.from({ length: maxPage > 3 ? 3 : maxPage }, (_, i) => ++i);
     } else if (currentPage === maxPage || currentPage === maxPage - 1) {
@@ -32,7 +32,9 @@ function PaginationPagesNumbers({
         {currentPage > 3 && (
           <PaginateButton
             currentPage={3}
-            onChange={onChangePage}
+            onChange={() =>
+              dispatch(PaginationSlice.actions.changePage(String(currentPage)))
+            }
             title="Назад"
           />
         )}
@@ -45,9 +47,9 @@ function PaginationPagesNumbers({
                   : 'pagination__link'
               }
               to={`${AppRoute.Catalog}?page=${number}`}
-              onClick={() => {
-                onChangePage?.(number);
-              }}
+              onClick={() =>
+                dispatch(PaginationSlice.actions.changePage(String(number)))
+              }
             >
               {number}
             </Link>
@@ -56,7 +58,9 @@ function PaginationPagesNumbers({
         {maxPage > 3 && maxPage >= currentPage + 2 && (
           <PaginateButton
             currentPage={4}
-            onChange={onChangePage}
+            onChange={() =>
+              dispatch(PaginationSlice.actions.changePage(String(currentPage)))
+            }
             title="Далее"
           />
         )}

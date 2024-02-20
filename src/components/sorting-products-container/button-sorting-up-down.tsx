@@ -3,6 +3,7 @@ import { NAME_ASCENDING_DESCENDING } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
+import { PaginationSlice } from '../../store/slices/pagination-slice';
 
 type Props = {
   type: string;
@@ -22,6 +23,7 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
         data-testid="btnSortingUpDown"
         onClick={() => {
           dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
+          dispatch(PaginationSlice.actions.changePage('1'));
           searchParams.set('order', type);
           searchParams.delete('page');
           setSearchParams(searchParams);

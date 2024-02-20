@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationLevelSlice } from '../../../store/slices/filtration-level-slice';
+import { PaginationSlice } from '../../../store/slices/pagination-slice';
 
 type Props = {
   level: string;
@@ -22,6 +23,7 @@ function ButtonLevelFilter({ level }: Props): JSX.Element {
           type="checkbox"
           onClick={() => {
             dispatch(FiltrationLevelSlice.actions.changeType(level));
+            dispatch(PaginationSlice.actions.changePage('1'));
             searchParams.set('level', level);
             searchParams.delete('page');
             setSearchParams(searchParams);

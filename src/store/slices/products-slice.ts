@@ -18,7 +18,7 @@ type StateProducts = {
   typeCamerasFiltration: TypeProduct[];
   levelFiltration: TypeProduct[];
   priceFiltration: TypeProduct[];
-  changePage: string;
+  pagination: string;
 };
 
 const initialState: StateProducts = {
@@ -34,7 +34,7 @@ const initialState: StateProducts = {
   typeCamerasFiltration: [],
   levelFiltration: [],
   priceFiltration: [],
-  changePage: '1',
+  pagination: '1',
 };
 
 const productsSlice = createSlice({
@@ -44,8 +44,8 @@ const productsSlice = createSlice({
     changeType(state, action: PayloadAction<TypeProduct[]>) {
       state.changeType = action.payload;
     },
-    changePage(state, action: PayloadAction<string>) {
-      state.changePage = action.payload;
+    addPagination(state, action: PayloadAction<string>) {
+      state.pagination = action.payload;
     },
     addTypeProductsSorting(state, action: PayloadAction<TypeProduct[]>) {
       state.typeProductsSorting = action.payload;

@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationTypeCamerasSlice } from '../../../store/slices/filtration-type-cameras-slice';
+import { PaginationSlice } from '../../../store/slices/pagination-slice';
 
 type Props = {
   typeCameras: string;
@@ -26,6 +27,7 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
             dispatch(
               FiltrationTypeCamerasSlice.actions.changeType(typeCameras)
             );
+            dispatch(PaginationSlice.actions.changePage('1'));
             searchParams.set('type', typeCameras);
             searchParams.delete('page');
             setSearchParams(searchParams);
