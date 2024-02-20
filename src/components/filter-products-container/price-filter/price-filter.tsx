@@ -13,20 +13,20 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
   const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
   const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
 
-  const hendlePriceFrom = useCallback(
+  const handlePriceFrom = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setTimeout(() => {
         dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
-      }, 2000);
+      }, 1000);
     },
     [dispatch]
   );
 
-  const hendlePriceTo = useCallback(
+  const handlePriceTo = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setTimeout(() => {
         dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
-      }, 2000);
+      }, 1000);
     },
     [dispatch]
   );
@@ -53,7 +53,6 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
     if (statePriceTo && Number(statePriceTo) > maxPriceProduct) {
       return maxPriceProduct;
     }
-    return statePriceTo;
   }, [maxPriceProduct, statePriceFrom, statePriceTo]);
 
   return (
@@ -68,7 +67,7 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
               placeholder={`от${minPriceProduct}`}
               value={resultFrom}
               onChange={(event) => {
-                hendlePriceFrom(event);
+                handlePriceFrom(event);
               }}
             />
           </label>
@@ -81,7 +80,7 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
               placeholder={`до${maxPriceProduct}`}
               value={resultTo}
               onChange={(event) => {
-                hendlePriceTo(event);
+                handlePriceTo(event);
               }}
             />
           </label>
