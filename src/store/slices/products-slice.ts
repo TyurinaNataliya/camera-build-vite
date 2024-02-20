@@ -19,6 +19,8 @@ type StateProducts = {
   levelFiltration: TypeProduct[];
   priceFiltration: TypeProduct[];
   pagination: string;
+  priceFrom: string;
+  priceTo: string;
 };
 
 const initialState: StateProducts = {
@@ -35,6 +37,8 @@ const initialState: StateProducts = {
   levelFiltration: [],
   priceFiltration: [],
   pagination: '1',
+  priceFrom: '',
+  priceTo: '',
 };
 
 const productsSlice = createSlice({
@@ -46,6 +50,12 @@ const productsSlice = createSlice({
     },
     addPagination(state, action: PayloadAction<string>) {
       state.pagination = action.payload;
+    },
+    addPriceFrom(state, action: PayloadAction<string>) {
+      state.priceFrom = action.payload;
+    },
+    addPriceTo(state, action: PayloadAction<string>) {
+      state.priceTo = action.payload;
     },
     addTypeProductsSorting(state, action: PayloadAction<TypeProduct[]>) {
       state.typeProductsSorting = action.payload;

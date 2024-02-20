@@ -7,7 +7,7 @@ describe('Component:PaginationPagesNumbers', () => {
     const paginationPagesNumbersTextId = 'pagination-pages-numbers';
 
     const preparedComponent = withHistory(
-      <PaginationPagesNumbers currentPage={1} maxPage={6} />
+      <PaginationPagesNumbers maxPage={6} />
     );
 
     render(preparedComponent);

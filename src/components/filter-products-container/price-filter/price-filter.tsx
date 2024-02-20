@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { useAppDispatch } from '../../../hooks/store';
+import { useCallback, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
 import { TypeProduct } from '../../../type-data/type';
 
@@ -10,14 +10,26 @@ type Props = {
 function PriceFilter({ filteredProducts }: Props): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const [statePriceFrom, setStatePriceFrom] = useState('');
-  function hendlePriceFrom(event: React.ChangeEvent<HTMLInputElement>) {
-    setStatePriceFrom(event.target.value);
-  }
-  const [statePriceTo, setStatePriceTo] = useState('');
-  function hendlePriceTo(event: React.ChangeEvent<HTMLInputElement>) {
-    setStatePriceTo(event.target.value);
-  }
+  const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
+  const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
+
+  const hendlePriceFrom = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTimeout(() => {
+        dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
+      }, 2000);
+    },
+    [dispatch]
+  );
+
+  const hendlePriceTo = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTimeout(() => {
+        dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
+      }, 2000);
+    },
+    [dispatch]
+  );
 
   const listPriceProducts = [...(filteredProducts || [])].map(
     (product) => product.price
@@ -26,31 +38,19 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
   const minPriceProduct = Math.min(...listPriceProducts);
 
   const resultFrom = useMemo(() => {
-    if (Number(statePriceFrom) < 0) {
-      return 0;
-    }
-    if (statePriceFrom.length && Number(statePriceFrom) < minPriceProduct) {
+    if (statePriceFrom && Number(statePriceFrom) < minPriceProduct) {
       return minPriceProduct;
     }
-    if (
-      statePriceFrom.length >= String(maxPriceProduct).length &&
-      Number(statePriceFrom) > maxPriceProduct
-    ) {
+    if (statePriceFrom && Number(statePriceFrom) > maxPriceProduct) {
       return maxPriceProduct;
     }
   }, [maxPriceProduct, minPriceProduct, statePriceFrom]);
 
   const resultTo = useMemo(() => {
-    if (Number(statePriceTo) < 0) {
-      return 0;
-    }
-    if (statePriceTo.length && Number(statePriceTo) < Number(statePriceFrom)) {
+    if (statePriceTo && Number(statePriceTo) < Number(statePriceFrom)) {
       return Number(statePriceFrom);
     }
-    if (
-      statePriceTo.length >= String(maxPriceProduct).length &&
-      Number(statePriceTo) > maxPriceProduct
-    ) {
+    if (statePriceTo && Number(statePriceTo) > maxPriceProduct) {
       return maxPriceProduct;
     }
     return statePriceTo;
@@ -69,9 +69,6 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
               value={resultFrom}
               onChange={(event) => {
                 hendlePriceFrom(event);
-                dispatch(
-                  FiltrationPriceSlice.actions.changeFrom(event.target.value)
-                );
               }}
             />
           </label>
@@ -85,9 +82,6 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
               value={resultTo}
               onChange={(event) => {
                 hendlePriceTo(event);
-                dispatch(
-                  FiltrationPriceSlice.actions.changeTo(event.target.value)
-                );
               }}
             />
           </label>
