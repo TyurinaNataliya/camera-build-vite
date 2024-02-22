@@ -70,6 +70,14 @@ function CatalogContainer(): JSX.Element {
         PaginationSlice.actions.changePage(searchParams.get('page') || '')
       );
     }
+    return () => {
+      searchParams.delete('category');
+      searchParams.delete('type');
+      searchParams.delete('level');
+      searchParams.delete('sorting');
+      searchParams.delete('order');
+      searchParams.delete('page');
+    };
   }, [dispatch, searchParams]);
 
   const [modalActiveItem, setModalActiveItem] = useState<boolean>(false);
@@ -193,6 +201,9 @@ function CatalogContainer(): JSX.Element {
     } else {
       document.body.style.overflow = 'auto';
     }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, [modalActivSuccess, modalActiveItem]);
 
   return (

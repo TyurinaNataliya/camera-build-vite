@@ -4,6 +4,7 @@ import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import {
+  Fragment,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -109,6 +110,9 @@ function ProductContainer(): JSX.Element {
     } else {
       document.body.style.overflow = 'auto';
     }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, [
     modalActivSuccess,
     modalActiveItem,
