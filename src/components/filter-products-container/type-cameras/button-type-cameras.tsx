@@ -43,12 +43,12 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
           disabled={
             stateCategoryCameras === CategiryCameras.Photocamera
               ? false
-              : !!(
-                  (stateCategoryCameras === CategiryCameras.Videocamera &&
-                    typeCameras === TypesCameras.Film) ||
-                  (stateCategoryCameras === CategiryCameras.Videocamera &&
-                    typeCameras === TypesCameras.Instant)
-                )
+              : !!((
+                stateCategoryCameras === CategiryCameras.Videocamera &&
+                    typeCameras === TypesCameras.Film
+              ) || (stateCategoryCameras === CategiryCameras.Videocamera &&
+                    typeCameras === TypesCameras.Instant
+              ))
           }
         />
         <span className="custom-checkbox__icon"></span>

@@ -20,6 +20,7 @@ function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
   const currentPageString = useAppSelector(
     (state) => state.pagination.currentPage
   );
+
   const currentPage = Number(currentPageString);
   const dispatch = useAppDispatch();
   const numberPages = useMemo(() => {
@@ -49,8 +50,7 @@ function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
           <PaginateButton
             currentPage={MAX_COUNT_NUMBER_PAGE}
             onChange={() =>
-              dispatch(PaginationSlice.actions.changePage(String(currentPage)))
-            }
+              dispatch(PaginationSlice.actions.changePage(String(currentPage)))}
             title="Назад"
           />
         )}
@@ -64,25 +64,15 @@ function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
               }
               to={`${AppRoute.Catalog}?page=${number}`}
               onClick={() =>
-                dispatch(PaginationSlice.actions.changePage(String(number)))
-              }
+                dispatch(PaginationSlice.actions.changePage(String(number)))}
             >
               {number}
             </Link>
           </li>
         ))}
         {maxPage > MAX_COUNT_NUMBER_PAGE &&
-          maxPage >= currentPage + NUMBER_TWO_PAGE && (
-            <PaginateButton
-              currentPage={NUMBER_FOUR_PAGE}
-              onChange={() =>
-                dispatch(
-                  PaginationSlice.actions.changePage(String(currentPage))
-                )
-              }
-              title="Далее"
-            />
-          )}
+          maxPage >= currentPage + NUMBER_TWO_PAGE &&
+          (<PaginateButton currentPage={NUMBER_FOUR_PAGE} onChange={() =>dispatch(PaginationSlice.actions.changePage(String(currentPage)))}title="Далее"/>)}
       </ul>
     </div>
   );

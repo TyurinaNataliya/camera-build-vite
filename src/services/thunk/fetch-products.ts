@@ -11,9 +11,7 @@ const fetchProductsAction = createAsyncThunk<
   const { data } = await api.get<TypeProduct[]>(
     !params?.length
       ? ApiRoute.Products
-      : `${ApiRoute.Products}?price_gte=${params[0]}&price_lte=${
-          params[1] || 0
-        } `
+      : `${ApiRoute.Products}?price_gte=${params[0]}&price_lte=${params[1] || 0} `
   );
 
   return data;
