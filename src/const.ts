@@ -7,6 +7,10 @@ const MIN_COUNT_LETTERS_NAME = 2;
 const MAX_COUNT_LETTERS_NAME = 15;
 const MIN_COUNT_LETTERS_INPUT = 10;
 const MAX_COUNT_LETTERS_INPUT = 160;
+const NUMBER_FOUR_PAGE = 4;
+const NUMBER_FIVE_PAGE = 5;
+const NUMBER_TWO_PAGE = 2;
+const NUMBER_ONE_PAGE = 1;
 
 const AppRoute = {
   Basket: '/basket',
@@ -54,6 +58,10 @@ const TypeSorting = {
   sortPopular: 'по популярности',
 };
 export {
+  NUMBER_FIVE_PAGE,
+  NUMBER_TWO_PAGE,
+  NUMBER_ONE_PAGE,
+  NUMBER_FOUR_PAGE,
   LEVEL_FILTER,
   TYPE_CAMERAS,
   CATEGORY_FILTER,

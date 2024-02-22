@@ -1,5 +1,12 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import {
+  AppRoute,
+  MAX_COUNT_NUMBER_PAGE,
+  NUMBER_FIVE_PAGE,
+  NUMBER_FOUR_PAGE,
+  NUMBER_ONE_PAGE,
+  NUMBER_TWO_PAGE,
+} from '../../../const';
 import { useMemo } from 'react';
 import { PaginateButton } from '../paginate-button/paginate-button';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
@@ -17,10 +24,19 @@ function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const numberPages = useMemo(() => {
     let result: number[] = [];
-    if (currentPage <= 3) {
-      result = Array.from({ length: maxPage > 3 ? 3 : maxPage }, (_, i) => ++i);
-    } else if (currentPage === maxPage || currentPage === maxPage - 1) {
-      result = [4, 5];
+    if (currentPage <= MAX_COUNT_NUMBER_PAGE) {
+      result = Array.from(
+        {
+          length:
+            maxPage > MAX_COUNT_NUMBER_PAGE ? MAX_COUNT_NUMBER_PAGE : maxPage,
+        },
+        (_, i) => ++i
+      );
+    } else if (
+      currentPage === maxPage ||
+      currentPage === maxPage - NUMBER_ONE_PAGE
+    ) {
+      result = [NUMBER_FOUR_PAGE, NUMBER_FIVE_PAGE];
     }
 
     return result;
@@ -29,9 +45,9 @@ function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
   return (
     <div className="pagination" data-testid="pagination-pages-numbers">
       <ul className="pagination__list">
-        {currentPage > 3 && (
+        {currentPage > MAX_COUNT_NUMBER_PAGE && (
           <PaginateButton
-            currentPage={3}
+            currentPage={MAX_COUNT_NUMBER_PAGE}
             onChange={() =>
               dispatch(PaginationSlice.actions.changePage(String(currentPage)))
             }
@@ -55,15 +71,18 @@ function PaginationPagesNumbers({ maxPage }: Props): JSX.Element {
             </Link>
           </li>
         ))}
-        {maxPage > 3 && maxPage >= currentPage + 2 && (
-          <PaginateButton
-            currentPage={4}
-            onChange={() =>
-              dispatch(PaginationSlice.actions.changePage(String(currentPage)))
-            }
-            title="Далее"
-          />
-        )}
+        {maxPage > MAX_COUNT_NUMBER_PAGE &&
+          maxPage >= currentPage + NUMBER_TWO_PAGE && (
+            <PaginateButton
+              currentPage={NUMBER_FOUR_PAGE}
+              onChange={() =>
+                dispatch(
+                  PaginationSlice.actions.changePage(String(currentPage))
+                )
+              }
+              title="Далее"
+            />
+          )}
       </ul>
     </div>
   );

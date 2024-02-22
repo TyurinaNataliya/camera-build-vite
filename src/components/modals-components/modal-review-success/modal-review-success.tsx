@@ -18,7 +18,6 @@ function ModalReviewSuccess({
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         handleCloseModalReviewSucces?.();
-        // handleWindowUpdate();
       }
     };
     document.addEventListener('keydown', handleKey, true);
@@ -68,7 +67,6 @@ function ModalReviewSuccess({
             onClick={() => {
               navigate(`${AppRoute.Product}/${idProduct}`);
               handleCloseModalReviewSucces?.();
-              // handleWindowUpdate()
             }}
           >
             <svg width="10" height="10" aria-hidden="true">

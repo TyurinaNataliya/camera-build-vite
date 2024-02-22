@@ -16,7 +16,6 @@ import {
   MIN_COUNT_LETTERS_NAME,
   RatingMap,
 } from '../../../const';
-// import { fetchReviewsProductAction } from '../../../services/thunk/fetch-reviews-product';
 
 type Props = {
   handleCloseModalReview?: () => void;
