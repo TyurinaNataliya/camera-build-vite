@@ -39,6 +39,27 @@ const RatingMap = {
   1: 'Ужасно',
 };
 
+enum SearchParamsType {
+  Sorting = 'sorting',
+  Order = 'order',
+  Category = 'category',
+  Level = 'level',
+  Type = 'type',
+  Page = 'page',
+}
+
+enum CategiryCameras {
+  Photocamera = 'Фотоаппарат',
+  Videocamera = 'Видеокамера',
+}
+
+enum TypesCameras {
+  Digital = 'Цифровая',
+  Film = 'Плёночная',
+  Instant = 'Моментальная',
+  Collectors = 'Коллекционная',
+}
+
 const NAME_ASCENDING_DESCENDING_ENGLISH = ['up', 'down'];
 const NAME_ASCENDING_DESCENDING = ['По возрастанию', 'По убыванию'];
 const TypeSortingAscending = {
@@ -58,6 +79,9 @@ const TypeSorting = {
   sortPopular: 'по популярности',
 };
 export {
+  TypesCameras,
+  CategiryCameras,
+  SearchParamsType,
   NUMBER_FIVE_PAGE,
   NUMBER_TWO_PAGE,
   NUMBER_ONE_PAGE,

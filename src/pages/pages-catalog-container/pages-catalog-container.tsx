@@ -3,7 +3,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
-import { AppRoute, RequestStatus } from '../../const';
+import { AppRoute, RequestStatus, SearchParamsType } from '../../const';
 import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading/loading';
 import { Banner } from '../../components/banner/banner';
@@ -32,51 +32,55 @@ function CatalogContainer(): JSX.Element {
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get('category')) {
+    if (searchParams.get(SearchParamsType.Category)) {
       dispatch(
         FiltrationCategorySlice.actions.changeType(
-          searchParams.get('category') || ''
+          searchParams.get(SearchParamsType.Category) || ''
         )
       );
     }
-    if (searchParams.get('type')) {
+    if (searchParams.get(SearchParamsType.Type)) {
       dispatch(
         FiltrationTypeCamerasSlice.actions.changeType(
-          searchParams.get('type') || ''
+          searchParams.get(SearchParamsType.Type) || ''
         )
       );
     }
-    if (searchParams.get('level')) {
+    if (searchParams.get(SearchParamsType.Level)) {
       dispatch(
-        FiltrationLevelSlice.actions.changeType(searchParams.get('level') || '')
+        FiltrationLevelSlice.actions.changeType(
+          searchParams.get(SearchParamsType.Level) || ''
+        )
       );
     }
-    if (searchParams.get('sorting')) {
+    if (searchParams.get(SearchParamsType.Sorting)) {
       dispatch(
         SortingTypeProductSlice.actions.changeType(
-          searchParams.get('sorting') || ''
+          searchParams.get(SearchParamsType.Sorting) || ''
         )
       );
     }
-    if (searchParams.get('order')) {
+    if (searchParams.get(SearchParamsType.Order)) {
       dispatch(
         SortingAscendingDescendingSlice.actions.changeType(
-          searchParams.get('order') || ''
+          searchParams.get(SearchParamsType.Order) || ''
         )
       );
     }
-    if (searchParams.get('page')) {
+    if (searchParams.get(SearchParamsType.Page)) {
       dispatch(
-        PaginationSlice.actions.changePage(searchParams.get('page') || '')
+        PaginationSlice.actions.changePage(
+          searchParams.get(SearchParamsType.Page) || ''
+        )
       );
     }
     return () => {
-      searchParams.delete('category');
-      searchParams.delete('type');
-      searchParams.delete('level');
-      searchParams.delete('sorting');
-      searchParams.delete('order');
-      searchParams.delete('page');
+      searchParams.delete(SearchParamsType.Category);
+      searchParams.delete(SearchParamsType.Type);
+      searchParams.delete(SearchParamsType.Level);
+      searchParams.delete(SearchParamsType.Sorting);
+      searchParams.delete(SearchParamsType.Order);
+      searchParams.delete(SearchParamsType.Page);
     };
   }, [dispatch, searchParams]);
 

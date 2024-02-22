@@ -4,7 +4,6 @@ import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import {
-  Fragment,
   useCallback,
   useEffect,
   useLayoutEffect,

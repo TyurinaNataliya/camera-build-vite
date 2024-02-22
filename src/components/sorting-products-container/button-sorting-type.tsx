@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { NAME_TYPE } from '../../const';
+import { NAME_TYPE, SearchParamsType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 import { SortingTypeProductSlice } from '../../store/slices/sorting-type-product-slice';
@@ -22,8 +22,8 @@ function ButtonSortingType({ type, index }: Props): JSX.Element {
         onClick={() => {
           dispatch(SortingTypeProductSlice.actions.changeType(type));
           dispatch(PaginationSlice.actions.changePage('1'));
-          searchParams.set('sorting', type);
-          searchParams.delete('page');
+          searchParams.set(SearchParamsType.Sorting, type);
+          searchParams.delete(SearchParamsType.Page);
           setSearchParams(searchParams);
         }}
         type="radio"

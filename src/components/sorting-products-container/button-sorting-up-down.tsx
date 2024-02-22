@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { NAME_ASCENDING_DESCENDING } from '../../const';
+import { NAME_ASCENDING_DESCENDING, SearchParamsType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
@@ -24,8 +24,8 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
         onClick={() => {
           dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
           dispatch(PaginationSlice.actions.changePage('1'));
-          searchParams.set('order', type);
-          searchParams.delete('page');
+          searchParams.set(SearchParamsType.Order, type);
+          searchParams.delete(SearchParamsType.Page);
           setSearchParams(searchParams);
         }}
         type="radio"

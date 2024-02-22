@@ -2,6 +2,11 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationTypeCamerasSlice } from '../../../store/slices/filtration-type-cameras-slice';
 import { PaginationSlice } from '../../../store/slices/pagination-slice';
+import {
+  CategiryCameras,
+  SearchParamsType,
+  TypesCameras,
+} from '../../../const';
 
 type Props = {
   typeCameras: string;
@@ -28,21 +33,21 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
               FiltrationTypeCamerasSlice.actions.changeType(typeCameras)
             );
             dispatch(PaginationSlice.actions.changePage('1'));
-            searchParams.set('type', typeCameras);
-            searchParams.delete('page');
+            searchParams.set(SearchParamsType.Type, typeCameras);
+            searchParams.delete(SearchParamsType.Page);
             setSearchParams(searchParams);
           }}
           checked={
             stateTypeCameras === '' ? false : stateTypeCameras === typeCameras
           }
           disabled={
-            stateCategoryCameras === 'Фотоаппарат'
+            stateCategoryCameras === CategiryCameras.Photocamera
               ? false
               : !!(
-                  (stateCategoryCameras === 'Видеокамера' &&
-                    typeCameras === 'Плёночная') ||
-                  (stateCategoryCameras === 'Видеокамера' &&
-                    typeCameras === 'Моментальная')
+                  (stateCategoryCameras === CategiryCameras.Videocamera &&
+                    typeCameras === TypesCameras.Film) ||
+                  (stateCategoryCameras === CategiryCameras.Videocamera &&
+                    typeCameras === TypesCameras.Instant)
                 )
           }
         />
