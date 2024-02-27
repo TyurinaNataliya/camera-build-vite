@@ -29,13 +29,21 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
           data-testid="btnTypeCameras"
           type="checkbox"
           onClick={() => {
-            dispatch(
-              FiltrationTypeCamerasSlice.actions.changeType(typeCameras)
-            );
-            dispatch(PaginationSlice.actions.changePage('1'));
-            searchParams.set(SearchParamsType.Type, typeCameras);
-            searchParams.delete(SearchParamsType.Page);
-            setSearchParams(searchParams);
+            if(typeCameras === stateTypeCameras) {
+              dispatch(
+                FiltrationTypeCamerasSlice.actions.changeType(''));
+              searchParams.delete(SearchParamsType.Type);
+              setSearchParams(searchParams);
+
+            } else {
+              dispatch(
+                FiltrationTypeCamerasSlice.actions.changeType(typeCameras)
+              );
+              dispatch(PaginationSlice.actions.changePage('1'));
+              searchParams.set(SearchParamsType.Type, typeCameras);
+              searchParams.delete(SearchParamsType.Page);
+              setSearchParams(searchParams);
+            }
           }}
           checked={
             stateTypeCameras === '' ? false : stateTypeCameras === typeCameras

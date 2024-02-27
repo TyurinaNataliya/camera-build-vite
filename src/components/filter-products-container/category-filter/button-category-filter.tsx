@@ -22,11 +22,18 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
           data-testid="btnCategiry"
           type="checkbox"
           onClick={() => {
-            dispatch(FiltrationCategorySlice.actions.changeType(category));
-            dispatch(PaginationSlice.actions.changePage('1'));
-            searchParams.set(SearchParamsType.Category, category);
-            searchParams.delete(SearchParamsType.Page);
-            setSearchParams(searchParams);
+            if(category === stateCategoryFilter){
+              dispatch(FiltrationCategorySlice.actions.changeType(''));
+              searchParams.delete(SearchParamsType.Category);
+              setSearchParams(searchParams);
+            } else{
+              dispatch(FiltrationCategorySlice.actions.changeType(category));
+              dispatch(PaginationSlice.actions.changePage('1'));
+              searchParams.set(SearchParamsType.Category, category);
+              searchParams.delete(SearchParamsType.Page);
+              setSearchParams(searchParams);
+
+            }
           }}
           checked={
             stateCategoryFilter === ''
@@ -35,7 +42,7 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
           }
         />
         <span className="custom-checkbox__icon"></span>
-        <span className="custom-checkbox__label">{category}</span>
+        <span className="custom-checkbox__label">{category === 'Фотоаппарат' ? 'Фотокамера' : category}</span>
       </label>
     </div>
   );

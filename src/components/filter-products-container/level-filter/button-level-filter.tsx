@@ -23,11 +23,17 @@ function ButtonLevelFilter({ level }: Props): JSX.Element {
           data-testid="btnLevel"
           type="checkbox"
           onClick={() => {
-            dispatch(FiltrationLevelSlice.actions.changeType(level));
-            dispatch(PaginationSlice.actions.changePage('1'));
-            searchParams.set(SearchParamsType.Level, level);
-            searchParams.delete(SearchParamsType.Page);
-            setSearchParams(searchParams);
+            if(level === stateCategoryFilter){
+              dispatch(FiltrationLevelSlice.actions.changeType(''));
+              searchParams.delete(SearchParamsType.Level);
+              setSearchParams(searchParams);
+            } else{
+              dispatch(FiltrationLevelSlice.actions.changeType(level));
+              dispatch(PaginationSlice.actions.changePage('1'));
+              searchParams.set(SearchParamsType.Level, level);
+              searchParams.delete(SearchParamsType.Page);
+              setSearchParams(searchParams);
+            }
           }}
           checked={
             stateCategoryFilter === '' ? false : stateCategoryFilter === level
