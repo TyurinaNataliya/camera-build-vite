@@ -72,19 +72,19 @@ function ProductCardInCatalog({
       <div className="product-card__info">
         <div className="rate product-card__rate">
           <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
+            <use xlinkHref={rating >= 1 ? '#icon-full-star' : '#icon-star'}></use>
           </svg>
           <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
+            <use xlinkHref={rating >= 2 ? '#icon-full-star' : '#icon-star'}></use>
           </svg>
           <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
+            <use xlinkHref={rating >= 3 ? '#icon-full-star' : '#icon-star'}></use>
           </svg>
           <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
+            <use xlinkHref={rating >= 4 ? '#icon-full-star' : '#icon-star'}></use>
           </svg>
           <svg width="17" height="16" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
+            <use xlinkHref={rating >= 5 ? '#icon-full-star' : '#icon-star'}></use>
           </svg>
           <p className="visually-hidden">{`Рейтинг: ${rating}`}</p>
           <p className="rate__count">

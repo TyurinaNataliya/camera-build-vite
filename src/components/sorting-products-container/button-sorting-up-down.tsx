@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
 import { PaginationSlice } from '../../store/slices/pagination-slice';
+import { SortingTypeProductSlice } from '../../store/slices/sorting-type-product-slice';
 
 type Props = {
   type: string;
@@ -23,6 +24,7 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
         data-testid="btnSortingUpDown"
         onClick={() => {
           dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
+          dispatch(SortingTypeProductSlice.actions.changeType('sortPrice'));
           dispatch(PaginationSlice.actions.changePage('1'));
           searchParams.set(SearchParamsType.Order, type);
           searchParams.delete(SearchParamsType.Page);
