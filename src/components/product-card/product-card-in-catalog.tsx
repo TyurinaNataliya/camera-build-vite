@@ -27,6 +27,10 @@ function ProductCardInCatalog({
     previewImgWebp2x,
   } = product;
 
+  function numberWithSpaces(x:number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
   const dispatch = useAppDispatch();
   return (
     <div
@@ -91,7 +95,7 @@ function ProductCardInCatalog({
         <p className="product-card__title">{name}</p>
         <p className="product-card__price">
           <span className="visually-hidden">Цена:</span>
-          {`${price} ₽`}
+          {price < 1000 ? `${price} ₽` : numberWithSpaces(price)}
         </p>
       </div>
       <div className="product-card__buttons">

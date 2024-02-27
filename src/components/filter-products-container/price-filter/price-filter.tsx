@@ -64,7 +64,7 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
             <input
               type="number"
               name="price"
-              placeholder={`от${minPriceProduct}`}
+              placeholder={`от ${minPriceProduct}`}
               value={resultFrom}
               onChange={(event) => {
                 handlePriceFrom(event);
@@ -77,7 +77,7 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
             <input
               type="number"
               name="priceUp"
-              placeholder={`до${maxPriceProduct}`}
+              placeholder={`до ${maxPriceProduct}`}
               value={resultTo}
               onChange={(event) => {
                 handlePriceTo(event);
