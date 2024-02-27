@@ -1,21 +1,24 @@
+
 .swiper-pagination-bullet {
+  margin: 0 4px;
+  background: rgba(244, 244, 252, 1);
   width: 16px;
   height: 16px;
-  text-align: center;
-  line-height: 20px;
-  font-size: 12px;
+  opacity: 1;
 
-  opacity: 0.8;
-  background: rgba(244, 244, 252, 1);
 }
 .swiper-pagination {
-  position: absolute;
-  bottom: 20px;
-  left: -40px;
+ position: absolute;
   display: flex;
+  bottom: 20px;
   flex-direction: row-reverse;
+  margin-bottom: 10px;
+  margin-left: -40px;
+
 }
 
 .swiper-pagination-bullet-active {
   background: rgba(117, 117, 226, 1);
+  opacity: 1;
+
 }
