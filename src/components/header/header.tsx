@@ -12,12 +12,14 @@ function Header(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+
   const products = useAppSelector((state) => state.products?.products);
 
   const nameLists = useMemo(
     () => products?.map((product) => product.name) || [],
     [products]
   );
+
 
   const nameChangeHandle = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +38,12 @@ function Header(): JSX.Element {
     },
     [name, nameLists]
   );
+
   const nameResetHandle = useCallback(() => {
     setName('');
+
   }, []);
+
 
   return (
     <header className="header" id="header" data-testid="header-container">
@@ -108,9 +113,36 @@ function Header(): JSX.Element {
             >
               {options.map((product) => (
                 <li
+                  onKeyDown={(event)=>{
+                    if(event.code === 'ArrowUp'){
+                      event.preventDefault();
+                    }
+
+                    if(event.code === 'ArrowDown'){
+                      event.preventDefault();
+                    }
+                  }}
                   className="form-search__select-item"
                   tabIndex={0}
                   key={product}
+                  onKeyUp={(event)=>{
+                    if(event.code === 'Enter'){
+                      navigate(
+                        `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
+                      );
+                      dispatch(
+                        fetchProductAction(nameLists.indexOf(product) + 1)
+                      );
+                      dispatch(
+                        fetchSimilarProductsAction(nameLists.indexOf(product) + 1)
+                      );
+                      dispatch(
+                        fetchReviewsProductAction(nameLists.indexOf(product) + 1)
+                      );
+                    }
+
+                  }}
+
                   onClick={() => {
                     navigate(
                       `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
