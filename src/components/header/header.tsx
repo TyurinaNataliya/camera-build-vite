@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
@@ -11,7 +11,10 @@ function Header(): JSX.Element {
   const [options, setOptions] = useState<string[]>([]);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
+  const [currentTab, setCurrentTab] = useState(0);
 
   const products = useAppSelector((state) => state.products?.products);
 
@@ -25,25 +28,57 @@ function Header(): JSX.Element {
     (evt: ChangeEvent<HTMLInputElement>) => {
       setName(evt.target.value);
       function getOptions(nameInput: string, list: string[]) {
-        return list.filter((element) => {
-          const regex = new RegExp(nameInput, 'gi');
+        if (!nameInput) {
+          return [];
+        }
+        return list.filter((nameString) => nameString.toLowerCase().includes(nameInput.toLowerCase()));
 
-          return element.match(regex);
-        });
       }
 
-      if (name.length !== 0) {
-        setOptions(getOptions(name, nameLists));
+      if (evt.target.value.length !== 0) {
+        setOptions(getOptions(evt.target.value, nameLists));
       }
     },
-    [name, nameLists]
+    [nameLists]
   );
 
   const nameResetHandle = useCallback(() => {
     setName('');
+    inputRef.current?.focus();
+    setOptions([]);
 
   }, []);
 
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const keyCode = e.code;
+      if (keyCode === 'ArrowDown' && options.length - 1 > currentTab) {
+        setCurrentTab(currentTab + 1);
+      }
+      if (keyCode === 'ArrowUp' && currentTab >= 1) {
+        setCurrentTab(currentTab - 1);
+      }
+      if (keyCode === 'Enter') {
+        navigate(
+          `${AppRoute.Product}/${nameLists.indexOf(options[currentTab]) + 1}`
+        );
+        dispatch(
+          fetchProductAction(nameLists.indexOf(options[currentTab]) + 1)
+        );
+        dispatch(
+          fetchSimilarProductsAction(nameLists.indexOf(options[currentTab]) + 1)
+        );
+        dispatch(
+          fetchReviewsProductAction(nameLists.indexOf(options[currentTab]) + 1)
+        );
+      }
+
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [options, currentTab, navigate, nameLists, dispatch]);
 
   return (
     <header className="header" id="header" data-testid="header-container">
@@ -98,6 +133,7 @@ function Header(): JSX.Element {
                 autoComplete="off"
                 placeholder="Поиск по сайту"
                 value={name}
+                ref={inputRef}
                 onChange={(event) => {
                   nameChangeHandle(event);
                 }}
@@ -110,38 +146,30 @@ function Header(): JSX.Element {
                   ? { visibility: 'visible', opacity: 1 }
                   : {}
               }
+              ref={listRef}
             >
-              {options.map((product) => (
+              {options.map((product, index) => (
                 <li
-                  onKeyDown={(event)=>{
-                    if(event.code === 'ArrowUp'){
-                      event.preventDefault();
-                    }
-
-                    if(event.code === 'ArrowDown'){
-                      event.preventDefault();
-                    }
-                  }}
                   className="form-search__select-item"
+                  style={currentTab === index ? { background: '#c8c4e8' } : {}}
                   tabIndex={0}
                   key={product}
-                  onKeyUp={(event)=>{
-                    if(event.code === 'Enter'){
-                      navigate(
-                        `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
-                      );
-                      dispatch(
-                        fetchProductAction(nameLists.indexOf(product) + 1)
-                      );
-                      dispatch(
-                        fetchSimilarProductsAction(nameLists.indexOf(product) + 1)
-                      );
-                      dispatch(
-                        fetchReviewsProductAction(nameLists.indexOf(product) + 1)
-                      );
-                    }
-
-                  }}
+                  // onKeyDown={(event) => {
+                  //   if (event.code === 'Enter') {
+                  //     navigate(
+                  //       `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
+                  //     );
+                  //     dispatch(
+                  //       fetchProductAction(nameLists.indexOf(product) + 1)
+                  //     );
+                  //     dispatch(
+                  //       fetchSimilarProductsAction(nameLists.indexOf(product) + 1)
+                  //     );
+                  //     dispatch(
+                  //       fetchReviewsProductAction(nameLists.indexOf(product) + 1)
+                  //     );
+                  //   }
+                  // }}
 
                   onClick={() => {
                     navigate(

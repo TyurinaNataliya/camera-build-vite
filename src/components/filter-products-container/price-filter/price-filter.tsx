@@ -48,12 +48,12 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
 
   const resultTo = useMemo(() => {
     if (statePriceTo && Number(statePriceTo) < Number(statePriceFrom)) {
-      return Number(statePriceFrom);
+      return resultFrom;
     }
     if (statePriceTo && Number(statePriceTo) > maxPriceProduct) {
       return maxPriceProduct;
     }
-  }, [maxPriceProduct, statePriceFrom, statePriceTo]);
+  }, [maxPriceProduct, resultFrom, statePriceFrom, statePriceTo]);
 
   return (
     <fieldset className="catalog-filter__block">
