@@ -15,6 +15,9 @@ function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
   const { name, rating, reviewCount, price, id } = product;
   const [isActiveText, setIsActiveText] = useState<boolean>(true);
   const navigate = useNavigate();
+  function numberWithSpaces(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 
   return (
     <div className="container" data-testid="product-card">
@@ -59,7 +62,7 @@ function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
         </div>
         <p className="product__price">
           <span className="visually-hidden">Цена:</span>
-          {`${price} ₽`}
+          {price < 1000 ? `${price} ₽` : numberWithSpaces(price)}
         </p>
         <button
           className="btn btn--purple"
