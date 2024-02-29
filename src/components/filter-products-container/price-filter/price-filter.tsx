@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
 import { TypeProduct } from '../../../type-data/type';
@@ -10,50 +10,76 @@ type Props = {
 function PriceFilter({ filteredProducts }: Props): JSX.Element {
   const dispatch = useAppDispatch();
 
+
   const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
   const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
 
-  const handlePriceFrom = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTimeout(() => {
-        dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
-      }, 1000);
-    },
-    [dispatch]
+  const listPriceProducts = useMemo(
+    () => [...(filteredProducts || [])].map((product) => product.price),
+    [filteredProducts]
   );
+  const maxPriceProduct = useMemo(() => {
+    const max = Math.max(...listPriceProducts);
 
-  const handlePriceTo = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTimeout(() => {
-        dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
-      }, 1000);
-    },
-    [dispatch]
-  );
+    return max === Infinity ? 0 : max;
+  }, [listPriceProducts]);
+  const minPriceProduct = useMemo(() => {
+    const min = Math.min(...listPriceProducts);
+    return min < 0 ? 0 : min;
+  }, [listPriceProducts]);
 
-  const listPriceProducts = [...(filteredProducts || [])].map(
-    (product) => product.price
-  );
-  const maxPriceProduct = Math.max(...listPriceProducts);
-  const minPriceProduct = Math.min(...listPriceProducts);
+  const [priceTo, setPriceTo] = useState<string>('');
+  const [priceFrom, setPriceFrom] = useState<string>('');
 
-  const resultFrom = useMemo(() => {
-    if (statePriceFrom && Number(statePriceFrom) < minPriceProduct) {
-      return minPriceProduct;
-    }
-    if (statePriceFrom && Number(statePriceFrom) > maxPriceProduct) {
-      return maxPriceProduct;
-    }
-  }, [maxPriceProduct, minPriceProduct, statePriceFrom]);
+  useEffect(() => {
+    setPriceTo(statePriceTo);
+    return () => setPriceTo('');
+  }, [statePriceTo]);
 
-  const resultTo = useMemo(() => {
-    if (statePriceTo && Number(statePriceTo) < Number(statePriceFrom)) {
-      return resultFrom;
+  useEffect(() => {
+    setPriceFrom(statePriceFrom);
+    return () => setPriceFrom('');
+  }, [statePriceFrom]);
+
+  useEffect(() => {
+    if (!priceTo) {
+      return;
     }
-    if (statePriceTo && Number(statePriceTo) > maxPriceProduct) {
-      return maxPriceProduct;
+    const v = setTimeout(() => {
+      let res = priceTo;
+      if (Number(priceTo) <= minPriceProduct) {
+        res = minPriceProduct.toString();
+      }
+      if (Number(priceTo) >= maxPriceProduct) {
+        res = maxPriceProduct.toString();
+      }
+      if (priceFrom && Number(priceFrom) > minPriceProduct && Number(priceTo) < Number(priceFrom)) {
+        res = priceFrom.toString();
+      }
+      dispatch(FiltrationPriceSlice.actions.changeTo(res));
+    }, 1000);
+    return () => clearTimeout(v);
+  }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
+
+  useEffect(() => {
+    if (!priceFrom) {
+      return;
     }
-  }, [maxPriceProduct, resultFrom, statePriceFrom, statePriceTo]);
+    const v = setTimeout(() => {
+      let res = priceFrom;
+      if (Number(priceFrom) <= minPriceProduct) {
+        res = minPriceProduct.toString();
+      }
+      if (Number(priceFrom) >= maxPriceProduct) {
+        res = maxPriceProduct.toString();
+      }
+      if (priceTo && Number(priceTo) > minPriceProduct && Number(priceFrom) > Number(priceTo)) {
+        res = priceTo.toString();
+      }
+      dispatch(FiltrationPriceSlice.actions.changeFrom(res));
+    }, 1000);
+    return () => clearTimeout(v);
+  }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
 
   return (
     <fieldset className="catalog-filter__block">
@@ -65,9 +91,9 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
               type="number"
               name="price"
               placeholder={`от ${minPriceProduct}`}
-              value={resultFrom}
+              value={priceFrom}
               onChange={(event) => {
-                handlePriceFrom(event);
+                setPriceFrom(event.target.value);
               }}
             />
           </label>
@@ -78,9 +104,9 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
               type="number"
               name="priceUp"
               placeholder={`до ${maxPriceProduct}`}
-              value={resultTo}
+              value={priceTo}
               onChange={(event) => {
-                handlePriceTo(event);
+                setPriceTo(event.target.value);
               }}
             />
           </label>

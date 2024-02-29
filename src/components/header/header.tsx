@@ -154,22 +154,6 @@ function Header(): JSX.Element {
                   style={currentTab === index ? { background: '#c8c4e8' } : {}}
                   tabIndex={0}
                   key={product}
-                  // onKeyDown={(event) => {
-                  //   if (event.code === 'Enter') {
-                  //     navigate(
-                  //       `${AppRoute.Product}/${nameLists.indexOf(product) + 1}`
-                  //     );
-                  //     dispatch(
-                  //       fetchProductAction(nameLists.indexOf(product) + 1)
-                  //     );
-                  //     dispatch(
-                  //       fetchSimilarProductsAction(nameLists.indexOf(product) + 1)
-                  //     );
-                  //     dispatch(
-                  //       fetchReviewsProductAction(nameLists.indexOf(product) + 1)
-                  //     );
-                  //   }
-                  // }}
 
                   onClick={() => {
                     navigate(

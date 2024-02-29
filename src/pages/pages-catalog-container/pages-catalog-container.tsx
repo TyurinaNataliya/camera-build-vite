@@ -175,19 +175,17 @@ function CatalogContainer(): JSX.Element {
       );
     }
 
-    if (priceFilter.priceFrom && priceFilter.priceTo) {
-      result = result.filter(
-        (e) =>
-          e.price >= Number(priceFilter.priceFrom) &&
-          e.price <= Number(priceFilter.priceTo)
-      );
+    if (priceFilter.priceFrom) {
+      result = result.filter((e) => e.price >= Number(priceFilter.priceFrom));
+    }
+    if (priceFilter.priceTo) {
+      result = result.filter((e) => e.price <= Number(priceFilter.priceTo));
     }
     return result;
   }, [
     priceFilter.priceFrom,
     priceFilter.priceTo,
-    products,
-    selectedFiltrationCategoryProducts,
+    products, selectedFiltrationCategoryProducts,
     selectedFiltrationLevel,
     selectedFiltrationTypeCameras,
     selectedSortingAscendingDescendingProducts,
@@ -258,7 +256,7 @@ function CatalogContainer(): JSX.Element {
                 </h1>
                 <div className="page-content__columns">
                   <FilterProductsContainer
-                    filteredProducts={filteredProducts}
+                    filteredProducts={products || []}
                   />
                   <div className="catalog__content">
                     <div className="catalog-sort">
