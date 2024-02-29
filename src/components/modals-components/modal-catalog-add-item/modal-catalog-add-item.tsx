@@ -35,6 +35,10 @@ function ModalCatalogAddItem({
       document.removeEventListener('keydown', handleKey, true);
     };
   }, [handleCloseModalItem]);
+  function numberWithSpaces(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
 
   return (
     <div
@@ -78,7 +82,7 @@ function ModalCatalogAddItem({
               </ul>
               <p className="basket-item__price">
                 <span className="visually-hidden">Цена:</span>
-                {`${price} ₽`}
+                {price < 1000 ? `${price} ₽` : numberWithSpaces(price)}
               </p>
             </div>
           </div>
