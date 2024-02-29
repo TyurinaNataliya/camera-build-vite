@@ -14,7 +14,7 @@ function Header(): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = useState(-1);
 
   const products = useAppSelector((state) => state.products?.products);
 
