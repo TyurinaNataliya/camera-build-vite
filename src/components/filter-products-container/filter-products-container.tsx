@@ -11,14 +11,14 @@ import { PriceFilter } from './price-filter/price-filter';
 import { TypeCameras } from './type-cameras/type-cameras';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { TypeProduct } from '../../type-data/type';
 import { PaginationSlice } from '../../store/slices/pagination-slice';
 
 type Props = {
-  filteredProducts: TypeProduct[];
+  minPriceProduct: number;
+  maxPriceProduct: number;
 };
 
-function FilterProductsContainer({ filteredProducts }: Props): JSX.Element {
+function FilterProductsContainer({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const resetFiltration = useCallback(() => {
@@ -39,7 +39,7 @@ function FilterProductsContainer({ filteredProducts }: Props): JSX.Element {
       <div className="catalog-filter">
         <form action="#">
           <h2 className="visually-hidden">Фильтр</h2>
-          <PriceFilter filteredProducts={filteredProducts} />
+          <PriceFilter maxPriceProduct={maxPriceProduct} minPriceProduct={minPriceProduct} />
           <CategoryFilter />
           <TypeCameras />
           <LevelFilter />

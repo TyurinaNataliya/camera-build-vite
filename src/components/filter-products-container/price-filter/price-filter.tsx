@@ -1,32 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
-import { TypeProduct } from '../../../type-data/type';
 
 type Props = {
-  filteredProducts: TypeProduct[];
+  minPriceProduct: number;
+  maxPriceProduct: number;
 };
 
-function PriceFilter({ filteredProducts }: Props): JSX.Element {
+function PriceFilter({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
   const dispatch = useAppDispatch();
-
 
   const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
   const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
-
-  const listPriceProducts = useMemo(
-    () => [...(filteredProducts || [])].map((product) => product.price),
-    [filteredProducts]
-  );
-  const maxPriceProduct = useMemo(() => {
-    const max = Math.max(...listPriceProducts);
-
-    return max === Infinity ? 0 : max;
-  }, [listPriceProducts]);
-  const minPriceProduct = useMemo(() => {
-    const min = Math.min(...listPriceProducts);
-    return min < 0 ? 0 : min;
-  }, [listPriceProducts]);
 
   const [priceTo, setPriceTo] = useState<string>('');
   const [priceFrom, setPriceFrom] = useState<string>('');
@@ -42,43 +27,31 @@ function PriceFilter({ filteredProducts }: Props): JSX.Element {
   }, [statePriceFrom]);
 
   useEffect(() => {
-    if (!priceTo) {
-      return;
-    }
     const v = setTimeout(() => {
       let res = priceTo;
-      if (Number(priceTo) <= minPriceProduct) {
+      if (priceTo && Number(priceTo) <= minPriceProduct) {
         res = minPriceProduct.toString();
       }
-      if (Number(priceTo) >= maxPriceProduct) {
+      if (priceTo && Number(priceTo) >= maxPriceProduct) {
         res = maxPriceProduct.toString();
       }
-      if (Number(priceTo) < Number(priceFrom)) {
+      if (priceTo && priceFrom && Number(priceTo) < Number(priceFrom)) {
         res = priceFrom;
       }
-      // if (priceFrom && Number(priceFrom) > minPriceProduct && Number(priceTo) < Number(priceFrom)) {
-      //   res = priceFrom.toString();
-      // }
       dispatch(FiltrationPriceSlice.actions.changeTo(res));
     }, 1000);
     return () => clearTimeout(v);
   }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
 
   useEffect(() => {
-    if (!priceFrom) {
-      return;
-    }
     const v = setTimeout(() => {
       let res = priceFrom;
-      if (Number(priceFrom) <= minPriceProduct) {
+      if (priceFrom && Number(priceFrom) <= minPriceProduct) {
         res = minPriceProduct.toString();
       }
-      if (Number(priceFrom) >= maxPriceProduct) {
+      if (priceFrom && Number(priceFrom) >= maxPriceProduct) {
         res = maxPriceProduct.toString();
       }
-      // if (priceTo && Number(priceTo) > minPriceProduct && Number(priceFrom) > Number(priceTo)) {
-      //   res = priceTo.toString();
-      // }
       dispatch(FiltrationPriceSlice.actions.changeFrom(res));
     }, 1000);
     return () => clearTimeout(v);

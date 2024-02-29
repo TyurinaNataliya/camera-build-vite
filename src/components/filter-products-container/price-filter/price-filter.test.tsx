@@ -2,14 +2,14 @@ import { render, screen } from '@testing-library/react';
 
 import { withHistory } from '../../../utils/mock-component';
 import { PriceFilter } from './price-filter';
-import { MockProducts } from '../../../type-data/mock';
+
 
 describe('Component:Price', () => {
   it('should render correctly', () => {
     const ComponentPriceTextId = 'componentPrice';
 
     const preparedComponent = withHistory(
-      <PriceFilter filteredProducts={MockProducts} />
+      <PriceFilter maxPriceProduct={199000} minPriceProduct={1990} />
     );
 
     render(preparedComponent);

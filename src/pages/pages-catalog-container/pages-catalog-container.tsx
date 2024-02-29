@@ -175,13 +175,20 @@ function CatalogContainer(): JSX.Element {
       );
     }
 
+    const listPriceProducts = [...(result || [])].map((product) => product.price);
+
+    const maxPriceProduct = Math.max(...listPriceProducts) === Infinity ? 0 : Math.max(...listPriceProducts);
+
+    const minPriceProduct = Math.min(...listPriceProducts) < 0 ? 0 : Math.min(...listPriceProducts);
+
+
     if (priceFilter.priceFrom) {
       result = result.filter((e) => e.price >= Number(priceFilter.priceFrom));
     }
     if (priceFilter.priceTo) {
       result = result.filter((e) => e.price <= Number(priceFilter.priceTo));
     }
-    return result;
+    return { result, minPriceProduct, maxPriceProduct };
   }, [
     priceFilter.priceFrom,
     priceFilter.priceTo,
@@ -256,7 +263,8 @@ function CatalogContainer(): JSX.Element {
                 </h1>
                 <div className="page-content__columns">
                   <FilterProductsContainer
-                    filteredProducts={products || []}
+                    maxPriceProduct={filteredProducts.maxPriceProduct}
+                    minPriceProduct={filteredProducts.minPriceProduct}
                   />
                   <div className="catalog__content">
                     <div className="catalog-sort">
@@ -264,7 +272,7 @@ function CatalogContainer(): JSX.Element {
                         <SortingProductsContainer />
                         {filteredProducts && (
                           <PagePagination
-                            productsCameras={filteredProducts}
+                            productsCameras={filteredProducts.result}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

@@ -12,7 +12,7 @@ describe('Component:FilterProductsContainer', () => {
 
   it('should render correctly', () => {
     const { withStoreComponent } = withStore(
-      <FilterProductsContainer filteredProducts={[]} />
+      <FilterProductsContainer maxPriceProduct={199000} minPriceProduct={1990} />
     );
     const preparedComponent = withHistory(withStoreComponent, mockHistory);
 
