@@ -29,7 +29,7 @@ import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-asce
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (searchParams.get(SearchParamsType.Category)) {
@@ -148,7 +148,8 @@ function CatalogContainer(): JSX.Element {
         );
         dispatch(
           FiltrationTypeCamerasSlice.actions.changeType(''));
-
+        searchParams.delete(SearchParamsType.Type);
+        setSearchParams(searchParams);
       }
       result = result.filter(
         (product) => product.type === selectedFiltrationTypeCameras
