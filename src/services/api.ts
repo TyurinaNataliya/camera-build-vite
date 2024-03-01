@@ -4,7 +4,7 @@ import { AppRoute } from '../const';
 import { StatusCodes } from 'http-status-codes';
 import { getToken } from './token';
 
-const BACKEND_URL = 'https://camera-shop.accelerator.htmlacademy.pro';
+const BACKEND_URL = 'https://camera-shop.accelerator.htmlacademy.pro/';
 const REQUEST_TIMEOUT = 5000;
 const browserHistory = createBrowserHistory();
 

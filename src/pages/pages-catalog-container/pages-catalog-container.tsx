@@ -148,6 +148,7 @@ function CatalogContainer(): JSX.Element {
         );
         dispatch(
           FiltrationTypeCamerasSlice.actions.changeType(''));
+
       }
       result = result.filter(
         (product) => product.type === selectedFiltrationTypeCameras
