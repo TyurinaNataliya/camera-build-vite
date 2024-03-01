@@ -3,7 +3,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { fetchProductsAction } from '../../services/thunk/fetch-products';
-import { AppRoute, RequestStatus, SearchParamsType } from '../../const';
+import { AppRoute, CategiryCameras, RequestStatus, SearchParamsType, TypesCameras } from '../../const';
 import { ErrorMessage } from '../../components/error-message';
 import { LoadingComponent } from '../../components/loading/loading';
 import { Banner } from '../../components/banner/banner';
@@ -140,6 +140,15 @@ function CatalogContainer(): JSX.Element {
       );
     }
     if (selectedFiltrationTypeCameras) {
+      if ((selectedFiltrationCategoryProducts === CategiryCameras.Videocamera &&
+        selectedFiltrationTypeCameras === TypesCameras.Film) || (selectedFiltrationCategoryProducts === CategiryCameras.Videocamera &&
+          selectedFiltrationTypeCameras === TypesCameras.Instant)) {
+        result = result.filter(
+          (product) => product.category === selectedFiltrationCategoryProducts
+        );
+        dispatch(
+          FiltrationTypeCamerasSlice.actions.changeType(''));
+      }
       result = result.filter(
         (product) => product.type === selectedFiltrationTypeCameras
       );

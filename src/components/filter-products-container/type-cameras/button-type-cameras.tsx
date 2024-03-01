@@ -29,7 +29,7 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
           data-testid="btnTypeCameras"
           type="checkbox"
           onClick={() => {
-            if(typeCameras === stateTypeCameras) {
+            if (typeCameras === stateTypeCameras) {
               dispatch(
                 FiltrationTypeCamerasSlice.actions.changeType(''));
               searchParams.delete(SearchParamsType.Type);
@@ -46,17 +46,18 @@ function ButtonTypeCameras({ typeCameras }: Props): JSX.Element {
             }
           }}
           checked={
-            stateTypeCameras === '' ? false : stateTypeCameras === typeCameras
+            (stateTypeCameras === '') || (stateCategoryCameras === CategiryCameras.Videocamera &&
+              typeCameras === TypesCameras.Film) || (stateCategoryCameras === CategiryCameras.Videocamera &&
+                typeCameras === TypesCameras.Instant) ? false : stateTypeCameras === typeCameras
           }
           disabled={
             stateCategoryCameras === CategiryCameras.Photocamera
               ? false
               : !!((
                 stateCategoryCameras === CategiryCameras.Videocamera &&
-                    typeCameras === TypesCameras.Film
+                typeCameras === TypesCameras.Film
               ) || (stateCategoryCameras === CategiryCameras.Videocamera &&
-                    typeCameras === TypesCameras.Instant
-              ))
+                typeCameras === TypesCameras.Instant))
           }
         />
         <span className="custom-checkbox__icon"></span>
