@@ -27,7 +27,7 @@ function ProductCardInCatalog({
     previewImgWebp2x,
   } = product;
 
-  function numberWithSpaces(x:number) {
+  function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
@@ -57,11 +57,11 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-              srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`}
+              srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x`}
             />
             <img
-              src={previewImg}
-              srcSet={`${previewImg2x} 2x`}
+              src={`/${previewImg}`}
+              srcSet={`/${previewImg2x} 2x`}
               width="280"
               height="240"
               alt={name}
