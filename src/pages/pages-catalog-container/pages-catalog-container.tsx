@@ -198,15 +198,7 @@ function CatalogContainer(): JSX.Element {
       result = result.filter((e) => e.price <= Number(priceFilter.priceTo));
     }
     return { result, minPriceProduct, maxPriceProduct };
-  }, [
-    priceFilter.priceFrom,
-    priceFilter.priceTo,
-    products, selectedFiltrationCategoryProducts,
-    selectedFiltrationLevel,
-    selectedFiltrationTypeCameras,
-    selectedSortingAscendingDescendingProducts,
-    selectedSortingTypeProducts,
-  ]);
+  }, [dispatch, priceFilter.priceFrom, priceFilter.priceTo, products, selectedFiltrationCategoryProducts, selectedFiltrationLevel, selectedFiltrationTypeCameras, selectedSortingAscendingDescendingProducts, selectedSortingTypeProducts]);
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
