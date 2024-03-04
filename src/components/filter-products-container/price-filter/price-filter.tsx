@@ -35,9 +35,18 @@ function PriceFilter({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
       if (priceTo && Number(priceTo) >= maxPriceProduct) {
         res = maxPriceProduct.toString();
       }
-      if (priceTo && priceFrom && Number(priceTo) < Number(priceFrom)) {
+      if (priceTo && priceFrom && (Number(priceTo) <= Number(priceFrom))) {
         res = priceFrom;
       }
+      if (priceTo && priceFrom && (Number(priceFrom) >= maxPriceProduct)) {
+        res = maxPriceProduct.toString();
+      }
+      // if (priceTo && priceFrom && Number(priceFrom) > maxPriceProduct) {
+      //   res = maxPriceProduct.toString();
+      // }
+      // if (priceTo && priceFrom && (Number(priceFrom) > Number(priceTo))) {
+      //   res = priceFrom;
+      // }
       dispatch(FiltrationPriceSlice.actions.changeTo(res));
     }, 1000);
     return () => clearTimeout(v);
