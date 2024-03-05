@@ -9,7 +9,7 @@ describe('Component:Price', () => {
     const ComponentPriceTextId = 'componentPrice';
 
     const preparedComponent = withHistory(
-      <PriceFilter maxPriceProduct={199000} minPriceProduct={1990} />
+      <PriceFilter />
     );
 
     render(preparedComponent);

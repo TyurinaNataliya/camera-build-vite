@@ -6,6 +6,8 @@ describe('Filtration Price Slice', () => {
     const expectedState = {
       priceFrom: 'null',
       priceTo: 'null',
+      maxPrice: 'null',
+      minPrice: 'null',
     };
 
     const result = FiltrationPriceSlice.reducer(expectedState, emptyAction);
@@ -16,6 +18,8 @@ describe('Filtration Price Slice', () => {
     const expectedState = {
       priceFrom: '',
       priceTo: '',
+      maxPrice: '',
+      minPrice: '',
     };
     const result = FiltrationPriceSlice.reducer(undefined, emptyAction);
     expect(result).toEqual(expectedState);
