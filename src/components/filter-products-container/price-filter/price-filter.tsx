@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
 
@@ -11,40 +11,48 @@ function PriceFilter(): JSX.Element {
   const maxPriceProduct = useAppSelector((state) => state.priceFilter.maxPrice);
   const minPriceProduct = useAppSelector((state) => state.priceFilter.minPrice);
 
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
 
-  const handleBlurFrom = useCallback(() => {
-    let res = statePriceFrom;
+  const handleBlurFrom = useCallback((value: string) => {
+    let res = value;
     // если цена ОТ меньше минимальной цены ставим последнюю
-    if (statePriceFrom && Number(statePriceFrom) <= Number(minPriceProduct)) {
+    if (value && Number(value) <= Number(minPriceProduct)) {
       res = minPriceProduct;
     }
     // если цена ОТ больше максимальной цены ставим последнюю
-    if (Number(statePriceFrom) >= Number(maxPriceProduct)) {
+    if (Number(value) >= Number(maxPriceProduct)) {
       res = maxPriceProduct;
     }
     // если цена ОТ больше цены ДО то ставим последнюю
-    if (statePriceTo && (Number(statePriceFrom) >= Number(statePriceTo))) {
+    if (statePriceTo && (Number(value) >= Number(statePriceTo))) {
       res = statePriceTo;
     }
     dispatch(FiltrationPriceSlice.actions.changeFrom(res));
-  }, [dispatch, maxPriceProduct, minPriceProduct, statePriceFrom, statePriceTo]);
+    if (res !== value) {
+      setPriceFrom(res);
+    }
+  }, [dispatch, maxPriceProduct, minPriceProduct, statePriceTo]);
 
-  const handleBlurTo = useCallback(() => {
-    let res = statePriceTo;
+  const handleBlurTo = useCallback((value: string) => {
+    let res = value;
     // если цена ДО меньше минимальной цены ставим последнюю
-    if (statePriceTo && Number(statePriceTo) <= Number(minPriceProduct)) {
+    if (value && Number(value) <= Number(minPriceProduct)) {
       res = minPriceProduct;
     }
     // если цена ДО больше максимальной цены ставим последнюю
-    if (Number(statePriceTo) >= Number(maxPriceProduct)) {
+    if (Number(value) >= Number(maxPriceProduct)) {
       res = maxPriceProduct;
     }
     // если цена ДО меньше цены ОТ то ставим последнюю
-    if (statePriceTo && Number(statePriceTo) <= Number(statePriceFrom)) {
+    if (value && Number(value) <= Number(statePriceFrom)) {
       res = statePriceFrom;
     }
     dispatch(FiltrationPriceSlice.actions.changeTo(res));
-  }, [dispatch, maxPriceProduct, minPriceProduct, statePriceFrom, statePriceTo]);
+    if (res !== value) {
+      setPriceTo(res);
+    }
+  }, [dispatch, maxPriceProduct, minPriceProduct, statePriceFrom]);
 
   return (
     <fieldset className="catalog-filter__block">
@@ -56,10 +64,13 @@ function PriceFilter(): JSX.Element {
               type="number"
               name="price"
               placeholder={`от ${minPriceProduct}`}
-              value={statePriceFrom}
-              onBlur={handleBlurFrom}
+              value={priceFrom}
+              onBlur={(event) => {
+                handleBlurFrom(event.target.value);
+              }}
               onChange={(event) => {
-                dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
+                setPriceFrom(event.target.value);
+                // dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
               }}
             />
           </label>
@@ -70,10 +81,13 @@ function PriceFilter(): JSX.Element {
               type="number"
               name="priceUp"
               placeholder={`до ${maxPriceProduct}`}
-              value={statePriceTo}
-              onBlur={handleBlurTo}
+              value={priceTo}
+              onBlur={(event) => {
+                handleBlurTo(event.target.value);
+              }}
               onChange={(event) => {
-                dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
+                setPriceTo(event.target.value);
+                // dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
               }}
             />
           </label>
