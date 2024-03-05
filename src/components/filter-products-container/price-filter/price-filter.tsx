@@ -27,44 +27,47 @@ function PriceFilter({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
   }, [statePriceFrom]);
 
   useEffect(() => {
+    if (!priceTo) {
+      return;
+    }
     const v = setTimeout(() => {
       let res = priceTo;
-      if (priceTo && Number(priceTo) <= minPriceProduct) {
-        res = minPriceProduct.toString();
-      }
-      if (priceTo && Number(priceTo) >= maxPriceProduct) {
+      if (Number(priceFrom) && Number(priceTo) <= Number(priceFrom) && Number(priceFrom) >= maxPriceProduct) {
         res = maxPriceProduct.toString();
       }
-      if (priceTo && priceFrom && (Number(priceTo) <= Number(priceFrom))) {
+      if (Number(priceTo) <= Number(priceFrom) && Number(priceFrom) < maxPriceProduct) {
         res = priceFrom;
       }
-      if (priceTo && priceFrom && (Number(priceFrom) >= maxPriceProduct)) {
+      if (Number(priceTo) <= minPriceProduct) {
+        res = minPriceProduct.toString();
+      }
+      if (Number(priceTo) >= maxPriceProduct) {
         res = maxPriceProduct.toString();
       }
-      // if (priceTo && priceFrom && Number(priceFrom) > maxPriceProduct) {
-      //   res = maxPriceProduct.toString();
-      // }
-      // if (priceTo && priceFrom && (Number(priceFrom) > Number(priceTo))) {
-      //   res = priceFrom;
-      // }
       dispatch(FiltrationPriceSlice.actions.changeTo(res));
     }, 1000);
     return () => clearTimeout(v);
   }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
 
+
   useEffect(() => {
+    if (!priceFrom) {
+      return;
+    }
     const v = setTimeout(() => {
       let res = priceFrom;
-      if (priceFrom && Number(priceFrom) <= minPriceProduct) {
+      if (Number(priceFrom) <= minPriceProduct) {
         res = minPriceProduct.toString();
       }
-      if (priceFrom && Number(priceFrom) >= maxPriceProduct) {
+      if (Number(priceFrom) >= maxPriceProduct) {
         res = maxPriceProduct.toString();
       }
+
       dispatch(FiltrationPriceSlice.actions.changeFrom(res));
     }, 1000);
     return () => clearTimeout(v);
   }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
+
 
   return (
     <fieldset className="catalog-filter__block">

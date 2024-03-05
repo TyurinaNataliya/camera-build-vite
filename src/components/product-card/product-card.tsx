@@ -25,7 +25,7 @@ function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
         <picture>
           <source
             type="image/webp"
-            srcSet={`/${product.previewImgWebp}, ${product.previewImgWebp2x} 2x`}
+            srcSet={`/${product.previewImg}, ${product.previewImg2x} 2x`}
           />
           <img
             src={`/${product?.previewImg}`}

@@ -23,8 +23,8 @@ function ProductCardInCatalog({
     previewImg,
     previewImg2x,
     name,
-    previewImgWebp,
-    previewImgWebp2x,
+    // previewImgWebp,
+    // previewImgWebp2x,
   } = product;
 
   function numberWithSpaces(x: number) {
@@ -43,7 +43,7 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-              srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x`}
+              srcSet={`/${previewImg}, ${previewImg2x} 2x`}
             />
             <img
               src={`/${previewImg}`}
@@ -57,7 +57,7 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-              srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x`}
+              srcSet={`/${previewImg}, ${previewImg2x} 2x`}
             />
             <img
               src={`/${previewImg}`}
