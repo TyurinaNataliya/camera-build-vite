@@ -15,7 +15,7 @@ function PriceFilter(): JSX.Element {
   const handleBlurFrom = useCallback(() => {
     let res = statePriceFrom;
     // если цена ОТ меньше минимальной цены ставим последнюю
-    if (Number(statePriceFrom) <= Number(minPriceProduct)) {
+    if (statePriceFrom && Number(statePriceFrom) <= Number(minPriceProduct)) {
       res = minPriceProduct;
     }
     // если цена ОТ больше максимальной цены ставим последнюю
