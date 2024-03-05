@@ -26,6 +26,7 @@ import { PaginationSlice } from '../../store/slices/pagination-slice';
 import { FiltrationTypeCamerasSlice } from '../../store/slices/filtration-type-cameras-slice';
 import { SortingTypeProductSlice } from '../../store/slices/sorting-type-product-slice';
 import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
+import { FiltrationPriceSlice } from '../../store/slices/filtration-price-slice';
 
 function CatalogContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -192,6 +193,8 @@ function CatalogContainer(): JSX.Element {
 
     const minPriceProduct = Math.min(...listPriceProducts) < 0 ? 0 : Math.min(...listPriceProducts);
 
+    dispatch(FiltrationPriceSlice.actions.changeMaxPrice(maxPriceProduct.toString()));
+    dispatch(FiltrationPriceSlice.actions.changeMinPrice(minPriceProduct.toString()));
 
     if (priceFilter.priceFrom) {
       result = result.filter((e) => e.price >= Number(priceFilter.priceFrom));
@@ -199,8 +202,8 @@ function CatalogContainer(): JSX.Element {
     if (priceFilter.priceTo) {
       result = result.filter((e) => e.price <= Number(priceFilter.priceTo));
     }
-    return { result, minPriceProduct, maxPriceProduct };
-  }, [dispatch, priceFilter.priceFrom, priceFilter.priceTo, products, selectedFiltrationCategoryProducts, selectedFiltrationLevel, selectedFiltrationTypeCameras, selectedSortingAscendingDescendingProducts, selectedSortingTypeProducts]);
+    return result;
+  }, [dispatch, priceFilter.priceFrom, priceFilter.priceTo, products, searchParams, selectedFiltrationCategoryProducts, selectedFiltrationLevel, selectedFiltrationTypeCameras, selectedSortingAscendingDescendingProducts, selectedSortingTypeProducts, setSearchParams]);
 
   const promoProducts = useAppSelector(
     (state) => state.promoProducts?.promoProducts
@@ -265,17 +268,14 @@ function CatalogContainer(): JSX.Element {
                   Каталог фото- и видеотехники
                 </h1>
                 <div className="page-content__columns">
-                  <FilterProductsContainer
-                    maxPriceProduct={filteredProducts.maxPriceProduct}
-                    minPriceProduct={filteredProducts.minPriceProduct}
-                  />
+                  <FilterProductsContainer />
                   <div className="catalog__content">
                     <div className="catalog-sort">
                       <form action="#">
                         <SortingProductsContainer />
                         {filteredProducts && (
                           <PagePagination
-                            productsCameras={filteredProducts.result}
+                            productsCameras={filteredProducts}
                             handleActiveModalItem={handleActiveModalItem}
                           />
                         )}

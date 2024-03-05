@@ -4,10 +4,14 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 type InitialState = {
   priceFrom: string;
   priceTo: string;
+  maxPrice: string;
+  minPrice: string;
 };
 const initialState: InitialState = {
   priceFrom: '',
   priceTo: '',
+  maxPrice: '',
+  minPrice: '',
 };
 
 const FiltrationPriceSlice = createSlice({
@@ -19,6 +23,12 @@ const FiltrationPriceSlice = createSlice({
     },
     changeTo(state, action: PayloadAction<string>) {
       state.priceTo = action.payload;
+    },
+    changeMaxPrice(state, action: PayloadAction<string>) {
+      state.maxPrice = action.payload;
+    },
+    changeMinPrice(state, action: PayloadAction<string>) {
+      state.minPrice = action.payload;
     },
   },
 });

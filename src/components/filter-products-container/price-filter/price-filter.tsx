@@ -1,72 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationPriceSlice } from '../../../store/slices/filtration-price-slice';
 
-type Props = {
-  minPriceProduct: number;
-  maxPriceProduct: number;
-};
 
-function PriceFilter({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
+function PriceFilter(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const statePriceFrom = useAppSelector((state) => state.priceFilter.priceFrom);
   const statePriceTo = useAppSelector((state) => state.priceFilter.priceTo);
+  const maxPriceProduct = useAppSelector((state) => state.priceFilter.maxPrice);
+  const minPriceProduct = useAppSelector((state) => state.priceFilter.minPrice);
 
-  const [priceTo, setPriceTo] = useState<string>('');
-  const [priceFrom, setPriceFrom] = useState<string>('');
-
-  useEffect(() => {
-    setPriceTo(statePriceTo);
-    return () => setPriceTo('');
-  }, [statePriceTo]);
 
   useEffect(() => {
-    setPriceFrom(statePriceFrom);
-    return () => setPriceFrom('');
-  }, [statePriceFrom]);
-
-  useEffect(() => {
-    if (!priceTo) {
+    if (!statePriceTo) {
       return;
     }
     const v = setTimeout(() => {
-      let res = priceTo;
-      if (Number(priceFrom) && Number(priceTo) <= Number(priceFrom) && Number(priceFrom) >= maxPriceProduct) {
-        res = maxPriceProduct.toString();
+      let res = statePriceTo;
+      if (Number(statePriceFrom) && Number(statePriceTo) <= Number(statePriceFrom) && Number(statePriceFrom) >= Number(maxPriceProduct)) {
+        res = maxPriceProduct;
       }
-      if (Number(priceTo) <= Number(priceFrom) && Number(priceFrom) < maxPriceProduct) {
-        res = priceFrom;
+      if (Number(statePriceTo) <= Number(minPriceProduct)) {
+        res = minPriceProduct;
       }
-      if (Number(priceTo) <= minPriceProduct) {
-        res = minPriceProduct.toString();
+      if (Number(statePriceTo) >= Number(maxPriceProduct)) {
+        res = maxPriceProduct;
       }
-      if (Number(priceTo) >= maxPriceProduct) {
-        res = maxPriceProduct.toString();
+      if (Number(statePriceTo) && Number(statePriceTo) <= Number(statePriceFrom)) {
+        res = statePriceFrom;
       }
       dispatch(FiltrationPriceSlice.actions.changeTo(res));
     }, 1000);
+
     return () => clearTimeout(v);
-  }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
+  }, [dispatch, maxPriceProduct, minPriceProduct, statePriceFrom, statePriceTo]);
 
 
   useEffect(() => {
-    if (!priceFrom) {
+
+    if (!statePriceFrom) {
       return;
     }
     const v = setTimeout(() => {
-      let res = priceFrom;
-      if (Number(priceFrom) <= minPriceProduct) {
-        res = minPriceProduct.toString();
+      let res = statePriceFrom;
+      if (Number(statePriceFrom) <= Number(minPriceProduct)) {
+        res = minPriceProduct;
       }
-      if (Number(priceFrom) >= maxPriceProduct) {
-        res = maxPriceProduct.toString();
+      if (Number(statePriceFrom) >= Number(maxPriceProduct)) {
+        res = maxPriceProduct;
       }
-
+      if (Number(statePriceTo) && (Number(statePriceFrom) >= Number(maxPriceProduct))) {
+        res = maxPriceProduct;
+      }
       dispatch(FiltrationPriceSlice.actions.changeFrom(res));
+
     }, 1000);
+
     return () => clearTimeout(v);
-  }, [dispatch, maxPriceProduct, minPriceProduct, priceFrom, priceTo]);
+  }, [dispatch, maxPriceProduct, minPriceProduct, statePriceFrom, statePriceTo]);
 
 
   return (
@@ -79,9 +71,9 @@ function PriceFilter({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
               type="number"
               name="price"
               placeholder={`от ${minPriceProduct}`}
-              value={priceFrom}
+              value={statePriceFrom}
               onChange={(event) => {
-                setPriceFrom(event.target.value);
+                dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
               }}
             />
           </label>
@@ -92,9 +84,9 @@ function PriceFilter({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
               type="number"
               name="priceUp"
               placeholder={`до ${maxPriceProduct}`}
-              value={priceTo}
+              value={statePriceTo}
               onChange={(event) => {
-                setPriceTo(event.target.value);
+                dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
               }}
             />
           </label>

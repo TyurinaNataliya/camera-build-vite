@@ -13,12 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { PaginationSlice } from '../../store/slices/pagination-slice';
 
-type Props = {
-  minPriceProduct: number;
-  maxPriceProduct: number;
-};
 
-function FilterProductsContainer({ minPriceProduct, maxPriceProduct }: Props): JSX.Element {
+function FilterProductsContainer(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const resetFiltration = useCallback(() => {
@@ -39,7 +35,7 @@ function FilterProductsContainer({ minPriceProduct, maxPriceProduct }: Props): J
       <div className="catalog-filter">
         <form action="#">
           <h2 className="visually-hidden">Фильтр</h2>
-          <PriceFilter maxPriceProduct={maxPriceProduct} minPriceProduct={minPriceProduct} />
+          <PriceFilter />
           <CategoryFilter />
           <TypeCameras />
           <LevelFilter />
