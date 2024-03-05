@@ -21,7 +21,7 @@ function ProductCardInCatalog({
     reviewCount,
     price,
     previewImg,
-    previewImg2x,
+    //previewImg2x,
     name,
     // previewImgWebp,
     // previewImgWebp2x,
@@ -43,11 +43,11 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-              srcSet={`/${previewImg}, ${previewImg2x} 2x`}
+            //srcSet={`/${previewImg}, ${previewImg2x} 2x`}
             />
             <img
               src={`/${previewImg}`}
-              srcSet={`/${previewImg2x} 2x`}
+              //srcSet={`/${previewImg2x} 2x`}
               width="280"
               height="240"
               alt={name}
@@ -57,11 +57,11 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-              srcSet={`/${previewImg}, ${previewImg2x} 2x`}
+            //srcSet={`/${previewImg}, ${previewImg2x} 2x`}
             />
             <img
               src={`/${previewImg}`}
-              srcSet={`/${previewImg2x} 2x`}
+              //srcSet={`/${previewImg2x} 2x`}
               width="280"
               height="240"
               alt={name}
