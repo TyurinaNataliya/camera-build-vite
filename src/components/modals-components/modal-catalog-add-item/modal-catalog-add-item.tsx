@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { TypeProduct } from '../../../type-data/type';
+import { useAppDispatch } from '../../../hooks/store';
+
+import { postBacketProduct } from '../../../services/thunk/post-backet-product';
+import { fetchBacketProductAction } from '../../../services/thunk/fetch-backet-product';
 
 type Props = {
   product: TypeProduct;
@@ -24,6 +28,8 @@ function ModalCatalogAddItem({
     price,
   } = product;
   const modalRef = useRef(null);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
@@ -38,8 +44,6 @@ function ModalCatalogAddItem({
   function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
-
-
   return (
     <div
       className="modal is-active"
@@ -93,6 +97,10 @@ function ModalCatalogAddItem({
               onClick={() => {
                 handleActiveModalSuccess?.();
                 handleCloseModalItem?.();
+
+                dispatch(postBacketProduct({ backetData: product }));
+                dispatch(fetchBacketProductAction());
+
               }}
             >
               <svg width="24" height="16" aria-hidden="true">

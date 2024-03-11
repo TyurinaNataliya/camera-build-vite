@@ -2,10 +2,22 @@ import { Link } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCardListInBasket } from '../../components/product-card/product-cards-list-in-basket';
-import { MockProducts } from '../../type-data/mock';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks/store';
+
 
 function BacketContainer(): JSX.Element {
+  //  const dispatch = useAppDispatch();
+  // useLayoutEffect(() => {
+  //   dispatch(fetchBacketProductAction());
+  // }, [dispatch]);
+
+  const StateProductsInBacket = useAppSelector(
+    (state) => state.productInBasket.productInBasket
+  );
+  //console.log(StateProductsInBacket);
+
+
   return (
     <>
       <Header />
@@ -42,7 +54,9 @@ function BacketContainer(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                <ProductCardListInBasket products={MockProducts} />
+                {StateProductsInBacket
+                  &&
+                  (<ProductCardListInBasket products={StateProductsInBacket} />)}
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">

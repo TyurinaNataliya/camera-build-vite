@@ -27,6 +27,10 @@ export type TypePromoProduct = {
   previewImgWebp2x: string;
 };
 
+export type TypeOrdersProduct = {
+  camerasIds: number[];
+  coupon: string;
+};
 export type TypeProductReview = {
   id?: string;
   createAt?: string;

@@ -23,6 +23,7 @@ const ApiRoute = {
   Products: '/cameras',
   Promo: '/promo',
   Reviews: '/reviews',
+  Orders: '/orders',
 };
 
 const RequestStatus = {

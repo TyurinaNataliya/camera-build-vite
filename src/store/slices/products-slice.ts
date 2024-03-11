@@ -21,6 +21,7 @@ type StateProducts = {
   pagination: string;
   priceFrom: string;
   priceTo: string;
+  productsIBacket: TypeProduct[] | null;
 };
 
 const initialState: StateProducts = {
@@ -39,6 +40,7 @@ const initialState: StateProducts = {
   pagination: '1',
   priceFrom: '',
   priceTo: '',
+  productsIBacket: null,
 };
 
 const productsSlice = createSlice({
@@ -83,6 +85,9 @@ const productsSlice = createSlice({
     },
     addLevelFilter(state, action: PayloadAction<TypeProduct[]>) {
       state.levelFiltration = action.payload;
+    },
+    addProductInBacket(state, action: PayloadAction<TypeProduct[]>) {
+      state.productsIBacket = action.payload;
     },
   },
   extraReducers(builder) {

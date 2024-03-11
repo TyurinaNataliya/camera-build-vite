@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { fetchBacketProductAction } from '../../../services/thunk/fetch-backet-product';
+import { useAppDispatch } from '../../../hooks/store';
 
 type Props = {
   handleCloseModalSuccess?: () => void;
@@ -16,6 +18,7 @@ function ModalAddItemSuccess({
   id,
 }: Props): JSX.Element {
   const modalRef = useRef(null);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
@@ -27,6 +30,10 @@ function ModalAddItemSuccess({
       document.removeEventListener('keydown', handleKey, true);
     };
   }, [handleCloseModalSuccess]);
+
+  useLayoutEffect(() => {
+    dispatch(fetchBacketProductAction());
+  }, [dispatch]);
 
   return (
     <div
