@@ -4,16 +4,10 @@ import { useEffect, useRef } from 'react';
 
 type Props = {
   handleCloseModalSuccess?: () => void;
-  fromCatalog?: boolean;
-  fromProduct?: boolean;
-  id?: number;
 };
 
 function ModalAddItemSuccess({
   handleCloseModalSuccess,
-  fromCatalog,
-  fromProduct,
-  id,
 }: Props): JSX.Element {
   const modalRef = useRef(null);
 
@@ -54,25 +48,16 @@ function ModalAddItemSuccess({
             <use xlinkHref="#icon-success"></use>
           </svg>
           <div className="modal__buttons">
-            {fromCatalog && (
-              <Link
-                onClick={handleCloseModalSuccess}
-                className="btn btn--transparent modal__btn"
-                to={AppRoute.Catalog}
-                autoFocus
-              >
-                Продолжить покупки
-              </Link>
-            )}
-            {fromProduct && id && (
-              <Link
-                onClick={handleCloseModalSuccess}
-                className="btn btn--transparent modal__btn"
-                to={`${AppRoute.Product}/${id}`}
-              >
-                Продолжить покупки
-              </Link>
-            )}
+
+            <Link
+              onClick={handleCloseModalSuccess}
+              className="btn btn--transparent modal__btn"
+              to={AppRoute.Catalog}
+              autoFocus
+            >
+              Продолжить покупки
+            </Link>
+
 
             <Link
               className="btn btn--purple modal__btn modal__btn--fit-width"

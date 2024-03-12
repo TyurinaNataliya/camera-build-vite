@@ -104,11 +104,14 @@ function ProductCardInCatalog({
       {stateBacketProduct.find((element) => element.id === id)?.id === id
         ?
         <div className="product-card__buttons">
-          <a className="btn btn--purple-border" href="#">
+          <Link className="btn btn--purple-border" to={AppRoute.Basket}>
             <svg width="16" height="16" aria-hidden="true">
               <use xlinkHref="#icon-basket"></use>
             </svg>В корзине
-          </a>
+          </Link>
+          <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>
+            Подробнее
+          </Link>
         </div>
         :
         <div className="product-card__buttons">

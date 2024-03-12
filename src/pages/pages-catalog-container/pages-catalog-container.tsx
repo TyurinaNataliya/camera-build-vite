@@ -240,7 +240,6 @@ function CatalogContainer(): JSX.Element {
             {modalActivSuccess === true && (
               <ModalAddItemSuccess
                 handleCloseModalSuccess={handleCloseModalSuccess}
-                fromCatalog
               />
             )}
             <div className="breadcrumbs">
