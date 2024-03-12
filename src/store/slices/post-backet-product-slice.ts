@@ -3,17 +3,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { TypeProduct } from '../../type-data/type';
 
 type StateProduct = {
-  product: TypeProduct | null;
-  productsInBacket: TypeProduct[];
-
-  countProducts: number;
+  productsInBacket: (TypeProduct & { cnt?: number })[];
+  productsIdInBacket: number[];
 };
 
 const initialState: StateProduct = {
-  product: null,
   productsInBacket: [],
-
-  countProducts: 1,
+  productsIdInBacket: [],
 };
 
 const postBacketProductSlice = createSlice({
@@ -21,14 +17,30 @@ const postBacketProductSlice = createSlice({
   initialState,
   reducers: {
     addProduct(state, action: PayloadAction<TypeProduct>) {
-      state.product = action.payload;
-      state.productsInBacket = [...state.productsInBacket, action.payload];
+      const foondedProduct = state.productsInBacket.find(
+        (e) => e.id === action.payload.id
+      );
+      state.productsInBacket = [
+        ...state.productsInBacket.filter((e) => e.id !== action.payload.id),
+        { ...action.payload, cnt: (foondedProduct?.cnt || 0) + 1 },
+      ];
     },
-    addCountProduct(state) {
-      state.countProducts = state.countProducts + 1;
+    removeProduct(state, action: PayloadAction<TypeProduct>) {
+      state.productsInBacket = state.productsInBacket.filter(
+        (e) => e.id !== action.payload.id
+      );
     },
-    removeCountProduct(state) {
-      state.countProducts = state.countProducts - 1;
+    incProduct(state, action: PayloadAction<TypeProduct>) {
+      state.productsInBacket = state.productsInBacket.map((e) => ({
+        ...e,
+        cnt: e.id === action.payload.id ? (e.cnt || 0) + 1 : e.cnt,
+      }));
+    },
+    decProduct(state, action: PayloadAction<TypeProduct>) {
+      state.productsInBacket = state.productsInBacket.map((e) => ({
+        ...e,
+        cnt: e.id === action.payload.id ? (e.cnt || 0) - 1 : e.cnt,
+      }));
     },
   },
 });

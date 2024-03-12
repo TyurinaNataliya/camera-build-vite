@@ -2,7 +2,7 @@ import { TypeProduct } from '../../type-data/type';
 import { ProductCardInBasket } from './product-card-in-basket';
 
 type Props = {
-  products: TypeProduct[];
+  products: (TypeProduct & { cnt?: number })[];
 };
 
 function ProductCardListInBasket({ products }: Props): JSX.Element {

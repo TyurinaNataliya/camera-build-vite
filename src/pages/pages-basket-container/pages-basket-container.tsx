@@ -5,13 +5,17 @@ import { ProductCardListInBasket } from '../../components/product-card/product-c
 import { AppRoute } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { useMemo } from 'react';
 
 
 function BacketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
+  // console.log('🚀 ~ BacketContainer ~ stateBacketProduct:', stateBacketProduct);
 
+  const sum = useMemo(() =>
+    stateBacketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBacketProduct]);
 
   return (
     <>
@@ -89,7 +93,7 @@ function BacketContainer(): JSX.Element {
                 <div className="basket__summary-order">
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Всего:</span>
-                    <span className="basket__summary-value">111 390 ₽</span>
+                    <span className="basket__summary-value">{sum} ₽</span>
                   </p>
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Скидка:</span>

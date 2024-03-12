@@ -1,8 +1,8 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { useAppDispatch } from '../../hooks/store';
 import { postBacketProductSlice } from '../../store/slices/post-backet-product-slice';
 import { TypeProduct } from '../../type-data/type';
 type Props = {
-  product: TypeProduct;
+  product: TypeProduct & { cnt?: number };
 };
 
 function ProductCardInBasket({ product }: Props): JSX.Element {
@@ -16,12 +16,12 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
     category,
     level,
     price,
+    cnt
   } = product;
 
   function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
-  const stateCountProduct = useAppSelector((state) => state.postBacketProduct.countProducts);
   const dispatch = useAppDispatch();
 
   return (
@@ -59,11 +59,11 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
       <div className="quantity">
         <button
           onClick={() => {
-            dispatch(postBacketProductSlice.actions.removeCountProduct());
+            dispatch(postBacketProductSlice.actions.decProduct(product));
           }}
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
-          disabled={stateCountProduct <= 1}
+          disabled={(cnt || 0) <= 1}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -73,18 +73,18 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
         <input
           type="number"
           id="counter1"
-          value={stateCountProduct}
+          value={cnt}
           min="1"
           max="99"
           aria-label="количество товара"
         />
         <button
           onClick={() => {
-            dispatch(postBacketProductSlice.actions.addCountProduct());
+            dispatch(postBacketProductSlice.actions.incProduct(product));
           }}
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
-          disabled={stateCountProduct >= 99}
+          disabled={(cnt || 0) >= 99}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -92,9 +92,13 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
         </button>
       </div>
       <div className="basket-item__total-price">
-        <span className="visually-hidden">Общая цена:</span>{`${numberWithSpaces(price * stateCountProduct)} ₽`}
+        <span className="visually-hidden">Общая цена:</span>{`${numberWithSpaces(price * (cnt || 1))} ₽`}
       </div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар">
+      <button className="cross-btn" type="button" aria-label="Удалить товар"
+        onClick={() => {
+          dispatch(postBacketProductSlice.actions.removeProduct(product));
+        }}
+      >
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>
