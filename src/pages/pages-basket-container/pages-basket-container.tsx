@@ -5,7 +5,7 @@ import { ProductCardListInBasket } from '../../components/product-card/product-c
 import { AppRoute } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 
 function BacketContainer(): JSX.Element {
@@ -16,6 +16,21 @@ function BacketContainer(): JSX.Element {
 
   const sum = useMemo(() =>
     stateBacketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBacketProduct]);
+
+  const sendOrder = useCallback(() => {
+    const result: number[] = [];
+    stateBacketProduct.forEach((e) => {
+      const temp: number[] = new Array<number>(e.cnt || 0).fill(e.id);
+      result.push(...(temp || []));
+    });
+    // console.log('🚀 ~ sendOrder ~ result:', result);
+
+    //TODO: coupon брать из стейта после проверки его валидности
+    // Надо ли очищать корзину иуходить на стартовый экранъ???
+    // Оповещение об успешной отправке заказа
+    dispatch(postOrdersProduct({ backetData: { camerasIds: result, coupon: 'camera-333' } }));
+
+  }, [dispatch, stateBacketProduct]);
 
   return (
     <>
@@ -110,8 +125,7 @@ function BacketContainer(): JSX.Element {
                     </span>
                   </p>
                   <button className="btn btn--purple" type="submit" onClick={() => {
-                    //TODO: в массив передаем StateProductsInBacket.map(e =>  e.id) айдишники
-                    dispatch(postOrdersProduct({ backetData: { camerasIds: [1], coupon: 'camera-333' } }));
+                    sendOrder();
                   }}
                   >
                     Оформить заказ
