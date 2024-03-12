@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { TypeProduct } from '../../../type-data/type';
 import { useAppDispatch } from '../../../hooks/store';
+import { postBacketProductSlice } from '../../../store/slices/post-backet-product-slice';
 
-import { postBacketProduct } from '../../../services/thunk/post-backet-product';
-import { fetchBacketProductAction } from '../../../services/thunk/fetch-backet-product';
 
 type Props = {
   product: TypeProduct;
@@ -29,6 +28,7 @@ function ModalCatalogAddItem({
   } = product;
   const modalRef = useRef(null);
   const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     const handleKey = (evt: KeyboardEvent) => {
@@ -97,9 +97,7 @@ function ModalCatalogAddItem({
               onClick={() => {
                 handleActiveModalSuccess?.();
                 handleCloseModalItem?.();
-
-                dispatch(postBacketProduct({ backetData: product }));
-                dispatch(fetchBacketProductAction());
+                dispatch(postBacketProductSlice.actions.addProduct(product));
 
               }}
             >

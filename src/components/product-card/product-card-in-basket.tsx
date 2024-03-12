@@ -61,7 +61,7 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
         <input
           type="number"
           id="counter1"
-          value="2"
+          value="1"
           min="1"
           max="99"
           aria-label="количество товара"

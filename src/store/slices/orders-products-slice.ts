@@ -1,40 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TypeProduct } from '../../type-data/type';
+import { TypeOrdersProduct } from '../../type-data/type';
 import { RequestStatus } from '../../const';
-import { fetchBacketProductAction } from '../../services/thunk/fetch-backet-product';
+import { fetchOrdersProductAction } from '../../services/thunk/fetch-orders-product';
 
 type StateProducts = {
-  productInBasket: TypeProduct[] | null;
+  productInOrder: TypeOrdersProduct[] | null;
   loadingStatus: boolean | null;
   error: null | string;
   fetchingStatus: string;
 };
 
 const initialState: StateProducts = {
-  productInBasket: null,
+  productInOrder: null,
   loadingStatus: null,
   error: null,
   fetchingStatus: RequestStatus.Idle,
 };
 
 const BacketProductSlice = createSlice({
-  name: 'productInBasket',
+  name: 'productInOrder',
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchBacketProductAction.fulfilled, (state, action) => {
-        state.productInBasket = action.payload;
+      .addCase(fetchOrdersProductAction.fulfilled, (state, action) => {
+        state.productInOrder = action.payload;
         state.loadingStatus = false;
         state.error = null;
         state.fetchingStatus = RequestStatus.Success;
       })
-      .addCase(fetchBacketProductAction.pending, (state) => {
+      .addCase(fetchOrdersProductAction.pending, (state) => {
         state.loadingStatus = true;
         state.error = null;
         state.fetchingStatus = RequestStatus.Pending;
       })
-      .addCase(fetchBacketProductAction.rejected, (state, action) => {
+      .addCase(fetchOrdersProductAction.rejected, (state, action) => {
         state.error = action.error.message || 'Unknown error';
         state.loadingStatus = false;
         state.fetchingStatus = RequestStatus.Error;

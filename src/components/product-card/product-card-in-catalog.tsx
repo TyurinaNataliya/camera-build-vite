@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { TypeProduct } from '../../type-data/type';
 import { AppRoute } from '../../const';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
-import { useAppDispatch } from '../../hooks/store';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+// import { useEffect } from 'react';
 
 type Props = {
   product: TypeProduct;
@@ -26,6 +27,8 @@ function ProductCardInCatalog({
     // previewImgWebp,
     // previewImgWebp2x,
   } = product;
+
+  const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
 
   function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -98,21 +101,34 @@ function ProductCardInCatalog({
           {price < 1000 ? `${price} ₽` : numberWithSpaces(price)}
         </p>
       </div>
-      <div className="product-card__buttons">
-        <button
-          className="btn btn--purple product-card__btn"
-          type="button"
-          onClick={() => {
-            dispatch(fetchProductAction(Number(id)));
-            handleActiveModalItem?.();
-          }}
-        >
-          Купить
-        </button>
-        <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>
-          Подробнее
-        </Link>
-      </div>
+      {stateBacketProduct.find((element) => element.id === id)?.id === id
+        ?
+        <div className="product-card__buttons">
+          <a className="btn btn--purple-border" href="#">
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-basket"></use>
+            </svg>В корзине
+          </a>
+        </div>
+        :
+        <div className="product-card__buttons">
+          <button
+            className="btn btn--purple product-card__btn"
+            type="button"
+            onClick={() => {
+              dispatch(fetchProductAction(Number(id)));
+              handleActiveModalItem?.();
+            }}
+          >
+            Купить
+          </button>
+          <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>
+            Подробнее
+          </Link>
+
+        </div>}
+
+
     </div>
   );
 }

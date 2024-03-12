@@ -3,19 +3,14 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCardListInBasket } from '../../components/product-card/product-cards-list-in-basket';
 import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks/store';
+import { postOrdersProduct } from '../../services/thunk/post-orders-product';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 
 function BacketContainer(): JSX.Element {
-  //  const dispatch = useAppDispatch();
-  // useLayoutEffect(() => {
-  //   dispatch(fetchBacketProductAction());
-  // }, [dispatch]);
+  const dispatch = useAppDispatch();
 
-  const StateProductsInBacket = useAppSelector(
-    (state) => state.productInBasket.productInBasket
-  );
-  //console.log(StateProductsInBacket);
+  const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
 
 
   return (
@@ -54,9 +49,8 @@ function BacketContainer(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                {StateProductsInBacket
-                  &&
-                  (<ProductCardListInBasket products={StateProductsInBacket} />)}
+                {stateBacketProduct &&
+                  (<ProductCardListInBasket products={stateBacketProduct} />)}
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">
@@ -72,6 +66,9 @@ function BacketContainer(): JSX.Element {
                           <input
                             type="text"
                             name="promo"
+                            onChange={() => {
+                              //TODO: записывать купон через диспатч в глобальный стейт
+                            }}
                             placeholder="Введите промокод"
                           />
                         </label>
@@ -80,7 +77,10 @@ function BacketContainer(): JSX.Element {
                           Промокод принят!
                         </p>
                       </div>
-                      <button className="btn" type="submit">
+                      <button className="btn" type="submit" onClick={() => {
+                        //TODO: передать купон POST /coupons
+                      }}
+                      >
                         Применить
                       </button>
                     </form>
@@ -105,7 +105,11 @@ function BacketContainer(): JSX.Element {
                       111 390 ₽
                     </span>
                   </p>
-                  <button className="btn btn--purple" type="submit">
+                  <button className="btn btn--purple" type="submit" onClick={() => {
+                    //TODO: в массив передаем StateProductsInBacket.map(e =>  e.id) айдишники
+                    dispatch(postOrdersProduct({ backetData: { camerasIds: [1], coupon: 'camera-333' } }));
+                  }}
+                  >
                     Оформить заказ
                   </button>
                 </div>

@@ -1,35 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { RequestStatus } from '../../const';
-import { postBacketProduct } from '../../services/thunk/post-backet-product';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { TypeProduct } from '../../type-data/type';
 
 type StateProduct = {
-  productInBacket: TypeProduct[];
-  productInBacketFetchingstatus: string;
+  product: TypeProduct | null;
+  productsInBacket: TypeProduct[];
 };
 
 const initialState: StateProduct = {
-  productInBacket: [],
-  productInBacketFetchingstatus: RequestStatus.Idle,
+  product: null,
+  productsInBacket: [],
 };
 
 const postBacketProductSlice = createSlice({
   name: 'postBacketProduct',
   initialState,
-  reducers: {},
-  extraReducers(builder) {
-    builder
-      .addCase(postBacketProduct.pending, (state) => {
-        state.productInBacketFetchingstatus = RequestStatus.Pending;
-      })
-      .addCase(postBacketProduct.fulfilled, (state, action) => {
-        state.productInBacketFetchingstatus = RequestStatus.Success;
-        state.productInBacket.push(action.payload);
-      })
-      .addCase(postBacketProduct.rejected, (state) => {
-        state.productInBacketFetchingstatus = RequestStatus.Error;
-      });
+  reducers: {
+    addProduct(state, action: PayloadAction<TypeProduct>) {
+      state.product = action.payload;
+      state.productsInBacket = [...state.productsInBacket, action.payload];
+    },
   },
 });
 
