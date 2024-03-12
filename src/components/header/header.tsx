@@ -23,6 +23,8 @@ function Header(): JSX.Element {
     [products]
   );
 
+  const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
+
 
   const nameChangeHandle = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -189,10 +191,14 @@ function Header(): JSX.Element {
             <span className="visually-hidden">Сбросить поиск</span>
           </button>
         </div>
+
+
         <Link className="header__basket-link" to={AppRoute.Basket}>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
+          {stateBacketProduct.length > 0 &&
+            (<span className="header__basket-count">{stateBacketProduct.length}</span>)}
         </Link>
       </div>
     </header>

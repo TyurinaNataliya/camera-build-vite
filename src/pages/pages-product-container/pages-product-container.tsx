@@ -135,8 +135,6 @@ function ProductContainer(): JSX.Element {
             handleCloseModalSuccess={() => {
               setmodalActivSuccess(false);
             }}
-            fromProduct
-            id={product?.id}
           />
         )}
         {modalActiveReview && product && (
