@@ -5,7 +5,7 @@ import { ProductCardListInBasket } from '../../components/product-card/product-c
 import { AppRoute } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,6 +15,7 @@ function BasketContainer(): JSX.Element {
 
   const sum = useMemo(() =>
     stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
+  const [nameCoupons, setNameCoupons] = useState<string>('');
 
 
   const sendOrder = useCallback(() => {
@@ -85,7 +86,9 @@ function BasketContainer(): JSX.Element {
                           <input
                             type="text"
                             name="promo"
-                            onChange={() => {
+                            value={nameCoupons}
+                            onChange={(event) => {
+                              setNameCoupons(event.target.value);
                               //TODO: записывать купон через диспатч в глобальный стейт
                             }}
                             placeholder="Введите промокод"

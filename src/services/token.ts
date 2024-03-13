@@ -1,15 +1,15 @@
-const AUTH_TOKEN_KEY_NAME = 'escape-room-token';
-export type Token = string;
+const PRODUCT_IN_BASKET = 'product_in_basket';
+export type Product = string;
 
-export const getToken = (): Token => {
-  const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);
+export const getProducts = (): Product => {
+  const token = localStorage.getItem(PRODUCT_IN_BASKET);
   return token ?? '';
 };
 
-export const saveToken = (token: Token): void => {
-  localStorage.setItem(AUTH_TOKEN_KEY_NAME, token);
+export const updateProducts = (product: Product): void => {
+  localStorage.setItem(PRODUCT_IN_BASKET, product);
 };
 
-export const dropToken = (): void => {
-  localStorage.removeItem(AUTH_TOKEN_KEY_NAME);
+export const removeProduct = (): void => {
+  localStorage.removeItem(PRODUCT_IN_BASKET);
 };

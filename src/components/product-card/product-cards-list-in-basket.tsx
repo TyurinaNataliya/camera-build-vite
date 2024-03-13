@@ -1,8 +1,8 @@
-import { TypeProduct } from '../../type-data/type';
+import { ProductInBasket } from '../../type-data/type';
 import { ProductCardInBasket } from './product-card-in-basket';
 
 type Props = {
-  products: (TypeProduct & { cnt?: number })[];
+  products: ProductInBasket[];
 };
 
 function ProductCardListInBasket({ products }: Props): JSX.Element {

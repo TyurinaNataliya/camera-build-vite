@@ -16,15 +16,15 @@ function PriceFilter(): JSX.Element {
 
   const handleBlurFrom = useCallback((value: string) => {
     let res = value;
-    // если цена ОТ меньше минимальной цены ставим последнюю
+
     if (value && Number(value) <= Number(minPriceProduct)) {
       res = minPriceProduct;
     }
-    // если цена ОТ больше максимальной цены ставим последнюю
+
     if (Number(value) >= Number(maxPriceProduct)) {
       res = maxPriceProduct;
     }
-    // если цена ОТ больше цены ДО то ставим последнюю
+
     if (statePriceTo && (Number(value) >= Number(statePriceTo))) {
       res = statePriceTo;
     }
@@ -36,15 +36,15 @@ function PriceFilter(): JSX.Element {
 
   const handleBlurTo = useCallback((value: string) => {
     let res = value;
-    // если цена ДО меньше минимальной цены ставим последнюю
+
     if (value && Number(value) <= Number(minPriceProduct)) {
       res = minPriceProduct;
     }
-    // если цена ДО больше максимальной цены ставим последнюю
+
     if (Number(value) >= Number(maxPriceProduct)) {
       res = maxPriceProduct;
     }
-    // если цена ДО меньше цены ОТ то ставим последнюю
+
     if (value && Number(value) <= Number(statePriceFrom)) {
       res = statePriceFrom;
     }
@@ -70,7 +70,6 @@ function PriceFilter(): JSX.Element {
               }}
               onChange={(event) => {
                 setPriceFrom(event.target.value);
-                // dispatch(FiltrationPriceSlice.actions.changeFrom(event.target.value));
               }}
             />
           </label>
@@ -87,7 +86,6 @@ function PriceFilter(): JSX.Element {
               }}
               onChange={(event) => {
                 setPriceTo(event.target.value);
-                // dispatch(FiltrationPriceSlice.actions.changeTo(event.target.value));
               }}
             />
           </label>

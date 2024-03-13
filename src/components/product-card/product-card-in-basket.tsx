@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/store';
 import { postBasketProductSlice } from '../../store/slices/post-basket-product-slice';
-import { TypeProduct } from '../../type-data/type';
+import { ProductInBasket } from '../../type-data/type';
 import { ModalBasketRemoveItem } from '../modals-components/modal-basket-remove-item/modal-basket-remove-item';
+
 type Props = {
-  product: TypeProduct & { cnt?: number };
+  product: ProductInBasket;
 };
 
 function ProductCardInBasket({ product }: Props): JSX.Element {
@@ -26,12 +27,14 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
   }
   const dispatch = useAppDispatch();
   const [modalBasketactive, setModalBasketactive] = useState<boolean>(false);
+
   function showModal() {
     setModalBasketactive(true);
   }
   function hideModal() {
     setModalBasketactive(false);
   }
+
 
   return (
     <>
@@ -84,9 +87,13 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
             type="number"
             id="counter1"
             value={cnt}
+            onChange={(event) => {
+              if (Number(event.target.value) > 0 && Number(event.target.value) < 100) {
+                dispatch(postBasketProductSlice.actions.setCountProduct({ ...product, cnt: Number(event.target.value) }));
+              }
+            }}
             min="1"
-            max="99"
-            aria-label="количество товара"
+            max="99" aria-label="количество товара"
           />
           <button
             onClick={() => {

@@ -18,6 +18,8 @@ export type TypeProduct = {
   previewImgWebp2x: string;
 };
 
+export type ProductInBasket = TypeProduct & { cnt?: number };
+
 export type TypePromoProduct = {
   id: number;
   name: string;

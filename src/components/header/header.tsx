@@ -5,6 +5,8 @@ import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from '
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
+import { getProducts } from '../../services/token';
+import { postBasketProductSlice } from '../../store/slices/post-basket-product-slice';
 
 function Header(): JSX.Element {
   const [name, setName] = useState<string>('');
@@ -13,6 +15,13 @@ function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const productInBasket = getProducts();
+    if (productInBasket) {
+      dispatch(postBasketProductSlice.actions.setProducts(productInBasket));
+    }
+  }, [dispatch]);
 
   const [currentTab, setCurrentTab] = useState(-1);
 
