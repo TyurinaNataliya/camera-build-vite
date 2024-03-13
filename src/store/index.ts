@@ -12,8 +12,8 @@ import { FiltrationTypeCamerasSlice } from './slices/filtration-type-cameras-sli
 import { FiltrationLevelSlice } from './slices/filtration-level-slice';
 import { FiltrationPriceSlice } from './slices/filtration-price-slice';
 import { PaginationSlice } from './slices/pagination-slice';
-import { BacketProductSlice } from './slices/orders-products-slice';
-import { postBacketProductSlice } from './slices/post-backet-product-slice';
+import { BasketProductSlice } from './slices/orders-products-slice';
+import { postBasketProductSlice } from './slices/post-basket-product-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
@@ -29,8 +29,8 @@ const reducer = combineReducers({
   [FiltrationLevelSlice.name]: FiltrationLevelSlice.reducer,
   [FiltrationPriceSlice.name]: FiltrationPriceSlice.reducer,
   [PaginationSlice.name]: PaginationSlice.reducer,
-  [BacketProductSlice.name]: BacketProductSlice.reducer,
-  [postBacketProductSlice.name]: postBacketProductSlice.reducer,
+  [BasketProductSlice.name]: BasketProductSlice.reducer,
+  [postBasketProductSlice.name]: postBasketProductSlice.reducer,
 });
 
 const api = createAPI();

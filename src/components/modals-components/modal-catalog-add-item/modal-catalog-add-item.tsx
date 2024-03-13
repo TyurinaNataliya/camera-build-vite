@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { TypeProduct } from '../../../type-data/type';
 import { useAppDispatch } from '../../../hooks/store';
-import { postBacketProductSlice } from '../../../store/slices/post-backet-product-slice';
+import { postBasketProductSlice } from '../../../store/slices/post-basket-product-slice';
 
 
 type Props = {
@@ -97,7 +97,7 @@ function ModalCatalogAddItem({
               onClick={() => {
                 handleActiveModalSuccess?.();
                 handleCloseModalItem?.();
-                dispatch(postBacketProductSlice.actions.addProduct(product));
+                dispatch(postBasketProductSlice.actions.addProduct(product));
 
               }}
             >

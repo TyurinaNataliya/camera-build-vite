@@ -8,18 +8,18 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo } from 'react';
 
 
-function BacketContainer(): JSX.Element {
+function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
-  // console.log('🚀 ~ BacketContainer ~ stateBacketProduct:', stateBacketProduct);
+  const stateBasketProduct = useAppSelector((state) => state.postBasketProduct.productsInBasket);
+  // console.log('🚀 ~ BasketContainer ~ stateBasketProduct:', stateBasketProduct);
 
   const sum = useMemo(() =>
-    stateBacketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBacketProduct]);
+    stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
 
   const sendOrder = useCallback(() => {
     const result: number[] = [];
-    stateBacketProduct.forEach((e) => {
+    stateBasketProduct.forEach((e) => {
       const temp: number[] = new Array<number>(e.cnt || 0).fill(e.id);
       result.push(...(temp || []));
     });
@@ -28,15 +28,15 @@ function BacketContainer(): JSX.Element {
     //TODO: coupon брать из стейта после проверки его валидности
     // Надо ли очищать корзину иуходить на стартовый экранъ???
     // Оповещение об успешной отправке заказа
-    dispatch(postOrdersProduct({ backetData: { camerasIds: result, coupon: 'camera-333' } }));
+    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: 'camera-333' } }));
 
-  }, [dispatch, stateBacketProduct]);
+  }, [dispatch, stateBasketProduct]);
 
   return (
     <>
       <Header />
       <main>
-        <div className="page-content" data-testid="backet-container">
+        <div className="page-content" data-testid="basket-container">
           <div className="breadcrumbs">
             <div className="container">
               <ul className="breadcrumbs__list">
@@ -68,8 +68,8 @@ function BacketContainer(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               <ul className="basket__list">
-                {stateBacketProduct &&
-                  (<ProductCardListInBasket products={stateBacketProduct} />)}
+                {stateBasketProduct &&
+                  (<ProductCardListInBasket products={stateBasketProduct} />)}
               </ul>
               <div className="basket__summary">
                 <div className="basket__promo">
@@ -141,4 +141,4 @@ function BacketContainer(): JSX.Element {
   );
 }
 
-export { BacketContainer };
+export { BasketContainer };

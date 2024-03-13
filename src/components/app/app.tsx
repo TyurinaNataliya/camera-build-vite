@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { CatalogContainer } from '../../pages/pages-catalog-container/pages-catalog-container';
 import { ProductContainer } from '../../pages/pages-product-container/pages-product-container';
-import { BacketContainer } from '../../pages/pages-basket-container/pages-basket-container';
+import { BasketContainer } from '../../pages/pages-basket-container/pages-basket-container';
 import { NotFoundContainer } from '../../pages/pages-not-found-container/pages-not-found-container';
 import { HelmetProvider } from 'react-helmet-async';
 import { ToastContainer } from 'react-toastify';
@@ -29,10 +29,10 @@ function App(): JSX.Element {
             path={`${AppRoute.Product}/:id/:string`}
             element={<ProductContainer />}
           />
-          <Route path={AppRoute.Basket} element={<BacketContainer />} />
+          <Route path={AppRoute.Basket} element={<BasketContainer />} />
           <Route
             path={`${AppRoute.Basket}/:string`}
-            element={<BacketContainer />}
+            element={<BasketContainer />}
           />
           <Route path={AppRoute.NotFound} element={<NotFoundContainer />} />
           <Route path="*" element={<NotFoundContainer />} />

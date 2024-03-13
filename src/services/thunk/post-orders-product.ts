@@ -5,12 +5,12 @@ import { ApiRoute } from '../../const';
 
 const postOrdersProduct = createAsyncThunk<
   TypeOrdersProduct,
-  { backetData: TypeOrdersProduct },
+  { basketData: TypeOrdersProduct },
   Thunk
->(`${ApiRoute.Orders}`, async ({ backetData }, { extra: api }) => {
+>(`${ApiRoute.Orders}`, async ({ basketData }, { extra: api }) => {
   const { data } = await api.post<TypeOrdersProduct>(
     `${ApiRoute.Orders}`,
-    backetData
+    basketData
   );
 
   return data;

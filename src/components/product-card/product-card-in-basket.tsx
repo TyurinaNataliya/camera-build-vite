@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks/store';
-import { postBacketProductSlice } from '../../store/slices/post-backet-product-slice';
+import { postBasketProductSlice } from '../../store/slices/post-basket-product-slice';
 import { TypeProduct } from '../../type-data/type';
 type Props = {
   product: TypeProduct & { cnt?: number };
@@ -59,7 +59,7 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
       <div className="quantity">
         <button
           onClick={() => {
-            dispatch(postBacketProductSlice.actions.decProduct(product));
+            dispatch(postBasketProductSlice.actions.decProduct(product));
           }}
           className="btn-icon btn-icon--prev"
           aria-label="уменьшить количество товара"
@@ -80,7 +80,7 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
         />
         <button
           onClick={() => {
-            dispatch(postBacketProductSlice.actions.incProduct(product));
+            dispatch(postBasketProductSlice.actions.incProduct(product));
           }}
           className="btn-icon btn-icon--next"
           aria-label="увеличить количество товара"
@@ -96,7 +96,7 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
       </div>
       <button className="cross-btn" type="button" aria-label="Удалить товар"
         onClick={() => {
-          dispatch(postBacketProductSlice.actions.removeProduct(product));
+          dispatch(postBasketProductSlice.actions.removeProduct(product));
         }}
       >
         <svg width="10" height="10" aria-hidden="true">

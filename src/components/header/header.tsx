@@ -23,7 +23,7 @@ function Header(): JSX.Element {
     [products]
   );
 
-  const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
+  const stateBasketProduct = useAppSelector((state) => state.postBasketProduct.productsInBasket);
 
 
   const nameChangeHandle = useCallback(
@@ -197,8 +197,8 @@ function Header(): JSX.Element {
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
-          {stateBacketProduct.length > 0 &&
-            (<span className="header__basket-count">{stateBacketProduct.length}</span>)}
+          {stateBasketProduct.length > 0 &&
+            (<span className="header__basket-count">{stateBasketProduct.length}</span>)}
         </Link>
       </div>
     </header>

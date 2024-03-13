@@ -28,7 +28,7 @@ function ProductCardInCatalog({
     // previewImgWebp2x,
   } = product;
 
-  const stateBacketProduct = useAppSelector((state) => state.postBacketProduct.productsInBacket);
+  const stateBasketProduct = useAppSelector((state) => state.postBasketProduct.productsInBasket);
 
   function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -101,7 +101,7 @@ function ProductCardInCatalog({
           {price < 1000 ? `${price} ₽` : numberWithSpaces(price)}
         </p>
       </div>
-      {stateBacketProduct.find((element) => element.id === id)?.id === id
+      {stateBasketProduct.find((element) => element.id === id)?.id === id
         ?
         <div className="product-card__buttons">
           <Link className="btn btn--purple-border" to={AppRoute.Basket}>

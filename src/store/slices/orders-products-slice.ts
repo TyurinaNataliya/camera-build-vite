@@ -17,7 +17,7 @@ const initialState: StateProducts = {
   fetchingStatus: RequestStatus.Idle,
 };
 
-const BacketProductSlice = createSlice({
+const BasketProductSlice = createSlice({
   name: 'productInOrder',
   initialState,
   reducers: {},
@@ -42,4 +42,4 @@ const BacketProductSlice = createSlice({
   },
 });
 
-export { BacketProductSlice };
+export { BasketProductSlice };
