@@ -7,7 +7,6 @@ import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo } from 'react';
 
-
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
@@ -16,6 +15,7 @@ function BasketContainer(): JSX.Element {
 
   const sum = useMemo(() =>
     stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
+
 
   const sendOrder = useCallback(() => {
     const result: number[] = [];
@@ -135,6 +135,7 @@ function BasketContainer(): JSX.Element {
             </div>
           </section>
         </div>
+
       </main>
       <Footer />
     </>

@@ -1,8 +1,43 @@
-function ModalBasketRemoveItem(): JSX.Element {
+import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../../hooks/store';
+import { postBasketProductSlice } from '../../../store/slices/post-basket-product-slice';
+import { TypeProduct } from '../../../type-data/type';
+import { AppRoute } from '../../../const';
+import { useEffect, useRef } from 'react';
+
+type Props = {
+  hideModal: () => void;
+  product: TypeProduct;
+}
+
+function ModalBasketRemoveItem({ hideModal, product }: Props): JSX.Element {
+  const dispatch = useAppDispatch();
+  const modalRef = useRef(null);
+  useEffect(() => {
+    const handleKey = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        hideModal?.();
+      }
+    };
+    document.addEventListener('keydown', handleKey, true);
+    return () => {
+      document.removeEventListener('keydown', handleKey, true);
+    };
+  }, [hideModal]);
+
+  const { previewImgWebp, previewImgWebp2x, previewImg, previewImg2x, name, vendorCode, level, category, type } = product;
   return (
-    <div className="modal is-active">
+    <div className="modal is-active"
+      onMouseDown={(event) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          hideModal?.();
+        }
+      }}
+      tabIndex={0}
+    >
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" ref={modalRef}>
+        </div>
         <div className="modal__content">
           <p className="title title--h4">Удалить этот товар?</p>
           <div className="basket-item basket-item--short">
@@ -10,35 +45,46 @@ function ModalBasketRemoveItem(): JSX.Element {
               <picture>
                 <source
                   type="image/webp"
-                  srcSet="img/content/orlenok.webp,
-                    img/content/orlenok@2x.webp 2x"
+                  srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x`}
                 />
                 <img
-                  src="img/content/orlenok.jpg"
-                  srcSet="img/content/orlenok@2x.jpg 2x"
-                  width="140" height="120" alt="Фотоаппарат «Орлёнок»"
+                  src={`/${previewImg}`}
+                  srcSet={`/${previewImg2x} 2x`}
+                  width="140" height="120" alt={`Фотоаппарат «${name}»`}
                 />
               </picture>
             </div>
             <div className="basket-item__description">
-              <p className="basket-item__title">Орлёнок</p>
+              <p className="basket-item__title">{name}</p>
               <ul className="basket-item__list">
                 <li className="basket-item__list-item">
                   <span className="basket-item__article">Артикул:</span>
-                  <span className="basket-item__number">O78DFGSD832</span>
+                  <span className="basket-item__number">{vendorCode}</span>
                 </li>
-                <li className="basket-item__list-item">Плёночная фотокамера</li>
-                <li className="basket-item__list-item">Любительский уровень</li>
+                <li className="basket-item__list-item">{category} {type}</li>
+                <li className="basket-item__list-item">{level}</li>
               </ul>
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--half-width" type="button">Удалить
+            <button
+              onClick={() => {
+                dispatch(postBasketProductSlice.actions.removeProduct(product));
+                hideModal();
+              }}
+
+              className="btn btn--purple modal__btn modal__btn--half-width" type="button"
+            >Удалить
             </button>
-            <a className="btn btn--transparent modal__btn modal__btn--half-width" href="#">Продолжить покупки
-            </a>
+            <Link className="btn btn--transparent modal__btn modal__btn--half-width" to={AppRoute.Catalog}>Продолжить покупки
+            </Link>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап">
+          <button
+            onClick={() => {
+              hideModal();
+            }}
+            className="cross-btn" type="button" aria-label="Закрыть попап"
+          >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

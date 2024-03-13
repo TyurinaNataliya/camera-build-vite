@@ -63,7 +63,7 @@ function ModalCatalogAddItem({
               <picture>
                 <source
                   type="image/webp"
-                  srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x"`}
+                  srcSet={`/${previewImgWebp}, ${previewImgWebp2x} 2x`}
                 />
                 <img
                   src={`/${previewImg}`}
