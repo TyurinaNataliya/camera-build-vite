@@ -19,7 +19,7 @@ const AppRoute = {
   NotFound: '/404',
 };
 
-const validPromoCoupon = ['camera-333', 'camera-444', 'camera-444', ''];
+const validPromoCoupon = ['camera-333', 'camera-444', 'camera-555'];
 
 const ApiRoute = {
   Products: '/cameras',

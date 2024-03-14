@@ -34,14 +34,16 @@ function BasketContainer(): JSX.Element {
 
   }, [dispatch, stateBasketProduct, stateCoupon]);
 
-  function getCoupon(coupon: string, summa: number) {
+  const getCoupon = useCallback((coupon: string, summa: number) => {
     switch (coupon) {
       case '': return 0;
       case 'camera-333': return summa * 0.15;
       case 'camera-444': return summa * 0.25;
       case 'camera-555': return summa * 0.35;
+      // default: return summa;
     }
-  }
+
+  }, []);
 
   return (
     <>
@@ -90,25 +92,47 @@ function BasketContainer(): JSX.Element {
                   </p>
                   <div className="basket-form">
                     <form action="#">
-                      <div className={`custom-input ${validPromoCoupon.includes(stateCoupon) === true ? 'is-valid' : 'is-invalid'}`}>
-                        <label>
-                          <span className="custom-input__label ">Промокод</span>
-                          <input
-                            type="text"
-                            name="promo"
-                            value={nameCoupons}
-                            onChange={(event) => {
-                              setNameCoupons(event.target.value);
+                      {stateCoupon === '' && (
+                        <div className="custom-input">
+                          <label>
+                            <span className="custom-input__label ">Промокод</span>
+                            <input
+                              type="text"
+                              name="promo"
+                              value={nameCoupons}
+                              onChange={(event) => {
+                                setNameCoupons(event.target.value);
 
-                            }}
-                            placeholder="Введите промокод"
-                          />
-                        </label>
-                        <p className="custom-input__error">Промокод неверный</p>
-                        <p className="custom-input__success">
-                          Промокод принят!
-                        </p>
-                      </div>
+                              }}
+                              placeholder="Введите промокод"
+                            />
+                          </label>
+                          <p className="custom-input__error">Промокод неверный</p>
+                          <p className="custom-input__success">
+                            Промокод принят!
+                          </p>
+                        </div>)}
+                      {stateCoupon !== '' && (
+                        <div className={`custom-input ${(validPromoCoupon.includes(stateCoupon) === true ? 'is-valid' : 'is-invalid')}`}>
+                          <label>
+                            <span className="custom-input__label ">Промокод</span>
+                            <input
+                              type="text"
+                              name="promo"
+                              value={nameCoupons}
+                              onChange={(event) => {
+                                setNameCoupons(event.target.value);
+
+                              }}
+                              placeholder="Введите промокод"
+                            />
+                          </label>
+                          <p className="custom-input__error">Промокод неверный</p>
+                          <p className="custom-input__success">
+                            Промокод принят!
+                          </p>
+                        </div>)}
+
                       <button className="btn" type="submit" onClick={() => {
                         dispatch(postBasketCouponSlice.actions.changeCoupon(nameCoupons));
                         //  dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
@@ -128,7 +152,7 @@ function BasketContainer(): JSX.Element {
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Скидка:</span>
                     <span className="basket__summary-value basket__summary-value--bonus">{
-                      numberWithSpaces(getCoupon(stateCoupon, sum) || 0)
+                      numberWithSpaces(Math.round(getCoupon(stateCoupon, sum) || 0))
                     } ₽
                     </span>
                   </p>
@@ -137,7 +161,7 @@ function BasketContainer(): JSX.Element {
                       К оплате:
                     </span>
                     <span className="basket__summary-value basket__summary-value--total">
-                      {numberWithSpaces(getCoupon(stateCoupon, sum) ? sum - getCoupon(stateCoupon, sum) : sum)} ₽
+                      {numberWithSpaces(getCoupon(stateCoupon, sum) ? sum - (Math.round(getCoupon(stateCoupon, sum) || 0)) : sum)} ₽
                     </span>
                   </p>
                   <button className="btn btn--purple" type="submit" onClick={() => {
