@@ -19,6 +19,8 @@ const AppRoute = {
   NotFound: '/404',
 };
 
+const validPromoCoupon = ['camera-333', 'camera-444', 'camera-444', ''];
+
 const ApiRoute = {
   Products: '/cameras',
   Promo: '/promo',
@@ -81,6 +83,7 @@ const TypeSorting = {
   sortPopular: 'по популярности',
 };
 export {
+  validPromoCoupon,
   TypesCameras,
   CategiryCameras,
   SearchParamsType,

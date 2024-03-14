@@ -5,8 +5,9 @@ import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from '
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { fetchSimilarProductsAction } from '../../services/thunk/fetch-similar-products';
 import { fetchReviewsProductAction } from '../../services/thunk/fetch-reviews-product';
-import { getProducts } from '../../services/token';
+import { getCoupons, getProducts } from '../../services/token';
 import { postBasketProductSlice } from '../../store/slices/post-basket-product-slice';
+import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
 
 function Header(): JSX.Element {
   const [name, setName] = useState<string>('');
@@ -20,6 +21,13 @@ function Header(): JSX.Element {
     const productInBasket = getProducts();
     if (productInBasket) {
       dispatch(postBasketProductSlice.actions.setProducts(productInBasket));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    const couponInBasket = getCoupons();
+    if (couponInBasket) {
+      dispatch(postBasketCouponSlice.actions.changeCoupon(couponInBasket));
     }
   }, [dispatch]);
 

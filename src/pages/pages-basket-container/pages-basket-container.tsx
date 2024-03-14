@@ -2,23 +2,25 @@ import { Link } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCardListInBasket } from '../../components/product-card/product-cards-list-in-basket';
-import { AppRoute } from '../../const';
+import { AppRoute, validPromoCoupon } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo, useState } from 'react';
 import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
-import { postCouponProduct } from '../../services/thunk/post-coupon-product';
+//import { postCouponProduct } from '../../services/thunk/post-coupon-product';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const stateBasketProduct = useAppSelector((state) => state.postBasketProduct.productsInBasket);
-  // console.log('🚀 ~ BasketContainer ~ stateBasketProduct:', stateBasketProduct);
 
   const sum = useMemo(() =>
     stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
   const [nameCoupons, setNameCoupons] = useState<string>('');
   const stateCoupon = useAppSelector((state) => state.CouponBasket.coupon);
+  function numberWithSpaces(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
 
 
   const sendOrder = useCallback(() => {
@@ -27,27 +29,17 @@ function BasketContainer(): JSX.Element {
       const temp: number[] = new Array<number>(e.cnt || 0).fill(e.id);
       result.push(...(temp || []));
     });
-    // console.log('🚀 ~ sendOrder ~ result:', result);
 
-    //TODO: coupon брать из стейта после проверки его валидности
-    // Надо ли очищать корзину иуходить на стартовый экранъ???
-    // Оповещение об успешной отправке заказа
     dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: stateCoupon } }));
 
   }, [dispatch, stateBasketProduct, stateCoupon]);
 
   function getCoupon(coupon: string, summa: number) {
-    if (coupon === '') {
-      return 0;
-    }
-    if (coupon === 'camera-333') {
-      return summa * 0.15;
-    }
-    if (coupon === 'camera-444') {
-      return summa * 0.25;
-    }
-    if (coupon === 'camera-555') {
-      return summa * 0.35;
+    switch (coupon) {
+      case '': return 0;
+      case 'camera-333': return summa * 0.15;
+      case 'camera-444': return summa * 0.25;
+      case 'camera-555': return summa * 0.35;
     }
   }
 
@@ -98,16 +90,16 @@ function BasketContainer(): JSX.Element {
                   </p>
                   <div className="basket-form">
                     <form action="#">
-                      <div className="custom-input">
+                      <div className={`custom-input ${validPromoCoupon.includes(stateCoupon) === true ? 'is-valid' : 'is-invalid'}`}>
                         <label>
-                          <span className="custom-input__label">Промокод</span>
+                          <span className="custom-input__label ">Промокод</span>
                           <input
                             type="text"
                             name="promo"
                             value={nameCoupons}
                             onChange={(event) => {
                               setNameCoupons(event.target.value);
-                              dispatch(postBasketCouponSlice.actions.changeCoupon(nameCoupons));
+
                             }}
                             placeholder="Введите промокод"
                           />
@@ -118,8 +110,8 @@ function BasketContainer(): JSX.Element {
                         </p>
                       </div>
                       <button className="btn" type="submit" onClick={() => {
-
-                        dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
+                        dispatch(postBasketCouponSlice.actions.changeCoupon(nameCoupons));
+                        //  dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
                         //TODO: передать купон POST /coupons
                       }}
                       >
@@ -131,12 +123,12 @@ function BasketContainer(): JSX.Element {
                 <div className="basket__summary-order">
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Всего:</span>
-                    <span className="basket__summary-value">{sum} ₽</span>
+                    <span className="basket__summary-value">{numberWithSpaces(sum)} ₽</span>
                   </p>
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Скидка:</span>
                     <span className="basket__summary-value basket__summary-value--bonus">{
-                      getCoupon(stateCoupon, sum)
+                      numberWithSpaces(getCoupon(stateCoupon, sum) || 0)
                     } ₽
                     </span>
                   </p>
@@ -145,7 +137,7 @@ function BasketContainer(): JSX.Element {
                       К оплате:
                     </span>
                     <span className="basket__summary-value basket__summary-value--total">
-                      111 390 ₽
+                      {numberWithSpaces(getCoupon(stateCoupon, sum) ? sum - getCoupon(stateCoupon, sum) : sum)} ₽
                     </span>
                   </p>
                   <button className="btn btn--purple" type="submit" onClick={() => {
