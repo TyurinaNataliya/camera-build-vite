@@ -14,6 +14,7 @@ import { FiltrationPriceSlice } from './slices/filtration-price-slice';
 import { PaginationSlice } from './slices/pagination-slice';
 import { BasketProductSlice } from './slices/orders-products-slice';
 import { postBasketProductSlice } from './slices/post-basket-product-slice';
+import { postBasketCouponSlice } from './slices/post-basket-coupon-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   [PaginationSlice.name]: PaginationSlice.reducer,
   [BasketProductSlice.name]: BasketProductSlice.reducer,
   [postBasketProductSlice.name]: postBasketProductSlice.reducer,
+  [postBasketCouponSlice.name]: postBasketCouponSlice.reducer,
 });
 
 const api = createAPI();

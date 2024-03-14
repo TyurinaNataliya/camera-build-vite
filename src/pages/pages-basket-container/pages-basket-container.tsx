@@ -6,6 +6,8 @@ import { AppRoute } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo, useState } from 'react';
+import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
+import { postCouponProduct } from '../../services/thunk/post-coupon-product';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,6 +18,7 @@ function BasketContainer(): JSX.Element {
   const sum = useMemo(() =>
     stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
   const [nameCoupons, setNameCoupons] = useState<string>('');
+  const stateCoupon = useAppSelector((state) => state.CouponBasket.coupon);
 
 
   const sendOrder = useCallback(() => {
@@ -29,9 +32,24 @@ function BasketContainer(): JSX.Element {
     //TODO: coupon брать из стейта после проверки его валидности
     // Надо ли очищать корзину иуходить на стартовый экранъ???
     // Оповещение об успешной отправке заказа
-    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: 'camera-333' } }));
+    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: stateCoupon } }));
 
-  }, [dispatch, stateBasketProduct]);
+  }, [dispatch, stateBasketProduct, stateCoupon]);
+
+  function getCoupon(coupon: string, summa: number) {
+    if (coupon === '') {
+      return 0;
+    }
+    if (coupon === 'camera-333') {
+      return summa * 0.15;
+    }
+    if (coupon === 'camera-444') {
+      return summa * 0.25;
+    }
+    if (coupon === 'camera-555') {
+      return summa * 0.35;
+    }
+  }
 
   return (
     <>
@@ -89,7 +107,7 @@ function BasketContainer(): JSX.Element {
                             value={nameCoupons}
                             onChange={(event) => {
                               setNameCoupons(event.target.value);
-                              //TODO: записывать купон через диспатч в глобальный стейт
+                              dispatch(postBasketCouponSlice.actions.changeCoupon(nameCoupons));
                             }}
                             placeholder="Введите промокод"
                           />
@@ -100,6 +118,8 @@ function BasketContainer(): JSX.Element {
                         </p>
                       </div>
                       <button className="btn" type="submit" onClick={() => {
+
+                        dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
                         //TODO: передать купон POST /coupons
                       }}
                       >
@@ -115,8 +135,9 @@ function BasketContainer(): JSX.Element {
                   </p>
                   <p className="basket__summary-item">
                     <span className="basket__summary-text">Скидка:</span>
-                    <span className="basket__summary-value basket__summary-value--bonus">
-                      0 ₽
+                    <span className="basket__summary-value basket__summary-value--bonus">{
+                      getCoupon(stateCoupon, sum)
+                    } ₽
                     </span>
                   </p>
                   <p className="basket__summary-item">
