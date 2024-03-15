@@ -173,7 +173,7 @@ function BasketContainer(): JSX.Element {
                     onClick={() => {
                       setModalSuccesActive(true);
                       setModalErrorActive(true);
-                      console.log(orderFetchingsStatus);
+                      // console.log(orderFetchingsStatus);
                       sendOrder();
                     }}
                     disabled={stateBasketProduct.length < 1}
