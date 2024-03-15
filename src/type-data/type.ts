@@ -31,7 +31,7 @@ export type TypePromoProduct = {
 
 export type TypeOrdersProduct = {
   camerasIds: number[];
-  coupon: string;
+  coupon: string | null;
 };
 export type TypeProductReview = {
   id?: string;

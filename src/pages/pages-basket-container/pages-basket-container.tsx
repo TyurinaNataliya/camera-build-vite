@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo, useState } from 'react';
 import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
 import { ModalProductBasketSucces } from '../../components/modals-components/modal-product-basket-success/modal-product-basket-success';
+import { postCouponProduct } from '../../services/thunk/post-coupon-product';
+import { ModalProductBasketError } from '../../components/modals-components/modal-product-basket-error/modal-product-basket-error';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,7 +19,11 @@ function BasketContainer(): JSX.Element {
   const sum = useMemo(() =>
     stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
   const [nameCoupons, setNameCoupons] = useState<string>('');
+  const [modalSuccesActive, setModalSuccesActive] = useState<boolean>(false);
+  const [modalErrorActive, setModalErrorActive] = useState<boolean>(false);
+
   const stateCoupon = useAppSelector((state) => state.CouponBasket.coupon);
+
   function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
@@ -30,9 +36,7 @@ function BasketContainer(): JSX.Element {
       const temp: number[] = new Array<number>(e.cnt || 0).fill(e.id);
       result.push(...(temp || []));
     });
-
-    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: stateCoupon } }));
-
+    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: stateCoupon ? stateCoupon : null } }));
   }, [dispatch, stateBasketProduct, stateCoupon]);
 
   const getCoupon = useCallback((coupon: string, summa: number) => {
@@ -41,9 +45,7 @@ function BasketContainer(): JSX.Element {
       case 'camera-333': return summa * 0.15;
       case 'camera-444': return summa * 0.25;
       case 'camera-555': return summa * 0.35;
-      // default: return summa;
     }
-
   }, []);
 
   return (
@@ -136,7 +138,7 @@ function BasketContainer(): JSX.Element {
 
                       <button className="btn" type="submit" onClick={() => {
                         dispatch(postBasketCouponSlice.actions.changeCoupon(nameCoupons));
-                        //  dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
+                        dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
                         //TODO: передать купон POST /coupons
                       }}
                       >
@@ -167,7 +169,9 @@ function BasketContainer(): JSX.Element {
                   </p>
                   <button
                     className="btn btn--purple"
-                    type="submit" onClick={() => {
+                    type="submit"
+                    onClick={() => {
+                      setModalSuccesActive(true);
                       sendOrder();
                     }}
                     disabled={stateBasketProduct.length < 1}
@@ -179,8 +183,17 @@ function BasketContainer(): JSX.Element {
             </div>
           </section>
         </div>
-        {orderFetchingsStatus === RequestStatus.Success && (
-          <ModalProductBasketSucces />
+        {orderFetchingsStatus === RequestStatus.Success && modalSuccesActive === true && (
+          <ModalProductBasketSucces handleCloseModalSuccessActive={() => {
+            setModalSuccesActive(false);
+          }}
+          />
+        )}
+        {orderFetchingsStatus === RequestStatus.Error && modalErrorActive === true && (
+          <ModalProductBasketError handleCloseModalErrorActive={() => {
+            setModalErrorActive(false);
+          }}
+          />
         )}
       </main >
       <Footer />
