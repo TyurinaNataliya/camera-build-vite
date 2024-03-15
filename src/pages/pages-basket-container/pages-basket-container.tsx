@@ -172,6 +172,8 @@ function BasketContainer(): JSX.Element {
                     type="submit"
                     onClick={() => {
                       setModalSuccesActive(true);
+                      setModalErrorActive(true);
+                      console.log(orderFetchingsStatus);
                       sendOrder();
                     }}
                     disabled={stateBasketProduct.length < 1}

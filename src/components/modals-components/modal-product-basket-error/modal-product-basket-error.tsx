@@ -1,10 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-import { useCallback, useEffect, useRef } from 'react';
-import { useAppDispatch } from '../../../hooks/store';
-import { postBasketProductSlice } from '../../../store/slices/post-basket-product-slice';
-import { postBasketCouponSlice } from '../../../store/slices/post-basket-coupon-slice';
-import { removeCoupon, removeProduct } from '../../../services/token';
+import { useEffect, useRef } from 'react';
+
 
 type Props = {
   handleCloseModalErrorActive: () => void;
@@ -13,13 +10,7 @@ type Props = {
 
 function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.Element {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const cleanBasket = useCallback(() => {
-    removeProduct();
-    removeCoupon();
-    dispatch(postBasketProductSlice.actions.setProducts(''));
-    dispatch(postBasketCouponSlice.actions.changeCoupon(''));
-  }, [dispatch]);
+
 
   const modalRef = useRef(null);
 
@@ -27,14 +18,14 @@ function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.El
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         handleCloseModalErrorActive?.();
-        cleanBasket();
+
       }
     };
     document.addEventListener('keydown', handleKey, true);
     return () => {
       document.removeEventListener('keydown', handleKey, true);
     };
-  }, [cleanBasket, handleCloseModalErrorActive]);
+  }, [handleCloseModalErrorActive]);
 
   return (
     <div className="modal is-active modal--narrow">
@@ -47,7 +38,7 @@ function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.El
             <button
               onClick={() => {
                 navigate(AppRoute.Basket);
-                cleanBasket();
+                handleCloseModalErrorActive?.();
               }}
               className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
             >Попробовать снова.
