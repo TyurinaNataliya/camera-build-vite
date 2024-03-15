@@ -215,7 +215,7 @@ function Header(): JSX.Element {
             <use xlinkHref="#icon-basket"></use>
           </svg>
           {stateBasketProduct.length > 0 &&
-            (<span className="header__basket-count">{stateBasketProduct.length}</span>)}
+            (<span className="header__basket-count">{stateBasketProduct.map((product) => product.cnt).reduce((acc: number, number) => acc + (number || 0), 0)}</span>)}
         </Link>
       </div>
     </header>
