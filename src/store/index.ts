@@ -12,9 +12,10 @@ import { FiltrationTypeCamerasSlice } from './slices/filtration-type-cameras-sli
 import { FiltrationLevelSlice } from './slices/filtration-level-slice';
 import { FiltrationPriceSlice } from './slices/filtration-price-slice';
 import { PaginationSlice } from './slices/pagination-slice';
-import { BasketProductSlice } from './slices/orders-products-slice';
+
 import { postBasketProductSlice } from './slices/post-basket-product-slice';
 import { postBasketCouponSlice } from './slices/post-basket-coupon-slice';
+import { postOrderProductSlice } from './slices/post-orders-product-slice';
 
 const reducer = combineReducers({
   [productSlice.name]: productSlice.reducer,
@@ -30,7 +31,7 @@ const reducer = combineReducers({
   [FiltrationLevelSlice.name]: FiltrationLevelSlice.reducer,
   [FiltrationPriceSlice.name]: FiltrationPriceSlice.reducer,
   [PaginationSlice.name]: PaginationSlice.reducer,
-  [BasketProductSlice.name]: BasketProductSlice.reducer,
+  [postOrderProductSlice.name]: postOrderProductSlice.reducer,
   [postBasketProductSlice.name]: postBasketProductSlice.reducer,
   [postBasketCouponSlice.name]: postBasketCouponSlice.reducer,
 });

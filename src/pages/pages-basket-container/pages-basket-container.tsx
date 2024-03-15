@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCardListInBasket } from '../../components/product-card/product-cards-list-in-basket';
-import { AppRoute, validPromoCoupon } from '../../const';
+import { AppRoute, RequestStatus, validPromoCoupon } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo, useState } from 'react';
 import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
-//import { postCouponProduct } from '../../services/thunk/post-coupon-product';
+import { ModalProductBasketSucces } from '../../components/modals-components/modal-product-basket-success/modal-product-basket-success';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,6 +21,7 @@ function BasketContainer(): JSX.Element {
   function numberWithSpaces(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
+  const orderFetchingsStatus = useAppSelector((state) => state.postOrdersProduct.productInOrderFetchingstatus);
 
 
   const sendOrder = useCallback(() => {
@@ -164,9 +165,12 @@ function BasketContainer(): JSX.Element {
                       {numberWithSpaces(getCoupon(stateCoupon, sum) ? sum - (Math.round(getCoupon(stateCoupon, sum) || 0)) : sum)} ₽
                     </span>
                   </p>
-                  <button className="btn btn--purple" type="submit" onClick={() => {
-                    sendOrder();
-                  }}
+                  <button
+                    className="btn btn--purple"
+                    type="submit" onClick={() => {
+                      sendOrder();
+                    }}
+                    disabled={stateBasketProduct.length < 1}
                   >
                     Оформить заказ
                   </button>
@@ -175,8 +179,10 @@ function BasketContainer(): JSX.Element {
             </div>
           </section>
         </div>
-
-      </main>
+        {orderFetchingsStatus === RequestStatus.Success && (
+          <ModalProductBasketSucces />
+        )}
+      </main >
       <Footer />
     </>
   );
