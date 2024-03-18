@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ProductCardListInBasket } from '../../components/product-card/product-cards-list-in-basket';
-import { AppRoute, RequestStatus, validPromoCoupon } from '../../const';
+import { AppRoute, DiscountFactor, RequestStatus, validPromoCoupon } from '../../const';
 import { postOrdersProduct } from '../../services/thunk/post-orders-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { useCallback, useMemo, useState } from 'react';
-import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
 import { ModalProductBasketSucces } from '../../components/modals-components/modal-product-basket-success/modal-product-basket-success';
 import { postCouponProduct } from '../../services/thunk/post-coupon-product';
 import { ModalProductBasketError } from '../../components/modals-components/modal-product-basket-error/modal-product-basket-error';
+import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -37,14 +37,15 @@ function BasketContainer(): JSX.Element {
       result.push(...(temp || []));
     });
     dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: stateCoupon ? stateCoupon : null } }));
+
   }, [dispatch, stateBasketProduct, stateCoupon]);
 
   const getCoupon = useCallback((coupon: string, summa: number) => {
     switch (coupon) {
       case '': return 0;
-      case 'camera-333': return summa * 0.15;
-      case 'camera-444': return summa * 0.25;
-      case 'camera-555': return summa * 0.35;
+      case 'camera-333': return summa * DiscountFactor.Camera333;
+      case 'camera-444': return summa * DiscountFactor.Camera444;
+      case 'camera-555': return summa * DiscountFactor.Camera555;
     }
   }, []);
 
@@ -105,7 +106,6 @@ function BasketContainer(): JSX.Element {
                               value={nameCoupons}
                               onChange={(event) => {
                                 setNameCoupons(event.target.value);
-
                               }}
                               placeholder="Введите промокод"
                             />
@@ -116,7 +116,7 @@ function BasketContainer(): JSX.Element {
                           </p>
                         </div>)}
                       {stateCoupon !== '' && (
-                        <div className={`custom-input ${(validPromoCoupon.includes(stateCoupon) === true ? 'is-valid' : 'is-invalid')}`}>
+                        <div className={`custom-input ${(validPromoCoupon.includes(stateCoupon) ? 'is-valid' : 'is-invalid')}`}>
                           <label>
                             <span className="custom-input__label ">Промокод</span>
                             <input
@@ -136,11 +136,17 @@ function BasketContainer(): JSX.Element {
                           </p>
                         </div>)}
 
-                      <button className="btn" type="submit" onClick={() => {
-                        dispatch(postBasketCouponSlice.actions.changeCoupon(nameCoupons));
-                        dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
-                        //TODO: передать купон POST /coupons
-                      }}
+                      <button
+                        className="btn"
+                        type="submit"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          if (nameCoupons) {
+                            dispatch(postCouponProduct({ basketCouponData: nameCoupons }));
+                          } else {
+                            dispatch(postBasketCouponSlice.actions.changeCoupon());
+                          }
+                        }}
                       >
                         Применить
                       </button>

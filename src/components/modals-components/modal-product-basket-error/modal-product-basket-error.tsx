@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 
 type Props = {
-  handleCloseModalErrorActive: () => void;
+  handleCloseModalErrorActive?: () => void;
 }
 
 
@@ -28,7 +28,13 @@ function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.El
   }, [handleCloseModalErrorActive]);
 
   return (
-    <div className="modal is-active modal--narrow">
+    <div className="modal is-active modal--narrow" data-testid="modal-product-basket-error"
+      onMouseDown={(event) => {
+        if (modalRef.current && event.target === modalRef.current) {
+          handleCloseModalErrorActive?.();
+        }
+      }}
+    >
       <div className="modal__wrapper">
         <div className="modal__overlay" ref={modalRef}></div>
         <div className="modal__content">
@@ -45,7 +51,11 @@ function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.El
             </button>
 
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап">
+          <button className="cross-btn" type="button" aria-label="Закрыть попап"
+            onClick={() => {
+              handleCloseModalErrorActive?.();
+            }}
+          >
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

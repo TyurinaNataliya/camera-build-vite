@@ -7,11 +7,10 @@ const postCouponProduct = createAsyncThunk<
   string,
   { basketCouponData: string },
   Thunk
->(`${ApiRoute.Coupon}`, async ({ basketCouponData }, { extra: api }) => {
-  const { data } = await api.post<string>(
-    `${ApiRoute.Coupon}`,
-    basketCouponData
-  );
+>('data/fetchCouponBasket', async ({ basketCouponData }, { extra: api }) => {
+  const { data } = await api.post<string>(`${ApiRoute.Coupon}`, {
+    coupon: basketCouponData,
+  });
 
   return data;
 });

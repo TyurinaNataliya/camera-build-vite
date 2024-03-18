@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../../hooks/store';
 import { postBasketCouponSlice } from '../../../store/slices/post-basket-coupon-slice';
 
 type Props = {
-  handleCloseModalSuccessActive: () => void;
+  handleCloseModalSuccessActive?: () => void;
 }
 
 
@@ -20,7 +20,7 @@ function ModalProductBasketSucces({ handleCloseModalSuccessActive }: Props): JSX
     removeProduct();
     removeCoupon();
     dispatch(postBasketProductSlice.actions.setProducts('[]'));
-    dispatch(postBasketCouponSlice.actions.changeCoupon(''));
+    dispatch(postBasketCouponSlice.actions.changeCoupon());
   }, [dispatch]);
 
 
@@ -40,7 +40,7 @@ function ModalProductBasketSucces({ handleCloseModalSuccessActive }: Props): JSX
   }, [cleanBasket, handleCloseModalSuccessActive]);
 
   return (
-    <div className="modal is-active modal--narrow"
+    <div className="modal is-active modal--narrow" data-testid="modal-product-basket-success"
       onMouseDown={(event) => {
         if (modalRef.current && event.target === modalRef.current) {
           handleCloseModalSuccessActive?.();
@@ -71,7 +71,7 @@ function ModalProductBasketSucces({ handleCloseModalSuccessActive }: Props): JSX
             type="button"
             aria-label="Закрыть попап"
             onClick={() => {
-              handleCloseModalSuccessActive();
+              handleCloseModalSuccessActive?.();
               cleanBasket();
             }}
           >
