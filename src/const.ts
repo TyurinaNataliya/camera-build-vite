@@ -25,7 +25,7 @@ const DiscountFactor = {
   Camera555: 0.35,
 };
 
-const validPromoCoupon = ['15', '25', '35'];
+const validPromoCoupon = ['camera-333', 'camera-444', 'camera-555'];
 
 const ApiRoute = {
   Products: '/cameras',
