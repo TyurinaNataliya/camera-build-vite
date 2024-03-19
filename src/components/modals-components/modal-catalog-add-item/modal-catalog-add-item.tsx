@@ -85,7 +85,7 @@ function ModalCatalogAddItem({
               </ul>
               <p className="basket-item__price">
                 <span className="visually-hidden">Цена:</span>
-                {price < 1000 ? `${price} ₽` : numberWithSpaces(price)}
+                {numberWithSpaces(price)}
               </p>
             </div>
           </div>

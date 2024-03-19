@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { NAME_ASCENDING_DESCENDING, SearchParamsType } from '../../const';
+import { DEFAULT_NUMBER, NAME_ASCENDING_DESCENDING, SearchParamsType, filterAscendingDescending, sortType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 
 import { SortingAscendingDescendingSlice } from '../../store/slices/sorting-ascending-descending-slice';
@@ -24,8 +24,8 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
         data-testid="btnSortingUpDown"
         onClick={() => {
           dispatch(SortingAscendingDescendingSlice.actions.changeType(type));
-          dispatch(SortingTypeProductSlice.actions.changeType('sortPrice'));
-          dispatch(PaginationSlice.actions.changePage('1'));
+          dispatch(SortingTypeProductSlice.actions.changeType(sortType.SortPrice));
+          dispatch(PaginationSlice.actions.changePage(DEFAULT_NUMBER));
           searchParams.set(SearchParamsType.Order, type);
           searchParams.delete(SearchParamsType.Page);
           setSearchParams(searchParams);
@@ -33,7 +33,7 @@ function ButtonSortingUpDown({ type, index }: Props): JSX.Element {
         type="radio"
         id={type}
         name="sort-icon"
-        defaultChecked={type === 'up'}
+        defaultChecked={type === filterAscendingDescending.Up}
         checked={type === stateSorting}
         aria-label={NAME_ASCENDING_DESCENDING[index]}
       />

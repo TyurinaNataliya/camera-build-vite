@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { removeCoupon, updateCoupon } from '../../services/token';
 import { postCouponProduct } from '../../services/thunk/post-coupon-product';
+import { RequestStatus } from '../../const';
 
 type InitialState = {
   coupon: string;
+  couponFetchingstatus: string;
 };
 const initialState: InitialState = {
   coupon: '',
+  couponFetchingstatus: RequestStatus.Idle,
 };
 
 const postBasketCouponSlice = createSlice({
@@ -37,8 +40,11 @@ const postBasketCouponSlice = createSlice({
         state.coupon = ccc;
         updateCoupon(ccc);
       })
-      .addCase(postCouponProduct.pending, () => {})
+      .addCase(postCouponProduct.pending, (state) => {
+        state.couponFetchingstatus = RequestStatus.Pending;
+      })
       .addCase(postCouponProduct.rejected, (state) => {
+        state.couponFetchingstatus = RequestStatus.Error;
         state.coupon = 'null';
       });
   },

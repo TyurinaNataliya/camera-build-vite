@@ -24,6 +24,7 @@ function BasketContainer(): JSX.Element {
   const [modalErrorActive, setModalErrorActive] = useState<boolean>(false);
 
   const stateCoupon = useAppSelector((state) => state.CouponBasket.coupon);
+  const couponFetchingsStatus = useAppSelector((state) => state.CouponBasket.couponFetchingstatus);
 
 
   const orderFetchingsStatus = useAppSelector((state) => state.postOrdersProduct.productInOrderFetchingstatus);
@@ -35,9 +36,9 @@ function BasketContainer(): JSX.Element {
       const temp: number[] = new Array<number>(e.cnt || 0).fill(e.id);
       result.push(...(temp || []));
     });
-    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: stateCoupon ? stateCoupon : null } }));
+    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: couponFetchingsStatus === RequestStatus.Error ? null : stateCoupon } }));
 
-  }, [dispatch, stateBasketProduct, stateCoupon]);
+  }, [couponFetchingsStatus, dispatch, stateBasketProduct, stateCoupon]);
 
   const getCoupon = useCallback((coupon: string, summa: number) => {
     switch (coupon) {

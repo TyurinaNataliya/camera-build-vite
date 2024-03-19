@@ -11,6 +11,7 @@ const NUMBER_FOUR_PAGE = 4;
 const NUMBER_FIVE_PAGE = 5;
 const NUMBER_TWO_PAGE = 2;
 const NUMBER_ONE_PAGE = 1;
+const DEFAULT_NUMBER = '1';
 
 const AppRoute = {
   Basket: '/basket',
@@ -57,6 +58,10 @@ enum SearchParamsType {
   Type = 'type',
   Page = 'page',
 }
+enum optionsNameCategiryCameras {
+  Photocamera = 'Фотокамера',
+  Сamera = 'Фотоаппарат',
+}
 
 enum CategiryCameras {
   Photocamera = 'Фотоаппарат',
@@ -68,6 +73,14 @@ enum TypesCameras {
   Film = 'Плёночная',
   Instant = 'Моментальная',
   Collectors = 'Коллекционная',
+}
+enum sortType {
+  SortPrice = 'sortPrice',
+  SortPopular = 'sortPopular',
+}
+enum filterAscendingDescending {
+  Up = 'up',
+  Down = 'down',
 }
 
 const NAME_ASCENDING_DESCENDING_ENGLISH = ['up', 'down'];
@@ -89,6 +102,10 @@ const TypeSorting = {
   sortPopular: 'по популярности',
 };
 export {
+  DEFAULT_NUMBER,
+  filterAscendingDescending,
+  sortType,
+  optionsNameCategiryCameras,
   DiscountFactor,
   validPromoCoupon,
   TypesCameras,

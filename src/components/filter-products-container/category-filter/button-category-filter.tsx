@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store';
 import { FiltrationCategorySlice } from '../../../store/slices/filtration-category-slice';
 import { PaginationSlice } from '../../../store/slices/pagination-slice';
-import { SearchParamsType } from '../../../const';
+import { SearchParamsType, optionsNameCategiryCameras } from '../../../const';
 
 type Props = {
   category: string;
@@ -22,11 +22,11 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
           data-testid="btnCategiry"
           type="checkbox"
           onClick={() => {
-            if(category === stateCategoryFilter){
+            if (category === stateCategoryFilter) {
               dispatch(FiltrationCategorySlice.actions.changeType(''));
               searchParams.delete(SearchParamsType.Category);
               setSearchParams(searchParams);
-            } else{
+            } else {
               dispatch(FiltrationCategorySlice.actions.changeType(category));
               dispatch(PaginationSlice.actions.changePage('1'));
               searchParams.set(SearchParamsType.Category, category);
@@ -42,7 +42,7 @@ function ButtonCategoryFilter({ category }: Props): JSX.Element {
           }
         />
         <span className="custom-checkbox__icon"></span>
-        <span className="custom-checkbox__label">{category === 'Фотоаппарат' ? 'Фотокамера' : category}</span>
+        <span className="custom-checkbox__label">{category === optionsNameCategiryCameras.Сamera ? optionsNameCategiryCameras.Photocamera : category}</span>
       </label>
     </div>
   );
