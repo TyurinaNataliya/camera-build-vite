@@ -3,7 +3,8 @@ import { TypeProduct } from '../../type-data/type';
 import { AppRoute } from '../../const';
 import { fetchProductAction } from '../../services/thunk/fetch-product';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
-// import { useEffect } from 'react';
+import { numberWithSpaces } from '../../utils/utils';
+
 
 type Props = {
   product: TypeProduct;
@@ -22,17 +23,11 @@ function ProductCardInCatalog({
     reviewCount,
     price,
     previewImg,
-    //previewImg2x,
     name,
-    // previewImgWebp,
-    // previewImgWebp2x,
   } = product;
 
   const stateBasketProduct = useAppSelector((state) => state.postBasketProduct.productsInBasket);
 
-  function numberWithSpaces(x: number) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
 
   const dispatch = useAppDispatch();
   return (
@@ -46,11 +41,9 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-            //srcSet={`/${previewImg}, ${previewImg2x} 2x`}
             />
             <img
               src={`/${previewImg}`}
-              //srcSet={`/${previewImg2x} 2x`}
               width="280"
               height="240"
               alt={name}
@@ -60,11 +53,9 @@ function ProductCardInCatalog({
           <picture>
             <source
               type="image/webp"
-            //srcSet={`/${previewImg}, ${previewImg2x} 2x`}
             />
             <img
               src={`/${previewImg}`}
-              //srcSet={`/${previewImg2x} 2x`}
               width="280"
               height="240"
               alt={name}

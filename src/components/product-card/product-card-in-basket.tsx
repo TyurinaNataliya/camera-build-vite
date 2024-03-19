@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../hooks/store';
 import { postBasketProductSlice } from '../../store/slices/post-basket-product-slice';
 import { ProductInBasket } from '../../type-data/type';
 import { ModalBasketRemoveItem } from '../modals-components/modal-basket-remove-item/modal-basket-remove-item';
+import { numberWithSpaces } from '../../utils/utils';
 
 type Props = {
   product: ProductInBasket;
@@ -22,9 +23,7 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
     cnt
   } = product;
 
-  function numberWithSpaces(x: number) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+
   const dispatch = useAppDispatch();
   const [modalBasketactive, setModalBasketactive] = useState<boolean>(false);
 

@@ -23,12 +23,6 @@ function Header(): JSX.Element {
     }
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const couponInBasket = getCoupons();
-  //   if (couponInBasket) {
-  //     dispatch(postBasketCouponSlice.actions.changeCoupon(couponInBasket));
-  //   }
-  // }, [dispatch]);
 
   const [currentTab, setCurrentTab] = useState(-1);
 

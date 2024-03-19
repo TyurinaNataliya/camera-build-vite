@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { TypeProduct } from '../../../type-data/type';
 import { useAppDispatch } from '../../../hooks/store';
 import { postBasketProductSlice } from '../../../store/slices/post-basket-product-slice';
+import { numberWithSpaces } from '../../../utils/utils';
 
 
 type Props = {
@@ -41,9 +42,7 @@ function ModalCatalogAddItem({
       document.removeEventListener('keydown', handleKey, true);
     };
   }, [handleCloseModalItem]);
-  function numberWithSpaces(x: number) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+
   return (
     <div
       className="modal is-active"

@@ -4,6 +4,7 @@ import { TabsElementCharacteristics } from '../tabs-components/tabs-element-char
 import { TabsElementText } from '../tabs-components/tabs-element-text/tabs-element-text';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { numberWithSpaces } from '../../utils/utils';
 
 type Props = {
   product: TypeProduct;
@@ -15,9 +16,7 @@ function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
   const { name, rating, reviewCount, price, id } = product;
   const [isActiveText, setIsActiveText] = useState<boolean>(true);
   const navigate = useNavigate();
-  function numberWithSpaces(x: number) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+
 
   return (
     <div className="container" data-testid="product-card">
@@ -25,11 +24,9 @@ function ProductCard({ product, handleActiveModalItem }: Props): JSX.Element {
         <picture>
           <source
             type="image/webp"
-          //srcSet={`/${product.previewImg}, ${product.previewImg2x} 2x`}
           />
           <img
             src={`/${product?.previewImg}`}
-            //srcSet={`/${product?.previewImg2x || ''} 2x`}
             width="560"
             height="480"
             alt={product?.name}

@@ -14,4 +14,14 @@ function sortByRatingDown(a: TypeProduct, b: TypeProduct) {
   return b?.rating - a?.rating;
 }
 
-export { sortByPriceDown, sortByPriceUp, sortByRatingDown, sortByRatingUp };
+function numberWithSpaces(x: number) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+export {
+  sortByPriceDown,
+  sortByPriceUp,
+  sortByRatingDown,
+  sortByRatingUp,
+  numberWithSpaces,
+};

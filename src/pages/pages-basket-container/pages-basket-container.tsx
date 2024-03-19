@@ -10,6 +10,7 @@ import { ModalProductBasketSucces } from '../../components/modals-components/mod
 import { postCouponProduct } from '../../services/thunk/post-coupon-product';
 import { ModalProductBasketError } from '../../components/modals-components/modal-product-basket-error/modal-product-basket-error';
 import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
+import { numberWithSpaces } from '../../utils/utils';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,9 +25,7 @@ function BasketContainer(): JSX.Element {
 
   const stateCoupon = useAppSelector((state) => state.CouponBasket.coupon);
 
-  function numberWithSpaces(x: number) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  }
+
   const orderFetchingsStatus = useAppSelector((state) => state.postOrdersProduct.productInOrderFetchingstatus);
 
 
@@ -179,7 +178,6 @@ function BasketContainer(): JSX.Element {
                     onClick={() => {
                       setModalSuccesActive(true);
                       setModalErrorActive(true);
-                      // console.log(orderFetchingsStatus);
                       sendOrder();
                     }}
                     disabled={stateBasketProduct.length < 1}
