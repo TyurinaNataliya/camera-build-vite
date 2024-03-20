@@ -87,8 +87,8 @@ function ProductCardInBasket({ product }: Props): JSX.Element {
             id="counter1"
             value={cnt}
             onChange={(event) => {
-              if (Number(event.target.value) > 0 && Number(event.target.value) < 100) {
-                dispatch(postBasketProductSlice.actions.setCountProduct({ ...product, cnt: Number(event.target.value) }));
+              if (Math.ceil(Number(event.target.value)) > 0 && Math.ceil(Number(event.target.value)) < 100) {
+                dispatch(postBasketProductSlice.actions.setCountProduct({ ...product, cnt: Math.ceil(Number(event.target.value)) }));
               }
             }}
             min="1"
