@@ -11,6 +11,7 @@ import { postCouponProduct } from '../../services/thunk/post-coupon-product';
 import { ModalProductBasketError } from '../../components/modals-components/modal-product-basket-error/modal-product-basket-error';
 import { postBasketCouponSlice } from '../../store/slices/post-basket-coupon-slice';
 import { numberWithSpaces } from '../../utils/utils';
+import { getCoupons } from '../../services/token';
 
 function BasketContainer(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,13 +20,13 @@ function BasketContainer(): JSX.Element {
 
   const sum = useMemo(() =>
     stateBasketProduct.reduce((acc, cur) => acc + ((cur.cnt || 0) * cur.price), 0), [stateBasketProduct]);
-  const [nameCoupons, setNameCoupons] = useState<string>('');
-  const [modalSuccesActive, setModalSuccesActive] = useState<boolean>(false);
-  const [modalErrorActive, setModalErrorActive] = useState<boolean>(false);
 
   const stateCoupon = useAppSelector((state) => state.CouponBasket.coupon);
   const couponFetchingsStatus = useAppSelector((state) => state.CouponBasket.couponFetchingstatus);
 
+  const [nameCoupons, setNameCoupons] = useState<string>(getCoupons());
+  const [modalSuccesActive, setModalSuccesActive] = useState<boolean>(false);
+  const [modalErrorActive, setModalErrorActive] = useState<boolean>(false);
 
   const orderFetchingsStatus = useAppSelector((state) => state.postOrdersProduct.productInOrderFetchingstatus);
 
@@ -180,6 +181,7 @@ function BasketContainer(): JSX.Element {
                       setModalSuccesActive(true);
                       setModalErrorActive(true);
                       sendOrder();
+                      setNameCoupons('');
                     }}
                     disabled={stateBasketProduct.length < 1}
                   >
