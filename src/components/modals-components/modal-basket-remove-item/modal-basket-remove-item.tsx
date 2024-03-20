@@ -76,7 +76,7 @@ function ModalBasketRemoveItem({ hideModal, product }: Props): JSX.Element {
               className="btn btn--purple modal__btn modal__btn--half-width" type="button"
             >Удалить
             </button>
-            <Link className="btn btn--transparent modal__btn modal__btn--half-width" to={AppRoute.Basket}>Продолжить покупки
+            <Link className="btn btn--transparent modal__btn modal__btn--half-width" onClick={() => hideModal?.()} to={AppRoute.Basket}>Продолжить покупки
             </Link>
           </div>
           <button

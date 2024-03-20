@@ -37,7 +37,7 @@ function BasketContainer(): JSX.Element {
       const temp: number[] = new Array<number>(e.cnt || 0).fill(e.id);
       result.push(...(temp || []));
     });
-    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: couponFetchingsStatus === RequestStatus.Error ? null : stateCoupon } }));
+    dispatch(postOrdersProduct({ basketData: { camerasIds: result, coupon: couponFetchingsStatus === RequestStatus.Error || stateCoupon === '' ? null : stateCoupon } }));
 
   }, [couponFetchingsStatus, dispatch, stateBasketProduct, stateCoupon]);
 
