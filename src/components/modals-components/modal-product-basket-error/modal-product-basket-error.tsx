@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useEffect, useRef } from 'react';
+import FocusTrap from 'focus-trap-react';
 
 
 type Props = {
@@ -28,41 +29,43 @@ function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.El
   }, [handleCloseModalErrorActive]);
 
   return (
-    <div className="modal is-active modal--narrow" data-testid="modal-product-basket-error"
-      onMouseDown={(event) => {
-        if (modalRef.current && event.target === modalRef.current) {
-          handleCloseModalErrorActive?.();
-        }
-      }}
-    >
-      <div className="modal__wrapper">
-        <div className="modal__overlay" ref={modalRef}></div>
-        <div className="modal__content">
-          <p className="title title--h4">Упс..Что-то пошло не так.</p>
-          <p className="title title--h4">Пожалуйста, проверьте детали заказа и попробуйте снова.</p>
-          <div className="modal__buttons">
-            <button
+    <FocusTrap>
+      <div className="modal is-active modal--narrow" data-testid="modal-product-basket-error"
+        onMouseDown={(event) => {
+          if (modalRef.current && event.target === modalRef.current) {
+            handleCloseModalErrorActive?.();
+          }
+        }}
+      >
+        <div className="modal__wrapper">
+          <div className="modal__overlay" ref={modalRef}></div>
+          <div className="modal__content">
+            <p className="title title--h4">Упс..Что-то пошло не так.</p>
+            <p className="title title--h4">Пожалуйста, проверьте детали заказа и попробуйте снова.</p>
+            <div className="modal__buttons">
+              <button
+                onClick={() => {
+                  navigate(AppRoute.Basket);
+                  handleCloseModalErrorActive?.();
+                }}
+                className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
+              >Попробовать снова.
+              </button>
+
+            </div>
+            <button className="cross-btn" type="button" aria-label="Закрыть попап"
               onClick={() => {
-                navigate(AppRoute.Basket);
                 handleCloseModalErrorActive?.();
               }}
-              className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
-            >Попробовать снова.
+            >
+              <svg width="10" height="10" aria-hidden="true">
+                <use xlinkHref="#icon-close"></use>
+              </svg>
             </button>
-
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап"
-            onClick={() => {
-              handleCloseModalErrorActive?.();
-            }}
-          >
-            <svg width="10" height="10" aria-hidden="true">
-              <use xlinkHref="#icon-close"></use>
-            </svg>
-          </button>
         </div>
       </div>
-    </div>
+    </FocusTrap>
   );
 }
 export { ModalProductBasketError };
