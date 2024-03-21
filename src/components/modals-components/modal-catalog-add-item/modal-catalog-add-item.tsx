@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { TypeProduct } from '../../../type-data/type';
 import { useAppDispatch } from '../../../hooks/store';
 import { postBasketProductSlice } from '../../../store/slices/post-basket-product-slice';
@@ -31,18 +31,32 @@ function ModalCatalogAddItem({
   const modalRef = useRef(null);
   const dispatch = useAppDispatch();
 
+  const handleClick = useCallback(() => {
+    dispatch(postBasketProductSlice.actions.addProduct(product));//добавление в корзину
+    handleCloseModalItem?.();//закрытие попапа
+    handleActiveModalSuccess?.();//открытие сл попапа
+  }, [dispatch, handleActiveModalSuccess, handleCloseModalItem, product]);
 
   useEffect(() => {
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         handleCloseModalItem?.();
       }
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--purple modal__btn modal__btn--fit-width' && evt.key === 'Enter') {
+        evt.preventDefault();
+        handleClick();
+      }
+      if ((evt.target as HTMLButtonElement)?.className === 'cross-btn' && evt.key === 'Enter') {
+        evt.preventDefault();
+        handleCloseModalItem?.();//закрытие попапа
+      }
     };
     document.addEventListener('keydown', handleKey, true);
     return () => {
       document.removeEventListener('keydown', handleKey, true);
     };
-  }, [handleCloseModalItem]);
+  }, [handleClick, handleCloseModalItem]);
+
 
   return (
     <FocusTrap>
@@ -96,10 +110,7 @@ function ModalCatalogAddItem({
                 className="btn btn--purple modal__btn modal__btn--fit-width"
                 type="button"
                 onClick={() => {
-                  handleActiveModalSuccess?.();
-                  handleCloseModalItem?.();
-                  dispatch(postBasketProductSlice.actions.addProduct(product));
-
+                  handleClick();
                 }}
               >
                 <svg width="24" height="16" aria-hidden="true">
@@ -124,4 +135,5 @@ function ModalCatalogAddItem({
     </FocusTrap>
   );
 }
+
 export { ModalCatalogAddItem };

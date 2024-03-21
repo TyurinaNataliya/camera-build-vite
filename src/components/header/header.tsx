@@ -71,7 +71,7 @@ function Header(): JSX.Element {
       if (keyCode === 'ArrowUp' && currentTab >= 1) {
         setCurrentTab(currentTab - 1);
       }
-      if (keyCode === 'Enter') {
+      if ((e.target as HTMLButtonElement)?.className === 'form-search__input' && keyCode === 'Enter') {
         navigate(
           `${AppRoute.Product}/${nameLists.indexOf(options[currentTab]) + 1}`
         );

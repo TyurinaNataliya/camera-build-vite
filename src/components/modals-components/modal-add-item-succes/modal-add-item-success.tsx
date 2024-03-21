@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useEffect, useRef } from 'react';
 import FocusTrap from 'focus-trap-react';
@@ -11,10 +11,28 @@ function ModalAddItemSuccess({
   handleCloseModalSuccess,
 }: Props): JSX.Element {
   const modalRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
+        handleCloseModalSuccess?.();
+      }
+      // перейти в корзину
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--purple modal__btn modal__btn--fit-width' && evt.key === 'Enter') {
+        evt.preventDefault();
+        handleCloseModalSuccess?.();
+        navigate(AppRoute.Basket);
+      }
+      // перейти в каталог
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--transparent modal__btn' && evt.key === 'Enter') {
+        evt.preventDefault();
+        handleCloseModalSuccess?.();
+        navigate(AppRoute.Catalog);
+      }
+      // крестик
+      if ((evt.target as HTMLButtonElement)?.className === 'cross-btn' && evt.key === 'Enter') {
+        evt.preventDefault();
         handleCloseModalSuccess?.();
       }
     };
@@ -22,7 +40,7 @@ function ModalAddItemSuccess({
     return () => {
       document.removeEventListener('keydown', handleKey, true);
     };
-  }, [handleCloseModalSuccess]);
+  }, [handleCloseModalSuccess, navigate]);
 
 
   return (
