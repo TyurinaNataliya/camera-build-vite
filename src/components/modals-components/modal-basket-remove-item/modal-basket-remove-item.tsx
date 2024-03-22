@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/store';
 import { postBasketProductSlice } from '../../../store/slices/post-basket-product-slice';
 import { TypeProduct } from '../../../type-data/type';
@@ -14,9 +14,28 @@ type Props = {
 function ModalBasketRemoveItem({ hideModal, product }: Props): JSX.Element {
   const dispatch = useAppDispatch();
   const modalRef = useRef(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
+        hideModal?.();
+      }
+      // продолжить покупки
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--transparent modal__btn modal__btn--half-width' && evt.key === 'Enter') {
+        evt.preventDefault();
+        hideModal?.();
+        navigate(AppRoute.Basket);
+      }
+      // удалить
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--purple modal__btn modal__btn--half-width' && evt.key === 'Enter') {
+        evt.preventDefault();
+        dispatch(postBasketProductSlice.actions.removeProduct(product));
+        hideModal();
+      }
+      // крестик
+      if ((evt.target as HTMLButtonElement)?.className === 'cross-btn' && evt.key === 'Enter') {
+        evt.preventDefault();
         hideModal?.();
       }
     };
@@ -24,7 +43,8 @@ function ModalBasketRemoveItem({ hideModal, product }: Props): JSX.Element {
     return () => {
       document.removeEventListener('keydown', handleKey, true);
     };
-  }, [hideModal]);
+  }, [dispatch, hideModal, navigate, product]);
+
 
   const { previewImgWebp, previewImgWebp2x, previewImg, previewImg2x, name, vendorCode, level, category, type } = product;
   return (

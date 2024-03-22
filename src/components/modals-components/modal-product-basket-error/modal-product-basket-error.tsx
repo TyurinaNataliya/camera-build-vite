@@ -19,14 +19,24 @@ function ModalProductBasketError({ handleCloseModalErrorActive }: Props): JSX.El
     const handleKey = (evt: KeyboardEvent) => {
       if (evt.key === 'Escape') {
         handleCloseModalErrorActive?.();
-
+      }
+      // попробовать снова
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--purple modal__btn modal__btn--fit-width' && evt.key === 'Enter') {
+        evt.preventDefault();
+        navigate(AppRoute.Basket);
+        handleCloseModalErrorActive?.();
+      }
+      // крестик
+      if ((evt.target as HTMLButtonElement)?.className === 'cross-btn' && evt.key === 'Enter') {
+        evt.preventDefault();
+        handleCloseModalErrorActive?.();
       }
     };
     document.addEventListener('keydown', handleKey, true);
     return () => {
       document.removeEventListener('keydown', handleKey, true);
     };
-  }, [handleCloseModalErrorActive]);
+  }, [handleCloseModalErrorActive, navigate]);
 
   return (
     <FocusTrap>

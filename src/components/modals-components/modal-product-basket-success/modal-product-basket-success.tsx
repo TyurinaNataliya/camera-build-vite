@@ -33,12 +33,25 @@ function ModalProductBasketSucces({ handleCloseModalSuccessActive }: Props): JSX
         handleCloseModalSuccessActive?.();
         cleanBasket();
       }
+      // вернуться к покупкам
+      if ((evt.target as HTMLButtonElement)?.className === 'btn btn--purple modal__btn modal__btn--fit-width' && evt.key === 'Enter') {
+        evt.preventDefault();
+        cleanBasket();
+        navigate(AppRoute.Catalog);
+      }
+      // крестик
+      if ((evt.target as HTMLButtonElement)?.className === 'cross-btn' && evt.key === 'Enter') {
+        evt.preventDefault();
+        handleCloseModalSuccessActive?.();
+        cleanBasket();
+      }
     };
     document.addEventListener('keydown', handleKey, true);
     return () => {
       document.removeEventListener('keydown', handleKey, true);
     };
-  }, [cleanBasket, handleCloseModalSuccessActive]);
+  }, [cleanBasket, handleCloseModalSuccessActive, navigate]);
+
 
   return (
     <FocusTrap>

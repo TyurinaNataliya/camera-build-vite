@@ -32,9 +32,9 @@ function ModalCatalogAddItem({
   const dispatch = useAppDispatch();
 
   const handleClick = useCallback(() => {
-    dispatch(postBasketProductSlice.actions.addProduct(product));//добавление в корзину
-    handleCloseModalItem?.();//закрытие попапа
-    handleActiveModalSuccess?.();//открытие сл попапа
+    dispatch(postBasketProductSlice.actions.addProduct(product));
+    handleCloseModalItem?.();
+    handleActiveModalSuccess?.();
   }, [dispatch, handleActiveModalSuccess, handleCloseModalItem, product]);
 
   useEffect(() => {
@@ -42,13 +42,15 @@ function ModalCatalogAddItem({
       if (evt.key === 'Escape') {
         handleCloseModalItem?.();
       }
+      //добавить товар в корзину
       if ((evt.target as HTMLButtonElement)?.className === 'btn btn--purple modal__btn modal__btn--fit-width' && evt.key === 'Enter') {
         evt.preventDefault();
         handleClick();
       }
+      //закрыть попап
       if ((evt.target as HTMLButtonElement)?.className === 'cross-btn' && evt.key === 'Enter') {
         evt.preventDefault();
-        handleCloseModalItem?.();//закрытие попапа
+        handleCloseModalItem?.();
       }
     };
     document.addEventListener('keydown', handleKey, true);
